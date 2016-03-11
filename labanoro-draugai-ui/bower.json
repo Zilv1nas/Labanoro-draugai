@@ -1,0 +1,21 @@
+{
+  "name": "Labanoro draugai",
+  "homepage": "https://github.com/Zilv1nas/Labanoro-draugai",
+  "authors": [
+    "Žilvinas <zilvinas930@gmail.com>"
+  ],
+  "description": "Labanoro draugų IT sistema",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "bootstrap": "^3.3.6"
+  }
+}
