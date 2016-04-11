@@ -7,3 +7,9 @@ angular.module('labanoroDraugaiApp').controller('mainController', ['$scope', 'us
     });
 }]);
 
+angular.module('labanoroDraugaiApp').controller('loginController', ['$scope', function ($scope) {
+}]);
+
+angular.module('labanoroDraugaiApp').controller('registrationController', ['$scope', function ($scope) {
+}]);
+
