@@ -13,7 +13,7 @@
 
 <body>
     <div class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
                     <span class="icon-bar"></span>
@@ -24,12 +24,13 @@
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a ui-sref="membersList">Members</a></li>
-                    <li><a ui-sref="profile">Me</a></li>
-                    <li><a ui-sref="residencesList">Residences</a></li>
+                    <li><a ui-sref="membersList">Klubo nariai</a></li>
+                    <li><a ui-sref="profile">Mano profilis</a></li>
+                    <li><a ui-sref="residencesList">Vasarnamiai</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="login">Prisijungti</a></li>
+                    <li><a ui-sref="login">Administracija</a></li>
+                    <li><a href="javascript:void(0)">Prisijungti</a></li>
                 </ul>
             </div>
         </div>
@@ -42,7 +43,6 @@
     <script src="public/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="public/bower_components/angular/angular.min.js"></script>
     <script src="public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="public/bower_components/angular-smart-table/dist/smart-table.min.js"></script>
     <script src="public/bower_components/angular-route/angular-route.min.js"></script>
     <script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="public/bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
@@ -56,7 +56,6 @@
     <script src="public/js/controllers/residencesListController.js"></script>
     <script src="public/js/controllers/membersListController.js"></script>
     <script src="public/js/controllers/profileController.js"></script>
-    <script src="public/js/services/services.js"></script>
 </body>
 
 </html>

@@ -1,47 +1,48 @@
 <div class="col-md-12">
-
-    <table class="table" st-pipe="mc.callServer" st-table="mc.displayed">
-        <thead>
-            <tr>
-                <th st-sort="id">id</th>
-                <th st-sort="name">name</th>
-                <th st-sort="age">age</th>
-                <th st-sort="saved">saved people</th>
-            </tr>
-            <tr>
-                <th>
-                    <input st-search="id" />
-                </th>
-                <th>
-                    <input st-search="name" />
-                </th>
-                <th>
-                    <input st-search="age" />
-                </th>
-                <th>
-                    <input st-search="saved" />
-                </th>
-            </tr>
-        </thead>
-        <tbody ng-show="!mc.isLoading">
-            <tr ng-repeat="row in mc.displayed">
-                <td>{{row.id}}</td>
-                <td>{{row.name}}</td>
-                <td>{{row.age}}</td>
-                <td>{{row.saved}}</td>
-            </tr>
-        </tbody>
-        <tbody ng-show="mc.isLoading">
-            <tr>
-                <td colspan="4" class="text-center">Loading ... </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="text-center" st-pagination="" st-items-by-page="10" colspan="4">
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-
+    <h2>Vasarnamiai</h2>
+    <div class="row">
+        <div class="col-md-9 residences9">
+            <div class="row residence">
+                <div class="col-xs-5 col-md-4" img-responsive>
+                    <img ng-src="http://www.kefaloniaaccommodation.com/images/residenceposeidon1.jpg" alt="Description" width="200" />
+                </div>
+                <div class="col-xs-7 col-md-8">
+                    <div class="text-center">
+                        <h3>Vasarnamio pavadinimas</h3>
+                    </div>
+                    <div class="text-center">
+                        <span><i class="glyphicon glyphicon-tree-deciduous"></i>Vietovė</span>
+                    </div>
+                    <div class="text-center">
+                        <span><i class="glyphicon glyphicon-euro"></i>Kaina</span>
+                    </div>
+                    <button type="button" class="btn btn-default" aria-label="Right Align">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row residence">
+                <div class="col-xs-5 col-md-4" img-responsive>
+                    <img ng-src="http://www.kefaloniaaccommodation.com/images/residenceposeidon1.jpg" alt="Description" width="200" />
+                </div>
+                <div class="col-xs-7 col-md-8">
+                    <div class="text-center">
+                        <h3>Vasarnamio pavadinimas</h3>
+                    </div>
+                    <div class="text-center">
+                        <span><i class="glyphicon glyphicon-tree-deciduous"></i>Vietovė</span>
+                    </div>
+                    <div class="text-center">
+                        <span><i class="glyphicon glyphicon-euro"></i>Kaina</span>
+                    </div>
+                    <button type="button" class="btn btn-default" aria-label="Right Align">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 filtering">
+            Filtravimas
+        </div>
+    </div>
 </div>

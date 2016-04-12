@@ -1,3 +1,3 @@
 
-angular.module('labanoroDraugaiApp').controller('registrationController', ['$scope', function ($scope) {
+angular.module('labanoroDraugaiApp').controller('registrationController', [ function () {
 }]);

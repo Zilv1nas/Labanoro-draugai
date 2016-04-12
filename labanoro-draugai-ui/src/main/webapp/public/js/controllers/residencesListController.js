@@ -1,7 +1,4 @@
-angular.module('labanoroDraugaiApp').controller('residencesListController', ['$scope', function($scope) {
+angular.module('labanoroDraugaiApp').controller('residencesListController', function() {
     
-    this.callServer = function callServer(tableState) {
-        
-    }
     
-}]);
+});

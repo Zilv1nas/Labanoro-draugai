@@ -25,3 +25,21 @@
     text-align: center;
     margin-top: 24px;
 }
+
+@media (max-width: 992px) {
+    .filtering {
+        display: none;
+    }
+}
+
+.residences {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.residence {
+    border: 1px solid grey;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+}
