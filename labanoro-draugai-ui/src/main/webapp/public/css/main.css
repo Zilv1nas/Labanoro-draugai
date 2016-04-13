@@ -36,10 +36,11 @@
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.residence {
-    border: 1px solid grey;
-    padding: 8px;
-    margin-bottom: 8px;
-    border-radius: 5px;
-    background-color: #fff;
+.list-group .list-group-item.residence:not(:last-child) {  
+    border-bottom: 1px solid #DADADA;
+}
+
+.list-group .list-group-item.residence {  
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
