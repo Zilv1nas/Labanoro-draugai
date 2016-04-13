@@ -13,4 +13,6 @@ public interface UserDAO {
     void update(User user);
 
     void remove(User user);
+
+    User getUserFromLogin(String username, String password);
 }

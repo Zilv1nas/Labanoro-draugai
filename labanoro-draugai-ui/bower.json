@@ -19,6 +19,7 @@
     "bootstrap": "3.3.6",
     "bootstrap-material-design": "0.5.9",
     "angular-ui-router": "0.2.18",
-    "angular-smart-table": "2.1.8"
+    "angular-smart-table": "2.1.8",
+    "angular-jwt": "^0.0.9"
   }
 }
