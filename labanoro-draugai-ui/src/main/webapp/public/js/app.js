@@ -2,16 +2,15 @@
  * Created by Žilvinas on 2016-03-11.
  */
 $.material.init();
-var app = angular.module('labanoroDraugaiApp', ['ngRoute', 'ui.router', 'smart-table']);
+var app = angular.module('labanoroDraugaiApp', ['ui.router', 'smart-table']);
 
-app.config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
+app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', function($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
     $urlRouterProvider.otherwise("/");
 
-
     $stateProvider
         .state('main', {
-            url: "/main",
+            url: "/",
             controller: 'mainController',
             templateUrl: 'partials/mainView.html'
         })
@@ -41,8 +40,7 @@ app.config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouter
             templateUrl: 'partials/residencesListView.html'
         });
 
-
-    $urlRouterProvider.otherwise("/main");
+    $httpProvider.interceptors.push('authHttpRequestInterceptor');
 
     $locationProvider.html5Mode({
         enabled: true

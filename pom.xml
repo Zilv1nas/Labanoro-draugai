@@ -21,6 +21,7 @@
         <jjwt.version>0.6.0</jjwt.version>
         <junit.version>4.12</junit.version>
         <jbcrypt.version>0.3m</jbcrypt.version>
+        <jinq-jpa.version>1.8.10</jinq-jpa.version>
     </properties>
 
     <dependencyManagement>
@@ -75,6 +76,11 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-jpamodelgen</artifactId>
                 <version>${hibernate-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jinq</groupId>
+                <artifactId>jinq-jpa</artifactId>
+                <version>${jinq-jpa.version}</version>
             </dependency>
             <!--URL rewrite-->
             <dependency>

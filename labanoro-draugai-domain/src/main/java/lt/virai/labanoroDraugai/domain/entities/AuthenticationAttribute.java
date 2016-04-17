@@ -5,6 +5,8 @@ import lt.virai.labanoroDraugai.domain.model.AuthAttributeEnum;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,7 @@ public class AuthenticationAttribute {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false, length = 64)
     public AuthAttributeEnum getName() {
         return name;

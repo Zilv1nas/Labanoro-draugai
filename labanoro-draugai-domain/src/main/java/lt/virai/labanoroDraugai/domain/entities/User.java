@@ -3,8 +3,11 @@ package lt.virai.labanoroDraugai.domain.entities;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +53,7 @@ public class User {
         this.email = email;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", nullable = false)
     public Set<AuthenticationAttribute> getAuthenticationAttributes() {
         return authenticationAttributes;
@@ -98,6 +101,7 @@ public class User {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 128)
     public UserRole getRole() {
         return role;
