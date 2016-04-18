@@ -1,4 +1,4 @@
-app.factory('authHttpRequestInterceptor', ['$injector', function ($injector, authService) {
+app.factory('authHttpRequestInterceptor', ['$injector', function ($injector) {
     return {
         request: function ($request) {
             var authService = $injector.get('authService');

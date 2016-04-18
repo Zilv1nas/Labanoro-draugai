@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <title>Labanoro draugai</title>
     <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="public/bower_components/angular-loading-bar/build/loading-bar.min.css">
+    <link rel="stylesheet" href="public/css/main.css">
 </head>
 
 
@@ -49,16 +50,26 @@
     <script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="public/bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
     <script src="public/bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+    <script src="public/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+    <script src="public/bower_components/satellizer/satellizer.min.js"></script>
 
     <!--App dependencies-->
     <script src="public/js/app.js"></script>
-    <script src="public/js/controllers/controllers.js"></script>
+    <!--Controllers-->
+    <script src="public/js/controllers/mainController.js"></script>
     <script src="public/js/controllers/loginController.js"></script>
     <script src="public/js/controllers/registrationController.js"></script>
     <script src="public/js/controllers/residencesListController.js"></script>
     <script src="public/js/controllers/membersListController.js"></script>
     <script src="public/js/controllers/profileController.js"></script>
-    <script src="public/js/services/services.js"></script>
+    <script src="public/js/controllers/navigationController.js"></script>
+    <!--Interceptors-->
+    <script src="public/js/interceptors/authHttpRequestInterceptor.js"></script>
+    <!--Services-->
+    <script src="public/js/services/authService.js"></script>
+    <script src="public/js/services/membersService.js"></script>
+    <script src="public/js/services/profileService.js"></script>
+    <script src="public/js/services/residencesService.js"></script>
 </body>
 
 </html>
