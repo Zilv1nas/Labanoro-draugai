@@ -1,4 +1,4 @@
-angular.module('labanoroDraugaiApp').service('profileService', ['$http', function ($http) {
+app.service('profileService', ['$http', function ($http) {
     
     var baseUrl = 'rest/';
 

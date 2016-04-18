@@ -18,6 +18,10 @@
         <jersey-gf-cdi.version>2.14</jersey-gf-cdi.version>
         <jackson-annotations.version>2.7.1</jackson-annotations.version>
         <urlrewritefilter.version>4.0.4</urlrewritefilter.version>
+        <jjwt.version>0.6.0</jjwt.version>
+        <junit.version>4.12</junit.version>
+        <jbcrypt.version>0.3m</jbcrypt.version>
+        <jinq-jpa.version>1.8.10</jinq-jpa.version>
     </properties>
 
     <dependencyManagement>
@@ -68,11 +72,38 @@
                 <version>${hibernate-version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jinq</groupId>
+                <artifactId>jinq-jpa</artifactId>
+                <version>${jinq-jpa.version}</version>
+            </dependency>
             <!--URL rewrite-->
             <dependency>
                 <groupId>org.tuckey</groupId>
                 <artifactId>urlrewritefilter</artifactId>
                 <version>${urlrewritefilter.version}</version>
+            </dependency>
+            <!--Security-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mindrot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>${jbcrypt.version}</version>
+            </dependency>
+            <!--TEST-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

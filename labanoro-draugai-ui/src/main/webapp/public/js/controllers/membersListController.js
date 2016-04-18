@@ -1,4 +1,4 @@
-angular.module('labanoroDraugaiApp').controller('membersListController', [ function () {
+app.controller('membersListController', ['$scope', function ($scope) {
     
     this.callServer = function callServer(tableState) {
         

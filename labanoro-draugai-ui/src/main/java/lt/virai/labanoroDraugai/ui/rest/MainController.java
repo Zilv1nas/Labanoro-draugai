@@ -2,6 +2,8 @@ package lt.virai.labanoroDraugai.ui.rest;
 
 import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.entities.User;
+import lt.virai.labanoroDraugai.domain.model.UserRole;
+import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ public class MainController {
 
     //TODO remove
     @GET
+    @Secured({UserRole.MEMBER})
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public User test() {
