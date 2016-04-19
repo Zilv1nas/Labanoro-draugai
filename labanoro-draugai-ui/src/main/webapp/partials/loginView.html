@@ -15,20 +15,20 @@
                 <label for="inputEmail" class="col-md-2 control-label">El. paštas</label>
 
                 <div class="col-md-10">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="El. paštas">
+                    <input ng-model="loginInfo.username" type="email" class="form-control" id="inputEmail" placeholder="El. paštas">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword" class="col-md-2 control-label">Slaptažodis</label>
 
                 <div class="col-md-10">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Slaptažodis">
+                    <input ng-model="loginInfo.password" type="password" class="form-control" id="inputPassword" placeholder="Slaptažodis">
                 </div>
             </div>
             <div class="form-group">
                 <div class="login-form-buttons">
-                    <button type="submit" class="btn btn-primary">Prisijungti</button>
-                    <a href="register" class="btn btn-info">Registruotis</a>
+                    <button ng-click="login()" class="btn btn-primary">Prisijungti</button>
+                    <a ui-sref="register" class="btn btn-info">Registruotis</a>
                 </div>
             </div>
         </fieldset>

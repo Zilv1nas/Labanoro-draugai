@@ -1,7 +1,8 @@
-angular.module('labanoroDraugaiApp').controller('loginController', ['$scope', 'authService', function ($scope, authService) {
-    $scope.login = function (loginInfo) {
-        authService.login(loginInfo).success(function (data) {
-            authService.userAuthData = data;
+app.controller('loginController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
+    $scope.login = function () {
+        authService.login($scope.loginInfo).success(function (data) {
+            authService.setAuthData(data);
+            $state.go('main');
         }).error(function () {
             //TODO error handling
             alert("Couldn't log in");

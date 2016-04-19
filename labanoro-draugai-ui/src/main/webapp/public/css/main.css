@@ -1,3 +1,7 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
 .sheet {
     margin-bottom: 24px;
     background-color: #fff;
@@ -24,4 +28,46 @@
 .or-divider {
     text-align: center;
     margin-top: 24px;
+}
+
+@media (max-width: 992px) {
+    .filtering {
+        display: none;
+    }
+}
+
+.residences {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.list-group .list-group-item.residence:not(:last-child), .list-group .list-group-item.member:not(:last-child) {
+    border-bottom: 1px solid #DADADA;
+}
+
+
+.list-group .list-group-item.residence {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.list-group .list-group-item.member {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+
+#loading-bar .bar {
+    background: #004849;
+}
+
+#loading-bar .peg {
+    -moz-box-shadow: #004849 1px 0 6px 1px;
+    -ms-box-shadow: #004849 1px 0 6px 1px;
+    -webkit-box-shadow: #004849 1px 0 6px 1px;
+    box-shadow: #004849 1px 0 6px 1px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-top-color:  #004849;
+    border-left-color: #004849;
 }

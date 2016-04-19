@@ -7,17 +7,38 @@ import lt.virai.labanoroDraugai.domain.entities.User;
  */
 public class AuthResult {
 
-    private User user;
+    private String email;
+
+    private String name;
+
+    private String surname;
+
+    private String role;
 
     private String token;
 
     public AuthResult(User user, String token) {
-        this.user = user;
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.surname = user.getSurname();
+        this.role = user.getRole().toString();
         this.token = token;
     }
 
-    public User getUser() {
-        return user;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getToken() {
