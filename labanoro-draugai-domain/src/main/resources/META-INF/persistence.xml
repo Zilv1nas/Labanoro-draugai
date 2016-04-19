@@ -8,12 +8,13 @@
         <class>lt.virai.labanoroDraugai.domain.entities.User</class>
         <class>lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute</class>
         <class>lt.virai.labanoroDraugai.domain.entities.City</class>
-        <class>lt.virai.labanoroDraugai.domain.entities.CountryHouse</class>
+        <class>lt.virai.labanoroDraugai.domain.entities.Residence</class>
         <class>lt.virai.labanoroDraugai.domain.entities.Location</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
             <property name="hibernate.show_sql" value="true" />
+            <property name='hibernate.hbm2ddl.auto' value='update' />
         </properties>
     </persistence-unit>
 </persistence>

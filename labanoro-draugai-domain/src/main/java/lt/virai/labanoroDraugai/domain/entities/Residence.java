@@ -6,11 +6,12 @@ import javax.persistence.*;
  * Created by Mantas on 4/13/2016.
  */
 @Entity
-@Table(name = "country_house", schema = "labanoro-draugai-db", catalog = "")
-public class CountryHouse {
+@Table(name = "residence", schema = "labanoro-draugai-db", catalog = "")
+public class Residence {
     private Integer id;
     private Integer capacity;
-    private Location location;
+    private String address;
+    private City city;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +19,10 @@ public class CountryHouse {
         return id;
     }
 
-    public CountryHouse(Integer capacity, Location location) {
+    public Residence(Integer capacity, String address, City city) {
         this.capacity = capacity;
-        this.location = location;
+        this.address = address;
+        this.city = city;
     }
 
     public void setId(Integer id) {
@@ -35,5 +37,23 @@ public class CountryHouse {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    @Basic
+    @Column(name="address", nullable = false)
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @OneToOne
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
