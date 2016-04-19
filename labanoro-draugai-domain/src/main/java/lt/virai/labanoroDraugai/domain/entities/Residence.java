@@ -13,6 +13,9 @@ public class Residence {
     private String address;
     private City city;
 
+    protected Residence() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {

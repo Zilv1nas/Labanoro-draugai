@@ -28,7 +28,7 @@ public class CityController {
     public Response save(CityModel cityModel) {
         try {
             ModelState modelState = cityModel.validate();
-            if (cityModel.getId() != 0 && cityModel.getId() != null)
+            if (cityModel.getId() != null && cityModel.getId() != 0)
                 // todo property names hardcodinimas
                 modelState.addError("id", "Cannot create city which has id already set.");
 
@@ -37,6 +37,7 @@ public class CityController {
 
             City city = cityModel.mapTo();
             cityDAO.save(city);
+            //todo fix pathing (war name and prefix 'rest' lost)
             return Response.created(UriBuilder.fromResource(CityController.class).path("/get/{id}").build(city.getId().toString())).entity(city).build();
         } catch (Exception ex) {
             return Response.serverError().build();
@@ -50,7 +51,7 @@ public class CityController {
     public Response update(CityModel cityModel) {
         try {
             ModelState modelState = cityModel.validate();
-            if (cityModel.getId() == 0 || cityModel.getId() == null)
+            if (cityModel.getId() == null || cityModel.getId() == 0)
                 modelState.addError("id", "Cannot update city when id is not set.");
 
             if (modelState.hasErrors())
@@ -66,7 +67,6 @@ public class CityController {
 
     @GET
     @Path("/getall")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
@@ -97,7 +97,7 @@ public class CityController {
         }
     }
 
-    @DELETE
+    @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id")Integer id) {

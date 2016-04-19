@@ -15,6 +15,9 @@ public class City {
         this.name = name;
     }
 
+    protected City() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
