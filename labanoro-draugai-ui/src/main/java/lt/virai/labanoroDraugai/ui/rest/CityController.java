@@ -59,7 +59,7 @@ public class CityController {
 
             City city = cityModel.mapTo();
             cityDAO.update(city);
-            return Response.created(UriBuilder.fromResource(CityController.class).path("/get/{id}").build(city.getId().toString())).entity(city).build();
+            return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
@@ -114,7 +114,7 @@ public class CityController {
                 if(modelState.hasErrors())
                     return modelState.buildBadResponse();
                 cityDAO.remove(city);
-                return Response.ok(city).build();
+                return Response.ok().build();
             }
         } catch (Exception ex) {
             return Response.serverError().build();

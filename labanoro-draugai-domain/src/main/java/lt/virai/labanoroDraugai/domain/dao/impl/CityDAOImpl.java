@@ -15,10 +15,6 @@ import java.util.List;
 @Stateless
 public class CityDAOImpl extends AbstractDAO<City> implements CityDAO {
     public List<City> getAll(){
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<City> criteriaQuery = builder.createQuery(City.class);
-        criteriaQuery.from(City.class);
-
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        return streams.streamAll(entityManager, City.class).toList();
     }
 }
