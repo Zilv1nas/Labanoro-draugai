@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * Created by Žilvinas on 2016-04-14.
  */
-public abstract class AbstractDAO<T> {
+public abstract class AbstractDAO<T> implements DAO<T> {
 
     private Class<T> classType;
 
@@ -35,9 +35,7 @@ public abstract class AbstractDAO<T> {
         return entityManager.find(classType, Objects.requireNonNull(id));
     }
 
-    public void save(T entity) {
-        entityManager.persist(Objects.requireNonNull(entity));
-    }
+    public void save(T entity) { entityManager.persist(Objects.requireNonNull(entity)); }
 
     public void update(T entity) {
         entityManager.merge(Objects.requireNonNull(entity));
