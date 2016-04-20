@@ -12,8 +12,4 @@ import java.util.List;
  */
 @Stateless
 public class ResidenceDAOImpl extends AbstractDAO<Residence> implements ResidenceDAO {
-    @Override
-    public List<Residence> getAll() {
-        return streams.streamAll(entityManager, Residence.class).toList();
-    }
 }
