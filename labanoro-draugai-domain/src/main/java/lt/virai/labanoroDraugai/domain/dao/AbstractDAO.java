@@ -1,11 +1,13 @@
 package lt.virai.labanoroDraugai.domain.dao;
 
+import lt.virai.labanoroDraugai.domain.entities.City;
 import org.jinq.jpa.JinqJPAStreamProvider;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,7 +25,7 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     @SuppressWarnings("unchecked")
     public AbstractDAO() {
         this.classType = (Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
+                .getGenericSuperclass()).getActualTypeArguments()[0]; //Type erasure workaround
     }
 
     @PostConstruct
@@ -43,5 +45,9 @@ public abstract class AbstractDAO<T> implements DAO<T> {
 
     public void remove(T entity) {
         entityManager.remove(Objects.requireNonNull(entity));
+    }
+
+    public List<T> getAll() {
+        return streams.streamAll(entityManager, classType).toList();
     }
 }

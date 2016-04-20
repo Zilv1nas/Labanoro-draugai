@@ -7,10 +7,18 @@ import lt.virai.labanoroDraugai.ui.model.ModelState;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mantas on 4/19/2016.
@@ -70,13 +78,12 @@ public class CityController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            List<City> cities = cityDAO.getAll();
-            List<CityModel> citiesModels = new ArrayList<CityModel>();
-            for (City city : cities){
+            List<CityModel> citiesModels = cityDAO.getAll().stream().map(c -> {
                 CityModel cityModel = new CityModel();
-                cityModel.mapFrom(city);
-                citiesModels.add(cityModel);
-            }
+                cityModel.mapFrom(c);
+                return cityModel;
+            }).collect(Collectors.toList());
+
             return Response.ok(citiesModels).build();
         } catch (Exception ex) {
             return Response.serverError().build();
@@ -86,7 +93,7 @@ public class CityController {
     @GET
     @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id")Integer id) {
+    public Response get(@PathParam("id") Integer id) {
         try {
             City city = cityDAO.get(id);
             CityModel cityModel = new CityModel();
@@ -100,18 +107,17 @@ public class CityController {
     @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id")Integer id) {
+    public Response delete(@PathParam("id") Integer id) {
         ModelState modelState = new ModelState();
         try {
-            if(id == null){
+            if (id == null) {
                 modelState.addError("id", "Id not specified");
                 return modelState.buildBadResponse();
-            }
-            else {
+            } else {
                 City city = cityDAO.get(id);
                 if (city == null)
                     modelState.addError("", "City does not exist.");
-                if(modelState.hasErrors())
+                if (modelState.hasErrors())
                     return modelState.buildBadResponse();
                 cityDAO.remove(city);
                 return Response.ok(city).build();

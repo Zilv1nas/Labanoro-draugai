@@ -7,7 +7,7 @@ import javax.enterprise.inject.Model;
 /**
  * Created by Mantas on 4/19/2016.
  */
-public class CityModel implements ValidatableModel, MappableFrom<City>, MappableTo<City>{
+public class CityModel implements ValidatableModel, MappableFrom<City>, MappableTo<City> {
     private Integer id;
     private String name;
 
@@ -30,7 +30,7 @@ public class CityModel implements ValidatableModel, MappableFrom<City>, Mappable
     @Override
     public ModelState validate() {
         ModelState modelState = new ModelState();
-        if(name == null || name.length() == 0)
+        if (name == null || name.length() == 0)
             modelState.addError("name", "Name is required");
         else if (name.length() < 4)
             modelState.addError("name", "Name cannot be shorter than 4 symbols");
