@@ -5,5 +5,6 @@ package lt.virai.labanoroDraugai.domain.model;
  */
 public enum AuthAttributeEnum {
     USERNAME,
-    PASSWORD
+    PASSWORD,
+    FACEBOOK_ID
 }

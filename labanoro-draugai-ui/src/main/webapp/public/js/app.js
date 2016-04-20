@@ -41,13 +41,17 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: 'partials/residencesListView.html'
             });
 
-        $httpProvider.interceptors.push('authHttpRequestInterceptor');
-
         $locationProvider.html5Mode({
             enabled: true
         });
 
         cfpLoadingBarProvider.includeSpinner = false;
-        $authProvider.loginUrl = '/rest/login';
-        $authProvider.signupUrl = '/rest/register';
+        $authProvider.loginUrl = 'rest/login';
+        $authProvider.signupUrl = 'rest/register';
+        $authProvider.baseUrl = $('base').attr('href');
+        $authProvider.tokenPrefix='labanoro_draugai';
+        $authProvider.facebook({
+            clientId: '1538319626473322',
+            url: 'rest/register/facebook'
+        });
     }]);

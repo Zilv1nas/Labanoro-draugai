@@ -2,12 +2,29 @@ app.controller('registrationController', ['$scope', '$state', 'authService', fun
     $scope.signupType = "pw";
     
     $scope.register = function () {
-        authService.register($scope.newUser).success(function (data) {
-            authService.setAuthData(data);
+        if ($scope.signupType === "pw") {
+            registerWithUsername();
+        } else {
+            registerWithFB();
+        }
+    };
+    
+    var registerWithUsername = function () {
+        authService.register($scope.newUser).then(function (response) {
+            authService.setAuthData(response.data);
             $state.go('main');
-        }).error(function () {
+        }).catch(function (response) {
             //TODO error handling
-            alert("Couldn't register");
+            alert("Couldn't register" + response.data);
+        })
+    };
+
+    var registerWithFB = function () {
+        authService.authenticateFB().then(function (response) {
+            authService.setAuthData(response.data);
+            $state.go('main');
+        }).catch(function (response) {
+            alert("Couldn't register" + response.data);
         })
     }
 }]);

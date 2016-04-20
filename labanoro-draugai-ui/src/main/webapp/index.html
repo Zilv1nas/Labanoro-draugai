@@ -14,7 +14,7 @@
 
 
 <body>
-    <div class="navbar navbar-default">
+    <div ng-controller="navigationController" class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -63,8 +63,6 @@
     <script src="public/js/controllers/membersListController.js"></script>
     <script src="public/js/controllers/profileController.js"></script>
     <script src="public/js/controllers/navigationController.js"></script>
-    <!--Interceptors-->
-    <script src="public/js/interceptors/authHttpRequestInterceptor.js"></script>
     <!--Services-->
     <script src="public/js/services/authService.js"></script>
     <script src="public/js/services/membersService.js"></script>

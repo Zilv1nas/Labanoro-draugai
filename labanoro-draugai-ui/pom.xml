@@ -47,6 +47,10 @@
             <artifactId>urlrewritefilter</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.scribe</groupId>
+            <artifactId>scribe</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

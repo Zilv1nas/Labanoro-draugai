@@ -18,4 +18,10 @@ public interface AuthService {
     boolean hasRoles(String token, List<UserRole> userRoles);
 
     AuthResult register(User user);
+
+    AuthResult registerFacebookUser(User user);
+
+    AuthResult loginWithFacebook(String facebookId) throws AuthenticationException;
+
+    boolean isAlreadyRegistered(String email);
 }

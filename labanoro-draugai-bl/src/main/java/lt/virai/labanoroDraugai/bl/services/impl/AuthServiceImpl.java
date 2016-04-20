@@ -21,6 +21,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by Žilvinas on 2016-04-13.
@@ -104,6 +105,33 @@ public class AuthServiceImpl implements AuthService {
         userDAO.save(user);
 
         return new AuthResult(user, issueToken(user));
+    }
+
+    @Override
+    public AuthResult registerFacebookUser(User user) {
+        Objects.requireNonNull(user);
+
+        if (!user.getAuthenticationAttributes().stream().filter(a -> a.getName().equals(AuthAttributeEnum.FACEBOOK_ID)).findAny().isPresent()) {
+            throw new IllegalArgumentException("Facebook id was not provided");
+        }
+
+        userDAO.save(user);
+
+        return new AuthResult(user, issueToken(user));
+    }
+
+    @Override
+    public AuthResult loginWithFacebook(String facebookId) throws AuthenticationException {
+        Objects.requireNonNull(facebookId);
+        Optional<User> user = Optional.ofNullable(userDAO.getUserByAuthAttribute(AuthAttributeEnum.FACEBOOK_ID, facebookId));
+
+        return user.map(u -> new AuthResult(u, issueToken(u)))
+                .orElseThrow(() -> new AuthenticationException("Wrong username or password"));
+    }
+
+    @Override
+    public boolean isAlreadyRegistered(String email) {
+        return userDAO.getByUsername(email) != null;
     }
 
     private String issueToken(User user) {

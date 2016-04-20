@@ -13,54 +13,32 @@
                 <label for="inputSurname" class="col-md-2 control-label">Pavardė</label>
 
                 <div class="col-md-10">
-                    <input  ng-model="newUser.surname" type="text" class="form-control" id="inputSurname" placeholder="Pavardė">
+                    <input ng-model="newUser.surname" type="text" class="form-control" id="inputSurname"
+                           placeholder="Pavardė">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputEmail" class="col-md-2 control-label">El. paštas</label>
 
                 <div class="col-md-10">
-                    <input ng-model="newUser.email" type="email" class="form-control" id="inputEmail" placeholder="El. paštas">
+                    <input ng-model="newUser.email" type="email" class="form-control" id="inputEmail"
+                           placeholder="El. paštas">
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="col-md-2 control-label">Prisijungimo būdas</label>
+                <label for="inputPassword" class="col-md-2 control-label">Slaptažodis</label>
 
                 <div class="col-md-10">
-                    <div class="radio radio-primary">
-                        <label>
-                            <input ng-model="signupType" type="radio" name="signupType" id="signupType1" value="pw"
-                                   checked=""><span class="circle"></span><span class="check"></span>
-                            El. paštas/slaptažodis
-                        </label>
-                    </div>
-                    <div class="radio radio-primary">
-                        <label>
-                            <input ng-model="signupType" type="radio" name="signupType" id="signupType2" value="fb"><span
-                                class="circle"></span><span class="check"></span>
-                            Facebook
-                        </label>
-                    </div>
+                    <input ng-model="newUser.password" type="password" class="form-control" id="inputPassword"
+                           placeholder="Slaptažodis">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="inputRepeatPassword" class="col-md-2 control-label">Pakartokite slaptažodį</label>
 
-            <div ng-cloak ng-show="signupType === 'pw'">
-                <div class="form-group">
-                    <label for="inputPassword" class="col-md-2 control-label">Slaptažodis</label>
-
-                    <div class="col-md-10">
-                        <input ng-model="newUser.password" type="password" class="form-control" id="inputPassword"
-                               placeholder="Slaptažodis">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRepeatPassword" class="col-md-2 control-label">Pakartokite slaptažodį</label>
-
-                    <div class="col-md-10">
-                        <input type="password" class="form-control" id="inputRepeatPassword"
-                               placeholder="Pakartokite slaptažodį">
-                    </div>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" id="inputRepeatPassword"
+                           placeholder="Pakartokite slaptažodį">
                 </div>
             </div>
             <div class="form-group">

@@ -1,13 +1,15 @@
-app.service('authService', ['$http', '$rootScope', function ($http, $rootScope) {
+app.service('authService', ['$http', '$rootScope', '$auth', function ($http, $rootScope, $auth) {
 
-    var baseUrl = 'rest/';
-    
     this.login = function(loginInfo) {
-        return $http.post(baseUrl + 'login', loginInfo);
+        return $auth.login(loginInfo);
     };
     
     this.register = function (userInfo) {
-        return $http.post(baseUrl + 'register', userInfo);  
+        return $auth.signup(userInfo);
+    };
+
+    this.authenticateFB = function () {
+        return $auth.authenticate('facebook');
     };
     
     this.setAuthData = function (authData) {
@@ -15,11 +17,11 @@ app.service('authService', ['$http', '$rootScope', function ($http, $rootScope) 
             email: authData.email,
             name: authData.name,
             surname: authData.surname,
-            role: authData.role,
-            token: authData.token
+            role: authData.role
         };
 
         localStorage.setItem('userAuthData', JSON.stringify(userAuthData));
+        $auth.setToken(authData.token);
         $rootScope.$broadcast('authChanged');
     };
     
@@ -28,7 +30,7 @@ app.service('authService', ['$http', '$rootScope', function ($http, $rootScope) 
     };
 
     this.isAuthenticated = function () {
-        return !!this.getAuthData();
+        return $auth.getToken() && this.getAuthData();
     };
 
     this.isMember = function () {
@@ -44,6 +46,7 @@ app.service('authService', ['$http', '$rootScope', function ($http, $rootScope) 
     };
 
     this.logout = function () {
+        $auth.logout();
         localStorage.removeItem('userAuthData');
         $rootScope.$broadcast('authChanged');
     }
