@@ -71,3 +71,7 @@
     border-top-color:  #004849;
     border-left-color: #004849;
 }
+
+.user-list table > tbody > tr >td {
+    vertical-align: middle;
+}

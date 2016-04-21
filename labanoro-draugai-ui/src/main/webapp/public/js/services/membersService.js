@@ -1,10 +1,9 @@
 app.service('membersService', ['$http', function ($http) {
     
-    var baseUrl = 'rest/';
+    var baseUrl = 'rest/user/';
 
     this.getAllMembers = function() {
-        var url = "rest/members/GetAll";
-        return $http.GET(url);
+        return $http.get(baseUrl + 'getAll');
     }
     
 }]);

@@ -2,8 +2,10 @@ package lt.virai.labanoroDraugai.ui.rest;
 
 import lt.virai.labanoroDraugai.domain.dao.CityDAO;
 import lt.virai.labanoroDraugai.domain.entities.City;
+import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.CityModel;
 import lt.virai.labanoroDraugai.ui.model.ModelState;
+import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -29,6 +31,7 @@ public class CityController {
     @Inject
     private CityDAO cityDAO;
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -52,6 +55,7 @@ public class CityController {
         }
     }
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -73,16 +77,14 @@ public class CityController {
         }
     }
 
+    @Secured
     @GET
     @Path("/getall")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            List<CityModel> citiesModels = cityDAO.getAll().stream().map(c -> {
-                CityModel cityModel = new CityModel();
-                cityModel.mapFrom(c);
-                return cityModel;
-            }).collect(Collectors.toList());
+            List<CityModel> citiesModels = cityDAO.getAll()
+                    .stream().map(CityModel::new).collect(Collectors.toList());
 
             return Response.ok(citiesModels).build();
         } catch (Exception ex) {
@@ -90,20 +92,19 @@ public class CityController {
         }
     }
 
+    @Secured
     @GET
     @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") Integer id) {
         try {
-            City city = cityDAO.get(id);
-            CityModel cityModel = new CityModel();
-            cityModel.mapFrom(city);
-            return Response.ok(cityModel).build();
+            return Response.ok(new CityModel(cityDAO.get(id))).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
     }
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)

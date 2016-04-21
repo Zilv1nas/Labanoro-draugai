@@ -5,20 +5,17 @@ import lt.virai.labanoroDraugai.domain.entities.Residence;
 /**
  * Created by Mantas on 4/20/2016.
  */
-public class ResidenceModel implements ValidatableModel, MappableTo<Residence>, MappableFrom<Residence> {
+public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
     private Integer id;
     private Integer capacity;
     private String address;
     private CityModel city;
 
-
-    @Override
-    public void mapFrom(Residence entity) {
-        id = entity.getId();
-        capacity = entity.getCapacity();
-        address = entity.getAddress();
-        city = new CityModel();
-        city.mapFrom(entity.getCity());
+    public ResidenceModel(Residence residence) {
+        id = residence.getId();
+        capacity = residence.getCapacity();
+        address = residence.getAddress();
+        city = new CityModel(residence.getCity());
     }
 
     @Override

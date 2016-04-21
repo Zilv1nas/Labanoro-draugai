@@ -4,9 +4,11 @@ import lt.virai.labanoroDraugai.bl.services.ResidenceService;
 import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.entities.City;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
+import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.CityModel;
 import lt.virai.labanoroDraugai.ui.model.ModelState;
 import lt.virai.labanoroDraugai.ui.model.ResidenceModel;
+import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mantas on 4/20/2016.
@@ -28,6 +31,7 @@ public class ResidenceController {
     @Inject
     ResidenceDAO residenceDAO;
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -51,6 +55,7 @@ public class ResidenceController {
         }
     }
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -72,38 +77,35 @@ public class ResidenceController {
         }
     }
 
+    @Secured
     @GET
     @Path("/getall")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            List<Residence> residences = residenceDAO.getAll();
-            List<ResidenceModel> residencesModels = new ArrayList<ResidenceModel>();
-            for (Residence residence : residences){
-                ResidenceModel residenceModel = new ResidenceModel();
-                residenceModel.mapFrom(residence);
-                residencesModels.add(residenceModel);
-            }
-            return Response.ok(residencesModels).build();
+            List<ResidenceModel> residences= residenceDAO.getAll()
+                    .stream().map(ResidenceModel::new).collect(Collectors.toList());
+            return Response.ok(residences).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
     }
 
+    @Secured
     @GET
     @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id")Integer id) {
         try {
             Residence residence = residenceDAO.get(id);
-            ResidenceModel residenceModel = new ResidenceModel();
-            residenceModel.mapFrom(residence);
+            ResidenceModel residenceModel = new ResidenceModel(residence);
             return Response.ok(residenceModel).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
     }
 
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)

@@ -1,8 +1,9 @@
-app.controller('membersListController', ['$scope', function ($scope) {
-    
-    this.callServer = function callServer(tableState) {
-        
-    }
-    
+app.controller('membersListController', ['$scope', 'membersService', function ($scope, membersService) {
+    membersService.getAllMembers().then(function (response) {
+        $scope.members = response.data;
+    }).catch(function (response) {
+        //TODO
+        alert('Xujnia' + response.data);
+    })
 }]);
 

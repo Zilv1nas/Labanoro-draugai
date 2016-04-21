@@ -7,9 +7,17 @@ import javax.enterprise.inject.Model;
 /**
  * Created by Mantas on 4/19/2016.
  */
-public class CityModel implements ValidatableModel, MappableFrom<City>, MappableTo<City> {
+public class CityModel implements ValidatableModel, MappableTo<City> {
     private Integer id;
     private String name;
+
+    public CityModel(City city) {
+        name = city.getName();
+        id = city.getId();
+    }
+
+    public CityModel() {
+    }
 
     public Integer getId() {
         return id;
@@ -36,12 +44,6 @@ public class CityModel implements ValidatableModel, MappableFrom<City>, Mappable
             modelState.addError("name", "Name cannot be shorter than 4 symbols");
 
         return modelState;
-    }
-
-    @Override
-    public void mapFrom(City city) {
-        name = city.getName();
-        id = city.getId();
     }
 
     @Override

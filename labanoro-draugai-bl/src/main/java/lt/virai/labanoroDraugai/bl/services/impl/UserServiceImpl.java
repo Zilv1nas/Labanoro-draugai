@@ -6,6 +6,7 @@ import lt.virai.labanoroDraugai.domain.entities.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,5 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void remove(User user) {
         userDAO.remove(Objects.requireNonNull(user));
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userDAO.getAll();
     }
 }
