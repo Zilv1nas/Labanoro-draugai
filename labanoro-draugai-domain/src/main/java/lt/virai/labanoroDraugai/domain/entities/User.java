@@ -31,7 +31,7 @@ public class User {
     private String email;
     private String name;
     private String surname;
-    private UserRole role;
+    private UserRole role = UserRole.CANDIDATE;
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
 

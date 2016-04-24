@@ -34,7 +34,7 @@ app.service('authService', ['$http', '$rootScope', '$auth', function ($http, $ro
     };
 
     this.isMember = function () {
-        return this.getAuthData().role === 'MEMBER';
+        return this.getAuthData() && this.getAuthData().role === 'MEMBER';
     };
 
     this.isCandidate = function () {
@@ -42,7 +42,7 @@ app.service('authService', ['$http', '$rootScope', '$auth', function ($http, $ro
     };
 
     this.isAdmin = function () {
-        return this.getAuthData().role === 'ADMIN';
+        return this.getAuthData() && this.getAuthData().role === 'ADMIN';
     };
 
     this.logout = function () {

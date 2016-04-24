@@ -6,7 +6,6 @@ import lt.virai.labanoroDraugai.bl.services.AuthService;
 import lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.AuthAttributeEnum;
-import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.FbRegistrationInfo;
 import lt.virai.labanoroDraugai.ui.model.LoginInfo;
 import lt.virai.labanoroDraugai.ui.model.RegistrationInfo;
@@ -69,7 +68,6 @@ public class AuthenticationController {
             user.setEmail(registrationInfo.getEmail());
             user.setName(registrationInfo.getName());
             user.setSurname(registrationInfo.getSurname());
-            user.setRole(UserRole.MEMBER); //TODO
 
             Set<AuthenticationAttribute> attrs = new HashSet<>();
             AuthenticationAttribute attr = new AuthenticationAttribute();
@@ -123,8 +121,6 @@ public class AuthenticationController {
         attr.setName(AuthAttributeEnum.FACEBOOK_ID);
         attr.setValue(facebookId);
         user.getAuthenticationAttributes().add(attr);
-
-        user.setRole(UserRole.MEMBER); //TODO
 
         return Response.ok().entity(authService.registerFacebookUser(user)).build();
     }

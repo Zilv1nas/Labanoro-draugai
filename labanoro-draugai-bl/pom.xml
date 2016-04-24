@@ -25,6 +25,10 @@
             <artifactId>jjwt</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>lt.virai</groupId>
             <artifactId>labanoro-draugai-domain</artifactId>
             <version>${project.version}</version>

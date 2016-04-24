@@ -17,4 +17,6 @@ public interface UserService {
     void remove(User user);
 
     List<User> getAll();
+
+    void verifyUser(int userId);
 }

@@ -1,29 +1,45 @@
 <div class="col-md-12">
     <div class="well">
         <h2>Klubo nariai</h2>
-        <div class="table-responsive user-list">
+        <div class="row">
+        <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
+            <div class="input-group">
+                <label class="control-label" for="inviteMember">Pakviesti naują klubo narį</label>
+                <input ng-model="newUserEmail" type="email" id="inviteMember" class="form-control">
+              <span class="input-group-btn">
+                <button ng-click="invite(newUserEmail)" type="button" class="btn btn-fab btn-fab-mini">
+                  <i class="material-icons">send</i>
+                </button>
+              </span>
+            </div>
+            <span class="material-input"></span>
+        </div>
+        </div>
+        <div class="row table-responsive user-list">
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Created at</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created at</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody ng-cloak>
-                    <tr ng-repeat="member in members">
-                        <td>{{member.id}}</td>
-                        <td>{{member.name + ' ' + member.surname}}</td>
-                        <td>{{member.email}}</td>
-                        <td>{{member.registrationDate | date}}</td>
-                        <td>{{member.role}}</td>
-                        <td>
-                            <button class="btn btn-success btn-raised">Patvirtinti</button>
-                        </td>
-                    </tr>
+                <tr ng-repeat="member in members">
+                    <td>{{member.id}}</td>
+                    <td>{{member.name + ' ' + member.surname}}</td>
+                    <td>{{member.email}}</td>
+                    <td>{{member.registrationDate | date}}</td>
+                    <td>{{member.role}}</td>
+                    <td>
+                        <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE'"
+                                class="btn btn-success btn-raised">Patvirtinti
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
