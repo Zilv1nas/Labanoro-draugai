@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "reservation")
 public class Reservation {
+    private Integer id;
     private User user;
     private Residence residence;
     private LocalDate dateFrom;
@@ -60,5 +61,15 @@ public class Reservation {
 
     public void setDateTo(LocalDate dateTo) {
         this.dateTo = dateTo;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

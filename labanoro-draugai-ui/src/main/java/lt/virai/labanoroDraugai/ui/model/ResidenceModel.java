@@ -12,6 +12,7 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
     private CityModel city;
     private String image;
     private Integer weeklyPrice;
+    private WeekRangeModel availability;
 
     public ResidenceModel(Residence residence) {
         id = residence.getId();
@@ -24,9 +25,10 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
 
     @Override
     public Residence mapTo() {
-        Residence residence = new Residence(capacity, address, city.mapTo(), weeklyPrice);
+        Residence residence = new Residence(capacity, address, city.mapTo(), weeklyPrice, availability.getDateFrom());
         residence.setId(id);
         residence.setImage(image);
+        residence.setAvailableUntil(availability.getDateTo());
 
         return residence;
     }
@@ -49,6 +51,10 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
             modelState.addError("weeklyPrice", "Weekly price is required.");
         else if(weeklyPrice < 1)
             modelState.addError("weeklyPrice", "Weekly price cannot be less than 1.");
+        if(availability == null)
+            modelState.addError("availability", "Availability dates are required.");
+        else
+            modelState.merge(availability.validate(), "availability");
 
         return modelState;
     }
@@ -83,5 +89,13 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
 
     public void setCity(CityModel city) {
         this.city = city;
+    }
+
+    public void setAvailability(WeekRangeModel availability) {
+        this.availability = availability;
+    }
+
+    public WeekRangeModel getAvailability() {
+        return availability;
     }
 }

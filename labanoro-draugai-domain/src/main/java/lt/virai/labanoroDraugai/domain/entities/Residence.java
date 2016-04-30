@@ -1,6 +1,7 @@
 package lt.virai.labanoroDraugai.domain.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -15,15 +16,18 @@ public class Residence {
     private City city;
     private String image;
     private Integer weeklyPrice;
+    private LocalDate availableFrom;
+    private LocalDate availableUntil;
 
     protected Residence() {
     }
 
-    public Residence(Integer capacity, String address, City city, Integer weeklyPrice) {
+    public Residence(Integer capacity, String address, City city, Integer weeklyPrice, LocalDate availableFrom) {
         this.capacity = capacity;
         this.address = address;
         this.city = city;
         this.weeklyPrice = weeklyPrice;
+        this.availableFrom = availableFrom;
     }
 
     @Id
@@ -99,5 +103,25 @@ public class Residence {
 
     public void setWeeklyPrice(Integer weeklyPrice) {
         this.weeklyPrice = weeklyPrice;
+    }
+
+    @Basic
+    @Column(name = "available_from", nullable = false)
+    public LocalDate getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(LocalDate availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    @Basic
+    @Column(name = "available_until", nullable = false)
+    public LocalDate getAvailableUntil() {
+        return availableUntil;
+    }
+
+    public void setAvailableUntil(LocalDate availableUntil) {
+        this.availableUntil = availableUntil;
     }
 }

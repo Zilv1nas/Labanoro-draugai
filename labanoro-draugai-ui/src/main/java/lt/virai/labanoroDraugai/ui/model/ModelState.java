@@ -31,15 +31,15 @@ public class ModelState {
         return Response.status(Response.Status.BAD_REQUEST).entity(errors).build();
     }
 
-    public void merge(ModelState modelState, String key){
+    public void merge(ModelState modelState, String prefix){
         if(modelState == null || !modelState.hasErrors())
             return;
-        Objects.requireNonNull(key);
+        Objects.requireNonNull(prefix);
         Map<String, List<String>> otherErrors = modelState.getErrors();
         String[] errorKeys = (String[]) otherErrors.keySet().toArray();
         for (String errorKey : errorKeys){
             List<String> errorValues = otherErrors.get(errorKey);
-            String newKey = key + '.' + errorKey;
+            String newKey = prefix.isEmpty() ? errorKey : prefix + '.' + errorKey;
             for(String error : errorValues){
                 addError(newKey, error);
             }
