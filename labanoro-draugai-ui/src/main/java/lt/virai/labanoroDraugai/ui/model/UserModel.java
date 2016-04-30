@@ -20,6 +20,8 @@ public class UserModel {
 
     private String role;
 
+    private Integer balance;
+
     public UserModel() {
     }
 
@@ -30,6 +32,7 @@ public class UserModel {
         this.surname = user.getSurname();
         this.registrationDate = user.getRegistrationDate();
         this.role = user.getRole().toString();
+        this.balance = user.getBalance();
     }
 
     public Integer getId() {
@@ -78,5 +81,13 @@ public class UserModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
     }
 }

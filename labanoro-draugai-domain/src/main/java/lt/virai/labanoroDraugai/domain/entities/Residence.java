@@ -1,13 +1,6 @@
 package lt.virai.labanoroDraugai.domain.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -20,14 +13,17 @@ public class Residence {
     private Integer capacity;
     private String address;
     private City city;
+    private String image;
+    private Integer weeklyPrice;
 
     protected Residence() {
     }
 
-    public Residence(Integer capacity, String address, City city) {
+    public Residence(Integer capacity, String address, City city, Integer weeklyPrice) {
         this.capacity = capacity;
         this.address = address;
         this.city = city;
+        this.weeklyPrice = weeklyPrice;
     }
 
     @Id
@@ -83,5 +79,25 @@ public class Residence {
     @Override
     public int hashCode() {
         return Objects.hash(id, capacity, address, city);
+    }
+
+    @Lob
+    @Column(name = "image")
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Basic
+    @Column(name = "address", nullable = false)
+    public Integer getWeeklyPrice() {
+        return weeklyPrice;
+    }
+
+    public void setWeeklyPrice(Integer weeklyPrice) {
+        this.weeklyPrice = weeklyPrice;
     }
 }

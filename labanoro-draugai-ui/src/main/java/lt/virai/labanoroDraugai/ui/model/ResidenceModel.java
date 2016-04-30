@@ -10,18 +10,23 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
     private Integer capacity;
     private String address;
     private CityModel city;
+    private String image;
+    private Integer weeklyPrice;
 
     public ResidenceModel(Residence residence) {
         id = residence.getId();
         capacity = residence.getCapacity();
         address = residence.getAddress();
         city = new CityModel(residence.getCity());
+        image = residence.getImage();
+        weeklyPrice = residence.getWeeklyPrice();
     }
 
     @Override
     public Residence mapTo() {
-        Residence residence = new Residence(capacity, address, city.mapTo());
+        Residence residence = new Residence(capacity, address, city.mapTo(), weeklyPrice);
         residence.setId(id);
+        residence.setImage(image);
 
         return residence;
     }
@@ -33,9 +38,17 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
         if(capacity < 1)
             modelState.addError("capacity", "Capacity cannot be less than 1.");
         if(address.length() < 4)
-            modelState.addError("address", "Address cannot be less than 4.");
+            modelState.addError("address", "Address cannot be shorter than 4.");
         if(city == null)
             modelState.addError("city", "City is required.");
+        else
+            modelState.merge(city.validate(), "city");
+        if(image != null && image.startsWith("data:image"))
+            modelState.addError("image", "File type not supported.");
+        if(weeklyPrice == null)
+            modelState.addError("weeklyPrice", "Weekly price is required.");
+        else if(weeklyPrice < 1)
+            modelState.addError("weeklyPrice", "Weekly price cannot be less than 1.");
 
         return modelState;
     }

@@ -31,6 +31,7 @@ public class User {
     private String email;
     private String name;
     private String surname;
+    private Integer balance = 0;
     private UserRole role = UserRole.CANDIDATE;
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
@@ -121,5 +122,15 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    @Basic
+    @Column(name = "balance", nullable = false)
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
     }
 }

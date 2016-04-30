@@ -134,6 +134,14 @@ public class AuthServiceImpl implements AuthService {
         return userDAO.getByUsername(email) != null;
     }
 
+    @Override
+    public User getUser(String token) {
+        Objects.requireNonNull(token);
+        Integer userId = Integer.parseInt(Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody().getSubject());
+
+        return userDAO.get(userId);
+    }
+
     private String issueToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())

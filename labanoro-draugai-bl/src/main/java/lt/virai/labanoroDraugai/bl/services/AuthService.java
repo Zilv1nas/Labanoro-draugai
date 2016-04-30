@@ -24,4 +24,6 @@ public interface AuthService {
     AuthResult loginWithFacebook(String facebookId) throws AuthenticationException;
 
     boolean isAlreadyRegistered(String email);
+
+    User getUser(String token);
 }
