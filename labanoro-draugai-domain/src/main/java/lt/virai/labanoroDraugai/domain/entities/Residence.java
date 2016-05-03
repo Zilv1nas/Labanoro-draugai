@@ -15,7 +15,7 @@ public class Residence {
     private String address;
     private City city;
     private String image;
-    private Integer weeklyPrice;
+/*    private Integer weeklyPrice;*/
     private LocalDate availableFrom;
     private LocalDate availableUntil;
 
@@ -26,7 +26,7 @@ public class Residence {
         this.capacity = capacity;
         this.address = address;
         this.city = city;
-        this.weeklyPrice = weeklyPrice;
+/*        this.weeklyPrice = weeklyPrice;*/
         this.availableFrom = availableFrom;
     }
 
@@ -95,6 +95,7 @@ public class Residence {
         this.image = image;
     }
 
+/*
     @Basic
     @Column(name = "address", nullable = false)
     public Integer getWeeklyPrice() {
@@ -104,6 +105,7 @@ public class Residence {
     public void setWeeklyPrice(Integer weeklyPrice) {
         this.weeklyPrice = weeklyPrice;
     }
+*/
 
     @Basic
     @Column(name = "available_from", nullable = false)

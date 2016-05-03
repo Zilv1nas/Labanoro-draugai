@@ -2,6 +2,7 @@ package lt.virai.labanoroDraugai.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Created by Mantas on 4/30/2016.
@@ -23,8 +24,21 @@ public class Reservation {
         this.dateTo = dateTo;
     }
 
+    public Reservation() {
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @OneToOne
-    @Column(name = "user", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     public User getUser() {
         return user;
     }
@@ -34,7 +48,7 @@ public class Reservation {
     }
 
     @OneToOne
-    @Column(name = "residence", nullable = false)
+    @JoinColumn(name = "residence_id", nullable = false)
     public Residence getResidence() {
         return residence;
     }
@@ -63,13 +77,20 @@ public class Reservation {
         this.dateTo = dateTo;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(residence, that.residence) &&
+                Objects.equals(dateFrom, that.dateFrom) &&
+                Objects.equals(dateTo, that.dateTo);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, residence, dateFrom, dateTo);
     }
 }

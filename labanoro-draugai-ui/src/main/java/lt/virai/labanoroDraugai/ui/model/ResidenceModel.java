@@ -20,7 +20,7 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
         address = residence.getAddress();
         city = new CityModel(residence.getCity());
         image = residence.getImage();
-        weeklyPrice = residence.getWeeklyPrice();
+/*        weeklyPrice = residence.getWeeklyPrice();*/
     }
 
     @Override
