@@ -3,12 +3,13 @@ package lt.virai.labanoroDraugai.ui.rest;
 import lt.virai.labanoroDraugai.bl.services.EmailService;
 import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
-import lt.virai.labanoroDraugai.ui.model.InvitationInfo;
-import lt.virai.labanoroDraugai.ui.model.UserModel;
+import lt.virai.labanoroDraugai.ui.model.users.InvitationInfo;
+import lt.virai.labanoroDraugai.ui.model.users.UserModel;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -51,8 +52,7 @@ public class UserController {
     @POST
     @Path("/invite")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response invite(InvitationInfo invitationInfo) {
-        //TODO add validation
+    public Response invite(@Valid InvitationInfo invitationInfo) {
         try {
             emailService.sendInvitationEmail(invitationInfo.getToEmail(), invitationInfo.getFullName());
             return Response.ok().build();

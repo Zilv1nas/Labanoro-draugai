@@ -77,8 +77,9 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-jpamodelgen</artifactId>
+                <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jinq</groupId>

@@ -10,7 +10,6 @@ import org.jinq.tuples.Pair;
 
 import javax.ejb.Stateless;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * Created by Žilvinas on 2016-03-11.

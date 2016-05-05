@@ -5,7 +5,6 @@ import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 
 import javax.ejb.Stateless;
-import java.util.List;
 
 /**
  * Created by Mantas on 4/19/2016.

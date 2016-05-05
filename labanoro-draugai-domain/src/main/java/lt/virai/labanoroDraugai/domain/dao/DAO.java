@@ -14,5 +14,7 @@ public interface DAO<T> {
 
     void remove(T entity);
 
+    void remove(Integer id);
+
     List<T> getAll();
 }

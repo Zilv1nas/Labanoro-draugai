@@ -6,9 +6,9 @@ import lt.virai.labanoroDraugai.bl.services.AuthService;
 import lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.AuthAttributeEnum;
-import lt.virai.labanoroDraugai.ui.model.FbRegistrationInfo;
-import lt.virai.labanoroDraugai.ui.model.LoginInfo;
-import lt.virai.labanoroDraugai.ui.model.RegistrationInfo;
+import lt.virai.labanoroDraugai.ui.model.auth.FbRegistrationInfo;
+import lt.virai.labanoroDraugai.ui.model.auth.LoginInfo;
+import lt.virai.labanoroDraugai.ui.model.auth.RegistrationInfo;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.FacebookApi;
 import org.scribe.model.OAuthRequest;
@@ -20,6 +20,7 @@ import org.scribe.oauth.OAuthService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.security.sasl.AuthenticationException;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -47,10 +48,10 @@ public class AuthenticationController {
     private AuthService authService;
 
     @POST
-    @Path("/loginWithFacebook")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginInfo loginInfo) {
+    public Response login(@Valid LoginInfo loginInfo) {
         try {
             return Response.ok(authService.login(loginInfo.getUsername(), loginInfo.getPassword())).build();
         } catch (Exception e) {
@@ -62,7 +63,7 @@ public class AuthenticationController {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(RegistrationInfo registrationInfo) {
+    public Response register(@Valid RegistrationInfo registrationInfo) {
         try {
             User user = new User();
             user.setEmail(registrationInfo.getEmail());
@@ -86,7 +87,7 @@ public class AuthenticationController {
     @Path("/register/facebook")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response authenticateWithFb(FbRegistrationInfo fbRegistrationInfo) {
+    public Response authenticateWithFb(@Valid FbRegistrationInfo fbRegistrationInfo) {
         try {
             OAuthService fbService = new ServiceBuilder()
                     .apiKey(FB_API_ID)
@@ -107,7 +108,7 @@ public class AuthenticationController {
                 return registerWithFb(email, faceBookId, response);
             }
         } catch (Exception e) {
-           return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
@@ -126,7 +127,7 @@ public class AuthenticationController {
     }
 
     private Response loginWithFb(String facebookId) throws AuthenticationException {
-            return Response.ok().entity(authService.loginWithFacebook(facebookId)).build();
+        return Response.ok().entity(authService.loginWithFacebook(facebookId)).build();
     }
 
     private String resolveFbField(String field, String response) throws IOException {

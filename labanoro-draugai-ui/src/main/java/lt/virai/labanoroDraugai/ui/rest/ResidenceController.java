@@ -2,21 +2,24 @@ package lt.virai.labanoroDraugai.ui.rest;
 
 import lt.virai.labanoroDraugai.bl.services.ResidenceService;
 import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
-import lt.virai.labanoroDraugai.domain.entities.City;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
-import lt.virai.labanoroDraugai.ui.model.CityModel;
-import lt.virai.labanoroDraugai.ui.model.ModelState;
-import lt.virai.labanoroDraugai.ui.model.ResidenceModel;
+import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,15 +39,10 @@ public class ResidenceController {
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response save(ResidenceModel residenceModel) {
+    public Response save(@Valid ResidenceModel residenceModel) {
         try {
-            ModelState modelState = residenceModel.validate();
             if (residenceModel.getId() != null && residenceModel.getId() != 0)
-                // todo property names hardcodinimas
-                modelState.addError("id", "Cannot create residence which has id already set.");
-
-            if (modelState.hasErrors())
-                return modelState.buildBadResponse();
+                throw new IllegalStateException("Cannot create residence which has id already set.");
 
             Residence residence = residenceModel.mapTo();
             residenceService.create(residence);
@@ -60,17 +58,12 @@ public class ResidenceController {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(ResidenceModel residenceModel) {
+    public Response update(@Valid ResidenceModel residenceModel) {
         try {
-            ModelState modelState = residenceModel.validate();
             if (residenceModel.getId() == null || residenceModel.getId() == 0)
-                modelState.addError("id", "Cannot update residence when id is not set.");
+                throw new IllegalStateException("Cannot update residence when id is not set.");
 
-            if (modelState.hasErrors())
-                return modelState.buildBadResponse();
-
-            Residence residence = residenceModel.mapTo();
-            residenceDAO.update(residence);
+            residenceDAO.update(residenceModel.mapTo());
             return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
@@ -83,7 +76,7 @@ public class ResidenceController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            List<ResidenceModel> residences= residenceDAO.getAll()
+            List<ResidenceModel> residences = residenceDAO.getAll()
                     .stream().map(ResidenceModel::new).collect(Collectors.toList());
             return Response.ok(residences).build();
         } catch (Exception ex) {
@@ -95,7 +88,7 @@ public class ResidenceController {
     @GET
     @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id")Integer id) {
+    public Response get(@PathParam("id") @NotNull Integer id) {
         try {
             Residence residence = residenceDAO.get(id);
             ResidenceModel residenceModel = new ResidenceModel(residence);
@@ -109,22 +102,10 @@ public class ResidenceController {
     @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id")Integer id) {
-        ModelState modelState = new ModelState();
+    public Response delete(@PathParam("id") @NotNull Integer id) {
         try {
-            if(id == null){
-                modelState.addError("id", "Id not specified");
-                return modelState.buildBadResponse();
-            }
-            else {
-                Residence residence = residenceDAO.get(id);
-                if (residence == null)
-                    modelState.addError("", "Residence does not exist.");
-                if(modelState.hasErrors())
-                    return modelState.buildBadResponse();
-                residenceDAO.remove(residence);
-                return Response.ok().build();
-            }
+            residenceDAO.remove(id);
+            return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }

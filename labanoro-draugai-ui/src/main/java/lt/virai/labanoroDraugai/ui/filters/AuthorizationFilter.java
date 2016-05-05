@@ -47,7 +47,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
     }
 
-    private boolean checkRoles(String token, List<UserRole> userRoles){
+    private boolean checkRoles(String token, List<UserRole> userRoles) {
         return authService.hasRoles(token, userRoles);
     }
 

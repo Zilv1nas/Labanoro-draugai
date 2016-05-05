@@ -1,6 +1,14 @@
 package lt.virai.labanoroDraugai.domain.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +23,7 @@ public class Residence {
     private String address;
     private City city;
     private String image;
-/*    private Integer weeklyPrice;*/
+    private Integer weeklyPrice;
     private LocalDate availableFrom;
     private LocalDate availableUntil;
 
@@ -26,7 +34,7 @@ public class Residence {
         this.capacity = capacity;
         this.address = address;
         this.city = city;
-/*        this.weeklyPrice = weeklyPrice;*/
+        this.weeklyPrice = weeklyPrice;
         this.availableFrom = availableFrom;
     }
 
@@ -69,22 +77,6 @@ public class Residence {
         this.city = city;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Residence residence = (Residence) o;
-        return Objects.equals(id, residence.id) &&
-                Objects.equals(capacity, residence.capacity) &&
-                Objects.equals(address, residence.address) &&
-                Objects.equals(city, residence.city);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, capacity, address, city);
-    }
-
     @Lob
     @Column(name = "image")
     public String getImage() {
@@ -95,9 +87,8 @@ public class Residence {
         this.image = image;
     }
 
-/*
     @Basic
-    @Column(name = "address", nullable = false)
+    @Column(name = "weekly_price", nullable = false)
     public Integer getWeeklyPrice() {
         return weeklyPrice;
     }
@@ -105,7 +96,6 @@ public class Residence {
     public void setWeeklyPrice(Integer weeklyPrice) {
         this.weeklyPrice = weeklyPrice;
     }
-*/
 
     @Basic
     @Column(name = "available_from", nullable = false)
@@ -125,5 +115,25 @@ public class Residence {
 
     public void setAvailableUntil(LocalDate availableUntil) {
         this.availableUntil = availableUntil;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Residence residence = (Residence) o;
+        return Objects.equals(id, residence.id) &&
+                Objects.equals(capacity, residence.capacity) &&
+                Objects.equals(address, residence.address) &&
+                Objects.equals(city, residence.city) &&
+                Objects.equals(image, residence.image) &&
+                Objects.equals(weeklyPrice, residence.weeklyPrice) &&
+                Objects.equals(availableFrom, residence.availableFrom) &&
+                Objects.equals(availableUntil, residence.availableUntil);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, capacity, address, city, image, weeklyPrice, availableFrom, availableUntil);
     }
 }

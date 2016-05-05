@@ -1,4 +1,4 @@
-package lt.virai.labanoroDraugai.ui.model;
+package lt.virai.labanoroDraugai.ui.model.users;
 
 import lt.virai.labanoroDraugai.domain.entities.User;
 
