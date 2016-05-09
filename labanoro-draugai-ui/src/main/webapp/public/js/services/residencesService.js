@@ -2,8 +2,11 @@ app.service('residencesService', ['$http', function ($http) {
     var baseUrl = 'rest/';
 
     this.getAllResidences = function() {
-        var url = "rest/residences/GetAll";
-        return $http.GET(url);
+        return $http.get(baseUrl + "residences/getAll");
+    }
+    
+    this.createService = function(residence) {
+        return $http.post(baseUrl + "residences/create", residence);
     }
     
 }]);

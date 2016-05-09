@@ -2,7 +2,7 @@
  * Created by Žilvinas on 2016-03-11.
  */
 $.material.init();
-var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'smart-table']);
+var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap']);
 
 app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', '$authProvider', 'cfpLoadingBarProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider) {
@@ -39,6 +39,11 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 url: "/residencesList",
                 controller: 'residencesListController',
                 templateUrl: 'partials/residencesListView.html'
+            })
+            .state('createResidence', {
+                url: "/createResidence",
+                controller: 'createResidenceController',
+                templateUrl: 'partials/admin/createResidenceView.html'
             });
 
         $locationProvider.html5Mode({

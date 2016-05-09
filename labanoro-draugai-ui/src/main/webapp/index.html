@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="public/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="public/bower_components/angular-loading-bar/build/loading-bar.min.css">
@@ -28,10 +29,17 @@
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul ng-cloak class="nav navbar-nav">
-                    <li ng-show="isAdmin()"><a ui-sref="membersList">Members</a></li>
+                    <li ng-show="isMember()"><a ui-sref="membersList">Members</a></li>
                     <li ng-show="isMember()"><a ui-sref="residencesList">Residences</a></li>
                 </ul>
                 <ul ng-cloak class="nav navbar-nav navbar-right">
+                    <li ng-show="isAdmin" class="dropdown">
+                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="createResidence">Residences</a></li>
+                            <li><a ui-sref="createResidence">Create residence</a></li>
+                        </ul>
+                    </li>
                     <li ng-show="isAuthenticated"><a ui-sref="profile">{{userName}}</a></li>
                     <li ng-show="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
                     <li ng-show="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
@@ -54,6 +62,8 @@
     <script src="public/bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
     <script src="public/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="public/bower_components/satellizer/satellizer.min.js"></script>
+    <script src="public/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
     <!--App dependencies-->
     <script src="public/js/app.js"></script>
@@ -65,6 +75,9 @@
     <script src="public/js/controllers/membersListController.js"></script>
     <script src="public/js/controllers/profileController.js"></script>
     <script src="public/js/controllers/navigationController.js"></script>
+    <script src="public/js/controllers/admin/createResidenceController.js"></script>
+    <script src="public/js/controllers/admin/editResidenceController.js"></script>
+    <script src="public/js/controllers/admin/residencesListController.js"></script>
     <!--Services-->
     <script src="public/js/services/authService.js"></script>
     <script src="public/js/services/membersService.js"></script>
