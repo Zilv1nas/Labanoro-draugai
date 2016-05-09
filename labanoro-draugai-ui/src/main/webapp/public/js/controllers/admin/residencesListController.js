@@ -1,4 +1,4 @@
-app.controller('residencesListControllers', ['$scope', 'residencesService', function ($scope, residencesService) {
+app.controller('adminResidencesListController', ['$scope', 'residencesService', function ($scope, residencesService) {
 
     $scope.create = function () {
         residencesService.createService()
@@ -10,6 +10,5 @@ app.controller('residencesListControllers', ['$scope', 'residencesService', func
                 alert("Couldn't log in" + response.data);
             })
     }
-
 
 }]);

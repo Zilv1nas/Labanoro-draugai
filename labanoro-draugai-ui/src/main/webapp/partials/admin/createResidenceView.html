@@ -4,6 +4,17 @@
             <fieldset>
                 <h2>Sukurti rezidenciją</h2>
                 <div class="form-group">
+                    <label class="col-md-2 control-label">Nuotrauka</label>
+                    <div class="col-md-9">
+                        <input role="button" type="file" fileread="residence.image">
+                        <input type="text" class="form-control" placeholder="Pasirinkite nuotrauką...">
+                        </input>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-offset-2">
+                    <img width="400" class="img-responsive" ng-src="{{residence.image}}">
+                </div>
+                <div class="form-group">
                     <label class="col-md-2 control-label">Pavadinimas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.name" class="form-control" placeholder="Pavadinimas">
@@ -12,13 +23,19 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Kaina dienai €</label>
                     <div class="col-md-9">
-                        <input type="number" ng-model="residence.price" class="form-control" placeholder="Kaina dienai">
+                        <input type="number" ng-model="residence.dailyPrice" class="form-control" placeholder="Kaina dienai">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Vietų sk.</label>
                     <div class="col-md-9">
-                        <input type="number" ng-model="residence.total" class="form-control" placeholder="Maksimalus vietų skaičius">
+                        <input type="number" ng-model="residence.capacity" class="form-control" placeholder="Maksimalus vietų skaičius">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Adresas</label>
+                    <div class="col-md-9">
+                        <input ng-model="residence.address" class="form-control" placeholder="Vietovės adresas">
                     </div>
                 </div>
                 <div class="form-group">
@@ -31,7 +48,8 @@
                     <label class="col-md-2 control-label">Galioja nuo</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.sinceDate" is-open="popup1.opened" />
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateFrom" is-open="popup1.opened"
+                            />
                             <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -42,7 +60,8 @@
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.untilDate" is-open="popup2.opened" />
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateTo" is-open="popup2.opened"
+                            />
                             <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
@@ -58,11 +77,6 @@
             <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
           </span>
                         </p>
-                    </div>
-                </div>
-                <div ng-if="services.length > 0" class="form-group">
-                    <label class="col-md-2 control-label">Pridėtos paslaugos</label>
-                    <div class="col-md-9">
                         <span style="margin-right: 10px" ng-repeat="(key, service) in services">
                           <span>{{service}}</span>
                         <i role="button" style="color: #009688" ng-click="removeService(key)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>

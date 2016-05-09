@@ -11,5 +11,4 @@ app.controller('editResidenceController', ['$scope', 'residencesService', functi
             })
     }
 
-
 }]);

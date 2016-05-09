@@ -41,9 +41,19 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: 'partials/residencesListView.html'
             })
             .state('createResidence', {
-                url: "/createResidence",
+                url: "/admin/createResidence",
                 controller: 'createResidenceController',
                 templateUrl: 'partials/admin/createResidenceView.html'
+            })
+            .state('editResidence', {
+                url: "/admin/editResidence",
+                controller: 'editResidenceController',
+                templateUrl: 'partials/admin/editResidenceView.html'
+            })
+            .state('adminResidencesList', {
+                url: "/residencesLists",
+                controller: 'adminResidencesListController',
+                templateUrl: 'partials/admin/residencesListView.html'
             });
 
         $locationProvider.html5Mode({
@@ -54,7 +64,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
         $authProvider.loginUrl = 'rest/login';
         $authProvider.signupUrl = 'rest/register';
         $authProvider.baseUrl = $('base').attr('href');
-        $authProvider.tokenPrefix='labanoro_draugai';
+        $authProvider.tokenPrefix = 'labanoro_draugai';
         $authProvider.facebook({
             clientId: '1538319626473322',
             url: 'rest/register/facebook'

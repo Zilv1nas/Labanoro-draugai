@@ -14,13 +14,15 @@ app.controller('createResidenceController', ['$scope', 'residencesService', func
                 alert("Couldn't log in" + response.data);
             })
     }
-    
-    $scope.createService = function() {
-        $scope.services.push($scope.service);
-        $scope.service = '';
+
+    $scope.createService = function () {
+        if (($scope.service !== '') && (angular.isDefined($scope.service))) {
+            $scope.services.push($scope.service);
+            $scope.service = '';
+        }
     }
-    
-    $scope.removeService = function(key) {
+
+    $scope.removeService = function (key) {
         $scope.services.splice(key, 1);
     }
 
@@ -44,6 +46,23 @@ app.controller('createResidenceController', ['$scope', 'residencesService', func
         opened: false
     };
 
+}]);
 
-
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
 }]);
