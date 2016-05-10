@@ -3,7 +3,7 @@ app.service('residencesService', ['$http', function ($http) {
 
     this.getAllResidences = function() {
         return $http.get(baseUrl + "residences/getAll");
-    }
+    };
     
     this.createService = function(residence) {
         return $http.post(baseUrl + "residences/create", residence);

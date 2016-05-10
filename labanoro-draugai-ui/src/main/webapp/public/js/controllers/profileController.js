@@ -1,11 +1,37 @@
-app.controller('profileController', ['$scope', "authService", function ($scope, authService) {
-    
-    //TODO fetch full info
-    var authData = authService.getAuthData();
-    $scope.user = {
-        name: authData.name,
-        surname: authData.surname,
-        email: authData.email
+app.controller('profileController', ['$scope', '$uibModal', 'membersService', 'transactionService', function ($scope, $uibModal, membersService, transactionService) {
+
+    membersService.getCurrentUserProfile().then(function (response) {
+        $scope.user = response.data;
+    }).catch(function (response) {
+        //TODO
+    });
+
+    $scope.openModal = function () {
+
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'partials/modals/addPointsModal.html',
+            controller: 'addPointsController',
+            size: 'md'
+        });
+
+        modalInstance.result.then(function (points) {
+            transactionService.createPurchase(points).then(function (response) {
+                //TODO 
+            }).catch(function (response) {
+                //TODO
+            })
+        });
     }
+}]);
+
+app.controller('addPointsController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.points);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 }]);
 

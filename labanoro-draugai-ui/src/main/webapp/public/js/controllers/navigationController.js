@@ -25,7 +25,7 @@ app.controller('navigationController', ['$scope', '$state', 'authService', funct
     
     $scope.isMember = function () {
         return authService.isMember() || authService.isAdmin();
-    }
+    };
     
     $scope.isNotCandidate = function() {
         return !authService.isCandidate();

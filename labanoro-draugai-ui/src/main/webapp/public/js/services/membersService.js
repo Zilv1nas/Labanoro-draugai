@@ -12,6 +12,10 @@ app.service('membersService', ['$http', function ($http) {
     
     this.invite = function (invitationInfo) {
         return $http.post(baseUrl + "invite", invitationInfo);
+    };
+    
+    this.getCurrentUserProfile = function () {
+        return $http.get(baseUrl + "getProfile");
     }
     
 }]);

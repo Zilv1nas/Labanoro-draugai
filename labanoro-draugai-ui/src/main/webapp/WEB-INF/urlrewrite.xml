@@ -10,8 +10,8 @@
         <condition type="request-uri" operator="notequal">^.*/rest/(.*)$</condition>
         <condition type="request-uri" operator="notequal">^.*/public/(.*)$</condition>
         <condition type="request-uri" operator="notequal">^.*/partials/(.*)$</condition>
-        <from>^/(.*)$</from>
-        <to type="forward">index.html</to>
+        <from>^(.*)$</from>
+        <to type="forward">/index.html</to>
     </rule>
 
 </urlrewrite>

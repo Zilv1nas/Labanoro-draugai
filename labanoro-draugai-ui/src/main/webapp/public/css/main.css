@@ -75,3 +75,7 @@
 .user-list table > tbody > tr >td {
     vertical-align: middle;
 }
+
+.form-group {
+    position: initial;
+}

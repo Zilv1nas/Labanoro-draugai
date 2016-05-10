@@ -11,8 +11,11 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Optional;
 
 /**
  * Created by Žilvinas on 2016-04-16.
@@ -29,9 +32,37 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String token = AuthUtils.extractToken(requestContext.getHeaderString(HttpHeaders.AUTHORIZATION));
-
-        if (token == null || !authService.isAuthorized(token)) {
+        Optional<String> userId = authService.getUserId(token);
+        if (!userId.isPresent()) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+        } else {
+            overrideSecurityFilter(requestContext, userId.get());
         }
+    }
+
+    private void overrideSecurityFilter(ContainerRequestContext requestContext, String userId) {
+        requestContext.setSecurityContext(new SecurityContext() {
+
+            @Override
+            public Principal getUserPrincipal() {
+                return () -> userId;
+            }
+
+            @Override
+            public boolean isUserInRole(String role) {
+                return true;
+            }
+
+            @Override
+            public boolean isSecure() {
+                return false;
+            }
+
+            @Override
+            public String getAuthenticationScheme() {
+                return null;
+            }
+
+        });
     }
 }

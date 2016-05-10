@@ -30,9 +30,9 @@ import java.util.stream.Collectors;
 @Path("/residence")
 public class ResidenceController {
     @Inject
-    ResidenceService residenceService;
+    private ResidenceService residenceService;
     @Inject
-    ResidenceDAO residenceDAO;
+    private ResidenceDAO residenceDAO;
 
     @Secured({UserRole.ADMIN})
     @POST

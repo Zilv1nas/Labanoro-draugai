@@ -65,12 +65,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean isAuthorized(String token) {
+    public Optional<String> getUserId(String token) {
         try {
-            Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token);
-            return true;
+            String userId = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody().getSubject();
+            return Optional.of(userId);
         } catch (SignatureException e) {
-            return false;
+            return Optional.empty();
         }
     }
 
@@ -132,14 +132,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean isAlreadyRegistered(String email) {
         return userDAO.getByUsername(email) != null;
-    }
-
-    @Override
-    public User getUser(String token) {
-        Objects.requireNonNull(token);
-        Integer userId = Integer.parseInt(Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody().getSubject());
-
-        return userDAO.get(userId);
     }
 
     private String issueToken(User user) {
