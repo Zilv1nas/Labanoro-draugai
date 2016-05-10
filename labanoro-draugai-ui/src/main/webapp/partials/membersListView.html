@@ -33,7 +33,7 @@
                     <td>{{member.name + ' ' + member.surname}}</td>
                     <td>{{member.email}}</td>
                     <td>{{member.registrationDate | date}}</td>
-                    <td>{{member.role}}</td>
+                    <td>{{member.role | rolesFilter}}</td>
                     <td>
                         <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE'"
                                 class="btn btn-success btn-raised">Patvirtinti

@@ -2,7 +2,18 @@
     <div class="well col-md-8 col-md-offset-2">
         <form class="form-horizontal">
             <fieldset>
-                <h2>Sukurti rezidenciją</h2>
+                <h2>Redaguoti rezidenciją</h2>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Nuotrauka</label>
+                    <div class="col-md-9">
+                        <input role="button" type="file" fileread="residence.image">
+                        <input type="text" class="form-control" placeholder="Pasirinkite nuotrauką...">
+                        </input>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-offset-2">
+                    <img width="400" class="img-responsive" ng-src="{{residence.image}}">
+                </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Pavadinimas</label>
                     <div class="col-md-9">
@@ -12,7 +23,19 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Kaina dienai €</label>
                     <div class="col-md-9">
-                        <input type="number" ng-model="residence.price" class="form-control" placeholder="Kaina dienai">
+                        <input type="number" ng-model="residence.dailyPrice" class="form-control" placeholder="Kaina dienai">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Vietų sk.</label>
+                    <div class="col-md-9">
+                        <input type="number" ng-model="residence.capacity" class="form-control" placeholder="Maksimalus vietų skaičius">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Adresas</label>
+                    <div class="col-md-9">
+                        <input ng-model="residence.address" class="form-control" placeholder="Vietovės adresas">
                     </div>
                 </div>
                 <div class="form-group">
@@ -22,8 +45,47 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-md-2 control-label">Galioja nuo</label>
+                    <div class="col-md-9">
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateFrom" is-open="popup1.opened"
+                            />
+                            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Galioja iki</label>
+                    <div class="col-md-9">
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateTo" is-open="popup2.opened"
+                            />
+                            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Papildomos paslaugos</label>
+                    <div class="col-md-9">
+                        <p class="input-group">
+                            <input type="text" class="form-control" placeholder="Papildoma paslauga" ng-model="service" />
+                            <span class="input-group-btn">
+            <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
+          </span>
+                        </p>
+                        <span style="margin-right: 10px" ng-repeat="service in services track by $index">
+                          <span>{{service}}</span>
+                        <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="login-form-buttons">
-                        <button ng-click="create()" class="btn btn-primary">Sukurti</button>
+                        <button ng-click="update()" class="btn btn-primary">Redaguoti</button>
                     </div>
                 </div>
             </fieldset>

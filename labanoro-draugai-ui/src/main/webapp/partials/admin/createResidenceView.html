@@ -77,9 +77,9 @@
             <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
           </span>
                         </p>
-                        <span style="margin-right: 10px" ng-repeat="(key, service) in services">
+                        <span style="margin-right: 10px" ng-repeat="service in services track by $index">
                           <span>{{service}}</span>
-                        <i role="button" style="color: #009688" ng-click="removeService(key)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
+                        <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
                         </span>
                     </div>
                 </div>

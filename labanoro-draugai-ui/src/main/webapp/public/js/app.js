@@ -28,7 +28,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('membersList', {
                 url: "/membersList",
                 controller: 'membersListController',
-                templateUrl: 'partials/membersListView.html'
+                templateUrl: 'partials/membersListView.html',
+                resolve: {
+                    members: function (membersService) {
+                        return membersService.getAllMembers();
+                    }
+                }
             })
             .state('profile', {
                 url: "/profile",
@@ -38,7 +43,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('residencesList', {
                 url: "/residencesList",
                 controller: 'residencesListController',
-                templateUrl: 'partials/residencesListView.html'
+                templateUrl: 'partials/residencesListView.html',
+                // resolve: {
+                //     residences: function (residencesService) {
+                //         return residencesService.getAllResidences();
+                //     }
+                // }
             })
             .state('createResidence', {
                 url: "/admin/createResidence",
@@ -48,12 +58,27 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('editResidence', {
                 url: "/admin/editResidence",
                 controller: 'editResidenceController',
-                templateUrl: 'partials/admin/editResidenceView.html'
+                templateUrl: 'partials/admin/editResidenceView.html',
+                // resolve: {
+                //     residence: function (residencesService, $stateParams) {
+                //         return residencesService.getResidence($stateParams.id);
+                //     }
+                // }
             })
             .state('adminResidencesList', {
-                url: "/residencesLists",
+                url: "/admin/residencesLists",
                 controller: 'adminResidencesListController',
                 templateUrl: 'partials/admin/residencesListView.html'
+            })
+            .state('adminMembersList', {
+                url: "/admin/membersList",
+                controller: 'adminMembersListController',
+                templateUrl: 'partials/admin/membersListView.html',
+                resolve: {
+                    members: function (membersService) {
+                        return membersService.getAllMembers();
+                    }
+                }
             });
 
         $locationProvider.html5Mode({

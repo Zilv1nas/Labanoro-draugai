@@ -1,17 +1,16 @@
 app.controller('createResidenceController', ['$scope', 'residencesService', function ($scope, residencesService) {
-
+    $scope.residence = {};
     $scope.service = '';
     $scope.services = [];
 
     $scope.create = function () {
-        console.log('aha');
-        residencesService.createService()
+        $scope.residence.services = $scope.services;
+        residencesService.createResidence($scope.residence)
             .then(function (response) {
-                authService.setAuthData(response.data);
                 $state.go('main');
             }).catch(function (response) {
                 //TODO error handling
-                alert("Couldn't log in" + response.data);
+                alert("Couldn't create residence" + response.data);
             })
     }
 
