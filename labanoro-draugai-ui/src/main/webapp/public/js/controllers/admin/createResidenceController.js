@@ -12,18 +12,18 @@ app.controller('createResidenceController', ['$scope', 'residencesService', func
                 //TODO error handling
                 alert("Couldn't create residence" + response.data);
             })
-    }
+    };
 
     $scope.createService = function () {
         if (($scope.service !== '') && (angular.isDefined($scope.service))) {
             $scope.services.push($scope.service);
             $scope.service = '';
         }
-    }
+    };
 
     $scope.removeService = function (key) {
         $scope.services.splice(key, 1);
-    }
+    };
 
     $scope.clear = function () {
         $scope.dt = null;
@@ -59,7 +59,7 @@ app.directive("fileread", [function () {
                     scope.$apply(function () {
                         scope.fileread = loadEvent.target.result;
                     });
-                }
+                };
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
         }

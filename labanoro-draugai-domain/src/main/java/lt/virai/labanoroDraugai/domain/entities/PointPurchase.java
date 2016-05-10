@@ -5,6 +5,8 @@ import lt.virai.labanoroDraugai.domain.model.PurchaseStatus;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,14 @@ public class PointPurchase {
     private Integer amount;
     private User user;
     private PurchaseStatus status = PurchaseStatus.PENDING;
+
+    public PointPurchase(User user, Integer amount) {
+        this.user = user;
+        this.amount = amount;
+    }
+
+    public PointPurchase() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +76,7 @@ public class PointPurchase {
     }
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     public PurchaseStatus getStatus() {
         return status;

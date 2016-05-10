@@ -34,6 +34,19 @@ public class UserController {
     @Inject
     private EmailService emailService;
 
+    @Secured
+    @POST
+    @Path("/updateProfile")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProfile(@Valid UserModel userModel) {
+        try {
+            userService.updateUserProfile(userModel.mapTo());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @Secured({UserRole.ADMIN})
     @GET
     @Path("/getAll")
@@ -79,6 +92,5 @@ public class UserController {
         } catch (NumberFormatException | IllegalStateException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
     }
 }

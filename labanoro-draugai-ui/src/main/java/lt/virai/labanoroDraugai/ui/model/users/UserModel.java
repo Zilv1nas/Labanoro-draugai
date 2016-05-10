@@ -1,21 +1,32 @@
 package lt.virai.labanoroDraugai.ui.model.users;
 
 import lt.virai.labanoroDraugai.domain.entities.User;
+import lt.virai.labanoroDraugai.domain.model.UserRole;
+import lt.virai.labanoroDraugai.ui.model.MappableTo;
+import lt.virai.labanoroDraugai.ui.util.ValidationUtils;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
  * Created by Žilvinas on 2016-04-21.
  */
-public class UserModel {
+public class UserModel implements MappableTo<User> {
+    @NotNull(message = "User id is required")
     private Integer id;
 
+    @Email(regexp = ValidationUtils.EMAIL_REGEX)
     private String email;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String surname;
 
+    @NotNull
     private LocalDate registrationDate;
 
     private String role;
@@ -89,5 +100,19 @@ public class UserModel {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public User mapTo() {
+        User user = new User();
+        user.setId(id);
+        user.setEmail(email);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setBalance(balance);
+        user.setRole(UserRole.valueOf(role));
+        user.setRegistrationDate(registrationDate);
+
+        return user;
     }
 }
