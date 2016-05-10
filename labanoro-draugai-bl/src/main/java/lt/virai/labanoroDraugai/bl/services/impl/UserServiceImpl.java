@@ -53,4 +53,16 @@ public class UserServiceImpl implements UserService {
             }
         });
     }
+
+    @Override
+    public void updateUserProfile(User user) {
+        Objects.requireNonNull(user);
+
+        Optional<User> persistenUser = Optional.ofNullable(userDAO.get(user.getId()));
+        persistenUser.ifPresent(u -> {
+            u.setEmail(user.getEmail());
+            u.setSurname(user.getSurname());
+            u.setName(user.getName());
+        });
+    }
 }

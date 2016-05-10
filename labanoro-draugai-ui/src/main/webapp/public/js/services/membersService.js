@@ -5,6 +5,10 @@ app.service('membersService', ['$http', function ($http) {
     this.getAllMembers = function() {
         return $http.get(baseUrl + 'getAll');
     };
+
+    this.updateUserProfile = function(user) {
+        return $http.post(baseUrl + 'updateProfile', user);
+    };
     
     this.verifyUser = function (userId) {
       return $http.post(baseUrl + "verify", userId);  

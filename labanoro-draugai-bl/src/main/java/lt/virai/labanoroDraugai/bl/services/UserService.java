@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getAll();
 
     void verifyUser(int userId);
+
+    void updateUserProfile(User user);
 }

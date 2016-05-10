@@ -22,6 +22,14 @@ app.controller('profileController', ['$scope', '$uibModal', 'membersService', 't
                 //TODO
             })
         });
+    };
+
+    $scope.update = function () {
+        membersService.updateUserProfile($scope.user).then(function (response) {
+            //TODO
+        }).catch(function (response) {
+            //TODO
+        });
     }
 }]);
 
