@@ -23,12 +23,18 @@ public class TransactionServiceImpl implements TransactionService {
     private PointPurchaseDAO pointPurchaseDAO;
 
     @Override
-    public void createPurchase(Integer userId, Integer amount) {
+    public PointPurchase createPurchase(Integer userId, Integer amount) {
         Objects.requireNonNull(userId);
         Objects.requireNonNull(amount);
 
         Optional<User> user = Optional.ofNullable(userDAO.get(userId));
-        user.ifPresent(u -> pointPurchaseDAO.save(new PointPurchase(u, amount)));
+        if (user.isPresent()) {
+            PointPurchase pp = new PointPurchase(user.get(), amount);
+            pointPurchaseDAO.save(pp);
+            return pp;
+        } else {
+            return null;
+        }
     }
 
     @Override

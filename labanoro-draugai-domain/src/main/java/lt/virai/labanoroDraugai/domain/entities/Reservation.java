@@ -7,10 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created by Mantas on 4/30/2016.
@@ -24,6 +28,7 @@ public class Reservation {
     private Residence residence;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Set<ExtraService> selectedExtraServices = new HashSet<>();
 
     public Reservation(User user, Residence residence, LocalDate dateFrom, LocalDate dateTo) {
         this.user = user;
@@ -83,6 +88,18 @@ public class Reservation {
 
     public void setDateTo(LocalDate dateTo) {
         this.dateTo = dateTo;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "reservation_extra_service",
+            joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "extra_service_id", referencedColumnName = "id"))
+    public Set<ExtraService> getSelectedExtraServices() {
+        return selectedExtraServices;
+    }
+
+    public void setSelectedExtraServices(Set<ExtraService> selectedExtraServices) {
+        this.selectedExtraServices = selectedExtraServices;
     }
 
     @Override

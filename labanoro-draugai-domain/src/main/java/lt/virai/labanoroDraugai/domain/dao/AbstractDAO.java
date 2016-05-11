@@ -37,8 +37,9 @@ public abstract class AbstractDAO<T> implements DAO<T> {
         return entityManager.find(classType, Objects.requireNonNull(id));
     }
 
-    public void save(T entity) {
+    public T save(T entity) {
         entityManager.persist(Objects.requireNonNull(entity));
+        return entity;
     }
 
     public void update(T entity) {

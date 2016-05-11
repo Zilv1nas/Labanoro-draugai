@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
     User get(Integer id);
 
-    void save(User user);
+    User save(User user);
 
     void update(User user);
 

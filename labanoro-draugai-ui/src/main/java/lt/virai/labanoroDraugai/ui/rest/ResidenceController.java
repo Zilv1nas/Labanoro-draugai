@@ -44,10 +44,7 @@ public class ResidenceController {
             if (residenceModel.getId() != null && residenceModel.getId() != 0)
                 throw new IllegalStateException("Cannot create residence which has id already set.");
 
-            Residence residence = residenceModel.mapTo();
-            residenceService.create(residence);
-            //todo fix pathing (war name and prefix 'rest' lost)
-            return Response.created(UriBuilder.fromResource(ResidenceController.class).path("/get/{id}").build(residence.getId().toString())).entity(residence).build();
+            return Response.ok(residenceService.create(residenceModel.mapTo())).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }

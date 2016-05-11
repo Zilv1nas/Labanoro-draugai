@@ -8,7 +8,7 @@ import java.util.List;
 public interface DAO<T> {
     T get(Integer id);
 
-    void save(T entity);
+    T save(T entity);
 
     void update(T entity);
 

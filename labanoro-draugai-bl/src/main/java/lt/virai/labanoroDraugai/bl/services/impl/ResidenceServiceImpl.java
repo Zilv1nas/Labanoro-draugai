@@ -13,10 +13,10 @@ import javax.inject.Inject;
 @Stateless
 public class ResidenceServiceImpl implements ResidenceService {
     @Inject
-    ResidenceDAO residenceDAO;
+    private ResidenceDAO residenceDAO;
 
     @Override
-    public void create(Residence residence) {
-        residenceDAO.save(residence);
+    public Residence create(Residence residence) {
+        return residenceDAO.save(residence);
     }
 }

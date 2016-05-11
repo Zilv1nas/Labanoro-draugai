@@ -1,15 +1,21 @@
 package lt.virai.labanoroDraugai.ui.model.purchases;
 
 import lt.virai.labanoroDraugai.domain.entities.PointPurchase;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
+
+import static lt.virai.labanoroDraugai.ui.util.ValidationUtils.EMAIL_REGEX;
 
 /**
  * Created by Žilvinas on 2016-05-10.
  */
 public class PointPurchaseModel {
     private Integer id;
+    @Email(regexp = EMAIL_REGEX)
     private String username;
+    @Range(min = 0)
     private Integer amount;
     private LocalDateTime purchaseDate;
     private String status;
