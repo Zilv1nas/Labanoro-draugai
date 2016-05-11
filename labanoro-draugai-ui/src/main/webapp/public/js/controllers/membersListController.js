@@ -1,9 +1,11 @@
-app.controller('membersListController', ['$scope', '$state', 'authService', 'membersService', function ($scope, $state, authService, membersService) {
-    membersService.getAllMembers().then(function (response) {
-        $scope.members = response.data;
-    }).catch(function (response) {
-        //TODO
-    });
+app.controller('membersListController', ['$scope', '$state', 'authService', 'membersService', 'members', function ($scope, $state, authService, membersService, members) {
+
+    $scope.members = members;
+    // membersService.getAllMembers().then(function (response) {
+    //     $scope.members = response.data;
+    // }).catch(function (response) {
+    //     //TODO
+    // });
 
     $scope.verifyUser = function (userId) {
         membersService.verifyUser(userId).then(function (response) {

@@ -1,6 +1,5 @@
 <div class="col-md-12">
     <div class="well">
-        
         <h2>Rezidencijų administravimas</h2>
         <div class="row">
             <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
@@ -25,18 +24,20 @@
                         <th>Dienos kaina</th>
                         <th>Maks. vietų</th>
                         <th>Adresas</th>
-                        <th>Actions</th>
+                        <th >Actions</th>
                     </tr>
                 </thead>
                 <tbody ng-cloak>
-                    <tr ng-repeat="member in members">
-                        <td>{{member.id}}</td>
-                        <td>{{member.name + ' ' + member.surname}}</td>
-                        <td>{{member.email}}</td>
-                        <td>{{member.registrationDate | date}}</td>
-                        <td>{{member.role}}</td>
+                    <tr ng-repeat="residence in residences">
+                        <td>{{residence.id}}</td>
+                        <td>{{residence.name}}</td>
+                        <td>{{residence.dailyPrice}}</td>
+                        <td>{{residence.capacity}}</td>
+                        <td>{{residence.address}}</td>
                         <td>
-                            <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE'" class="btn btn-success btn-raised">Patvirtinti
+                            <button ng-click="updateResidence(residence.id)" class="btn btn-success btn-raised">Redaguoti
+                        </button>
+                            <button ng-click="deleteResidence(residence.id)" class="btn btn-danger btn-raised">Ištrinti
                         </button>
                         </td>
                     </tr>

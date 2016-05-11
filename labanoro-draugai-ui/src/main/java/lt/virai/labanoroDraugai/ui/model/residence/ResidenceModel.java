@@ -1,6 +1,5 @@
 package lt.virai.labanoroDraugai.ui.model.residence;
 
-import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.ui.model.MappableTo;
 import org.hibernate.validator.constraints.NotEmpty;

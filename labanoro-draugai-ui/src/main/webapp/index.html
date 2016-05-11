@@ -33,11 +33,13 @@
                     <li ng-show="isMember()"><a ui-sref="residencesList">Residences</a></li>
                 </ul>
                 <ul ng-cloak class="nav navbar-nav navbar-right">
-                    <li ng-show="isAdmin" class="dropdown">
+                    <li ng-show="isAdmin()" class="dropdown">
                         <a role="button" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a ui-sref="adminResidencesList">Residences</a></li>
                             <li><a ui-sref="createResidence">Create residence</a></li>
+                            <li><a ui-sref="editResidence">Edit residence</a></li>
+                            <li><a ui-sref="adminMembersList">Members</a></li>
                         </ul>
                     </li>
                     <li ng-show="isAuthenticated"><a ui-sref="profile">{{userName}}</a></li>
@@ -78,11 +80,14 @@
     <script src="public/js/controllers/admin/createResidenceController.js"></script>
     <script src="public/js/controllers/admin/editResidenceController.js"></script>
     <script src="public/js/controllers/admin/residencesListController.js"></script>
+    <script src="public/js/controllers/admin/membersListController.js"></script>
     <!--Services-->
     <script src="public/js/services/authService.js"></script>
     <script src="public/js/services/membersService.js"></script>
     <script src="public/js/services/residencesService.js"></script>
     <script src="public/js/services/transactionService.js"></script>
+    <!--Filters-->
+    <script src="public/js/filters/rolesFilter.js"></script>
 </body>
 
 </html>
