@@ -2,7 +2,7 @@ app.service('residencesService', ['$http', function ($http) {
     var baseUrl = 'rest/residence/';
 
     this.getAllResidences = function () {
-        return $http.get(baseUrl + "residences/getAll")
+        return $http.get(baseUrl + "getall")
             .then(function (result) {
                 return result.data;
             }).catch(function (response) {
