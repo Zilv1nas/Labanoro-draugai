@@ -55,7 +55,6 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: 'partials/residencesListView.html',
                 resolve: {
                      residences: function (residencesService) {
-                         console.log(residencesService.getAllResidences());
                          return residencesService.getAllResidences();
                      }
                  }
@@ -78,7 +77,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('adminResidencesList', {
                 url: "/admin/residencesLists",
                 controller: 'adminResidencesListController',
-                templateUrl: 'partials/admin/residencesListView.html'
+                templateUrl: 'partials/admin/residencesListView.html',
+                resolve: {
+                    residences: function (residencesService) {
+                        return residencesService.getAllResidences();
+                    }
+                }
             })
             .state('adminMembersList', {
                 url: "/admin/membersList",

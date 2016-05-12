@@ -1,4 +1,7 @@
-app.controller('adminResidencesListController', ['$scope', 'residencesService', function ($scope, residencesService) {
+app.controller('adminResidencesListController', ['$scope', 'residencesService', 'authService', 'residences',
+    function ($scope, residencesService, authService, residences) {
+
+    $scope.residences = residences;
 
     $scope.create = function () {
         residencesService.createService()
