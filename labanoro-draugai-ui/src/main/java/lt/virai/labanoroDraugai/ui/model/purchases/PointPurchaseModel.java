@@ -13,6 +13,8 @@ import static lt.virai.labanoroDraugai.ui.util.ValidationUtils.EMAIL_REGEX;
  */
 public class PointPurchaseModel {
     private Integer id;
+    private String name;
+    private String surname;
     @Email(regexp = EMAIL_REGEX)
     private String username;
     @Range(min = 0)
@@ -23,8 +25,10 @@ public class PointPurchaseModel {
     public PointPurchaseModel() {
     }
 
-    public PointPurchaseModel(Integer id, String username, Integer amount, LocalDateTime purchaseDate, String status) {
+    public PointPurchaseModel(Integer id, String name, String surname, String username, Integer amount, LocalDateTime purchaseDate, String status) {
         this.id = id;
+        this.name = name;
+        this.surname = surname;
         this.username = username;
         this.amount = amount;
         this.purchaseDate = purchaseDate;
@@ -33,10 +37,36 @@ public class PointPurchaseModel {
 
     public PointPurchaseModel(PointPurchase pp) {
         this.id = pp.getId();
+        this.name = pp.getUser().getName();
+        this.surname = pp.getUser().getSurname();
         this.username = pp.getUser().getEmail();
         this.amount = pp.getAmount();
         this.status = pp.getStatus().name();
         this.purchaseDate = pp.getPurchaseDate();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getUsername() {

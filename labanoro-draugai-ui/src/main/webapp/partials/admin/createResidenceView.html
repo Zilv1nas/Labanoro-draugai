@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">Kaina dienai €</label>
+                    <label class="col-md-2 control-label">Kaina dienai taškais</label>
                     <div class="col-md-9">
                         <input type="number" ng-model="residence.dailyPrice" class="form-control" placeholder="Kaina dienai">
                     </div>
@@ -48,7 +48,7 @@
                     <label class="col-md-2 control-label">Galioja nuo</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateFrom" is-open="popup1.opened"
+                            <input type="text" ng-required="true" class="form-control" uib-datepicker-popup ng-model="dateFrom" is-open="popup1.opened"
                             />
                             <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -60,7 +60,7 @@
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateTo" is-open="popup2.opened"
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="dateTo" is-open="popup2.opened"
                             />
                             <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -71,16 +71,23 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Papildomos paslaugos</label>
                     <div class="col-md-9">
+                        <input type="text" class="form-control" placeholder="Papildomos paslaugos pavadinimas" ng-model="name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Papildomos paslaugos kaina</label>
+                    <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" class="form-control" placeholder="Papildoma paslauga" ng-model="service" />
+                            <input type="number" class="form-control" placeholder="Papildomos paslaugos kaina" ng-model="price" />
                             <span class="input-group-btn">
             <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
           </span>
-                        </p>
-                        <span style="margin-right: 10px" ng-repeat="service in services track by $index">
-                          <span>{{service}}</span>
-                        <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
-                        </span>
+          </p>
+                            <span style="margin-right: 10px" ng-repeat="service in services track by $index">
+                          <span>{{service.name}}, {{service.price}} tšk.</span>
+                            <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
+                            </span>
+
                     </div>
                 </div>
                 <div class="form-group">

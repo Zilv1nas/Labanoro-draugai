@@ -1,4 +1,4 @@
-app.controller('profileController', ['$scope', '$uibModal', 'membersService', 'transactionService', function ($scope, $uibModal, membersService, transactionService) {
+app.controller('profileController', ['$scope', '$uibModal', 'membersService', 'transactionService', 'growl', function ($scope, $uibModal, membersService, transactionService, growl) {
 
     membersService.getCurrentUserProfile().then(function (response) {
         $scope.user = response.data;
@@ -17,9 +17,9 @@ app.controller('profileController', ['$scope', '$uibModal', 'membersService', 't
 
         modalInstance.result.then(function (points) {
             transactionService.createPurchase(points).then(function (response) {
-                //TODO 
+                growl.success('Taškai užsakyti sėkmindai! Taškai prisidės prie jūsų saskaitos, kai administratorius patvirtins užsakymą!');
             }).catch(function (response) {
-                //TODO
+                growl.error('Užsakyti nepavyko! Bandykite vėliau.');
             })
         });
     };

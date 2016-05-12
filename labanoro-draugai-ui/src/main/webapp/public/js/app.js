@@ -2,10 +2,13 @@
  * Created by Žilvinas on 2016-03-11.
  */
 $.material.init();
-var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap']);
+var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap', 'angular-growl']);
 
-app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', '$authProvider', 'cfpLoadingBarProvider',
-    function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider) {
+app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', '$authProvider', 'cfpLoadingBarProvider', 'growlProvider',
+    function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider, growlProvider) {
+
+        growlProvider.globalTimeToLive(5000);
+        growlProvider.globalPosition('top-right');
 
         $urlRouterProvider.otherwise("/");
 
@@ -79,6 +82,26 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                         return membersService.getAllMembers();
                     }
                 }
+            })
+            .state('purchasesList', {
+                url: "/admin/purchasesList",
+                controller: 'purchasesConfirmationController',
+                templateUrl: 'partials/admin/purchasesConfirmationView.html',
+                resolve: {
+                    purchases: function (transactionService) {
+                        return transactionService.getAllPurchases();
+                    }
+                }
+            })
+            .state('settings', {
+                url: "/admin/settings",
+                controller: 'settingsController',
+                templateUrl: 'partials/admin/settingsView.html',
+                // resolve: {
+                //     settings: function (membersService) {
+                //         return settingsService.getSettings();
+                //     }
+                // }
             });
 
         $locationProvider.html5Mode({

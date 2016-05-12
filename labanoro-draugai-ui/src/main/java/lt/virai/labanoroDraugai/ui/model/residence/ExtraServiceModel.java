@@ -17,6 +17,9 @@ public class ExtraServiceModel implements MappableTo<ExtraService> {
     @Range(min = 0)
     private Integer price;
 
+    public ExtraServiceModel() {
+    }
+
     public ExtraServiceModel(ExtraService extraService) {
         this.id = extraService.getId();
         this.name = extraService.getName();

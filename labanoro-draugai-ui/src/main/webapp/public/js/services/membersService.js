@@ -23,8 +23,17 @@ app.service('membersService', ['$http', function ($http) {
         return $http.get(baseUrl + "getProfile");
     };
 
-    this.updateUserProfile = function(user) {
+    this.updateUserProfile = function (user) {
         return $http.post(baseUrl + 'updateProfile', user);
+    };
+
+    this.getMaxMembers = function () {
+        return $http.get(baseUrl + 'getMaxMembers')
+            .then(function (result) {
+                return result.data;
+            }).catch(function (response) {
+                console.log(response);
+            });
     };
 
 }]);

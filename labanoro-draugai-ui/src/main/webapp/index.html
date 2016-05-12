@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="public/bower_components/bootstrap-material-design/dist/css/ripples.min.css">
     <link rel="stylesheet" href="public/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="public/bower_components/angular-growl-v2/build/angular-growl.min.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="public/bower_components/angular-loading-bar/build/loading-bar.min.css">
@@ -17,6 +18,7 @@
 
 
 <body>
+    <div growl></div>
     <div ng-controller="navigationController" class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -40,6 +42,8 @@
                             <li><a ui-sref="createResidence">Create residence</a></li>
                             <li><a ui-sref="editResidence">Edit residence</a></li>
                             <li><a ui-sref="adminMembersList">Members</a></li>
+                            <li><a ui-sref="purchasesList">Purchases</a></li>
+                            <li><a ui-sref="settings">Settings</a></li>
                         </ul>
                     </li>
                     <li ng-show="isAuthenticated"><a ui-sref="profile">{{userName}}</a></li>
@@ -66,6 +70,7 @@
     <script src="public/bower_components/satellizer/satellizer.min.js"></script>
     <script src="public/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="public/bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
 
     <!--App dependencies-->
     <script src="public/js/app.js"></script>
@@ -81,11 +86,14 @@
     <script src="public/js/controllers/admin/editResidenceController.js"></script>
     <script src="public/js/controllers/admin/residencesListController.js"></script>
     <script src="public/js/controllers/admin/membersListController.js"></script>
+    <script src="public/js/controllers/admin/purchasesConfirmationController.js"></script>
+    <script src="public/js/controllers/admin/settingsController.js"></script>
     <!--Services-->
     <script src="public/js/services/authService.js"></script>
     <script src="public/js/services/membersService.js"></script>
     <script src="public/js/services/residencesService.js"></script>
     <script src="public/js/services/transactionService.js"></script>
+    <script src="public/js/services/settingsService.js"></script>
     <!--Filters-->
     <script src="public/js/filters/rolesFilter.js"></script>
 </body>

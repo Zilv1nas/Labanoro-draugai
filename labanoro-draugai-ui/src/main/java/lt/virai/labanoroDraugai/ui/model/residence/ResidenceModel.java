@@ -50,6 +50,9 @@ public class ResidenceModel implements MappableTo<Residence> {
     @Valid
     private Set<ExtraServiceModel> extraServices = new HashSet<>();
 
+    public ResidenceModel() {
+    }
+
     public ResidenceModel(Residence residence) {
         id = residence.getId();
         capacity = residence.getCapacity();

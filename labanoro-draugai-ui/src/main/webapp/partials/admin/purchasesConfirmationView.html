@@ -1,0 +1,50 @@
+<div class="col-md-12">
+    <div class="well">
+        <h2>Pirkimai</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
+                <div class="input-group">
+                    <label class="control-label" for="inviteMember">Filtruoti pirkimus</label>
+                    <input ng-model="searchInput" class="form-control">
+                    <span class="input-group-btn">
+                <button ng-click="search()" type="button" class="btn btn-fab btn-fab-mini">
+                  <i class="material-icons">search</i>
+                </button>
+              </span>
+                </div>
+                <span class="material-input"></span>
+            </div>
+        </div>
+        <div class="row table-responsive user-list">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vardas</th>
+                        <th>Pavardė</th>
+                        <th>El. paštas</th>
+                        <th>Pirkimo data</th>
+                        <th>Kiekis</th>
+                        <th>Veiksmai</th>
+                    </tr>
+                </thead>
+                <tbody ng-cloak>
+                    <tr ng-repeat="purchase in purchases">
+                        <td>{{purchase.id}}</td>
+                        <td>{{purchase.name}}</td>
+                        <td>{{purchase.surname}}</td>
+                        <td>{{purchase.username}}</td>
+                        <td>{{purchase.purchaseDate}}</td>
+                        <td>{{purchase.amount}}</td>
+                        <td>
+                            <button ng-click="confirmPurchase(purchase.id)" class="btn btn-success btn-raised">Patvirtinti
+                        </button>
+                            <button ng-click="rejectPurchase(purchase.id)" class="btn btn-danger btn-raised">Atmesti
+                        </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
