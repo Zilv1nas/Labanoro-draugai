@@ -5,14 +5,14 @@
             <label for="inputName" class="col-md-2 control-label">Vardas</label>
 
             <div class="col-md-10">
-                <input ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
+                <input ng-readonly="!isAdmin" ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
             </div>
         </div>
         <div class="form-group">
             <label for="inputSurname" class="col-md-2 control-label">Pavardė</label>
 
             <div class="col-md-10">
-                <input ng-model="user.surname" type="text" class="form-control" id="inputSurname"
+                <input ng-readonly="!isAdmin" ng-model="user.surname" type="text" class="form-control" id="inputSurname"
                        placeholder="Pavardė">
             </div>
         </div>
@@ -20,24 +20,24 @@
             <label for="inputEmail" class="col-md-2 control-label">El. paštas</label>
 
             <div class="col-md-10">
-                <input ng-model="user.email" type="email" class="form-control" id="inputEmail"
+                <input ng-readonly="!isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail"
                        placeholder="El. paštas">
             </div>
         </div>
-        <div class="form-group">
+        <div ng-class="!isAdmin ? 'last-profile-row form-group' : 'form-group'">
             <label for="points" class="col-md-2 control-label">Klubo taškai</label>
 
-            <div class="col-md-5">
+            <div ng-class="isCurrentUser ? 'col-md-5' : 'col-md-10'">
                 <input ng-readonly="true" ng-model="user.balance" type="text" class="form-control" id="points"
                        placeholder="Klubo taškai">
             </div>
-            <div class="col-md-5">
+            <div ng-show="isCurrentUser" class="col-md-5">
                 <button ng-click="openModal()" class="btn btn-success btn-raised">Nusipirkti taškų</button>
             </div>
         </div>
         <div class="form-group">
             <div class="login-form-buttons">
-                <button ng-click="update()" class="btn btn-info">Atnaujinti profilį</button>
+                <button ng-show="isAdmin" ng-click="update()" class="btn btn-info">Atnaujinti profilį</button>
             </div>
         </div>
     </div>

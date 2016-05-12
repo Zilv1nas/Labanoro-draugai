@@ -12,6 +12,9 @@ public class ReservationHistoryModel {
     private ShortUserModel user;
     private WeekRangeModel duration;
 
+    public ReservationHistoryModel() {
+    }
+
     public ReservationHistoryModel(Reservation reservation) {
         id = reservation.getId();
         residence = new ResidenceModel(reservation.getResidence());

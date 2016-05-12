@@ -11,7 +11,7 @@ import java.util.Objects;
  * Created by Žilvinas on 2016-04-24.
  */
 @Stateless
-public class EmailServiceImpl implements EmailService {
+public class SendGridEmailService implements EmailService {
 
     private static final String SEND_GRID_API_KEY = "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"; //TODO add to properties
 
@@ -19,7 +19,7 @@ public class EmailServiceImpl implements EmailService {
 
     //TODO read email template from propeties
     @Override
-    public void sendInvitationEmail(String email, String from) throws SendGridException {
+    public void sendInvitationEmail(String email, String from, String redirectUrl) throws SendGridException {
         Objects.requireNonNull(email);
 
         SendGrid.Email newEmail = new SendGrid.Email();
@@ -27,9 +27,8 @@ public class EmailServiceImpl implements EmailService {
         newEmail.setFrom("pakvietimas@labanoro-draugai.lt");
         newEmail.setSubject("Pakvietimas į Labanoro Draugų klubą");
 
-        //TODO get forward url as a parameter
         String message = String.format("Sveiki, %s jus pakvietė į Labanoro Draugų klubą.\n " +
-                "Norėdami užpildyti stojimo anketą apsilankykite šiame puslapyje: %s", from, "http://localhost:8080/labanoro-draugai/login");
+                "Norėdami užpildyti stojimo anketą apsilankykite šiame puslapyje: %s", from, redirectUrl);
 
         newEmail.setHtml(message);
 

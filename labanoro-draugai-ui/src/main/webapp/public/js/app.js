@@ -34,6 +34,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: 'partials/membersListView.html',
                 resolve: {
                     members: function (membersService) {
+                        console.log(membersService.getAllMembers());
                         return membersService.getAllMembers();
                     }
                 }
@@ -43,15 +44,21 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'profileController',
                 templateUrl: 'partials/profileView.html'
             })
+            .state('memberProfile', {
+                url: "/profile/:memberId",
+                controller: 'profileController',
+                templateUrl: 'partials/profileView.html'
+            })
             .state('residencesList', {
                 url: "/residencesList",
                 controller: 'residencesListController',
                 templateUrl: 'partials/residencesListView.html',
-                // resolve: {
-                //     residences: function (residencesService) {
-                //         return residencesService.getAllResidences();
-                //     }
-                // }
+                resolve: {
+                     residences: function (residencesService) {
+                         console.log(residencesService.getAllResidences());
+                         return residencesService.getAllResidences();
+                     }
+                 }
             })
             .state('createResidence', {
                 url: "/admin/createResidence",

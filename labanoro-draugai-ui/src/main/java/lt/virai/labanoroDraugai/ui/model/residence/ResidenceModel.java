@@ -56,6 +56,8 @@ public class ResidenceModel implements MappableTo<Residence> {
     public ResidenceModel(Residence residence) {
         id = residence.getId();
         capacity = residence.getCapacity();
+        name = residence.getName();
+        description = residence.getDescription();
         address = residence.getAddress();
         city = new CityModel(residence.getCity());
         image = residence.getImage();
