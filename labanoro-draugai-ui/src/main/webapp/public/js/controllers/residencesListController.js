@@ -1,5 +1,7 @@
-app.controller('residencesListController', ['$scope', function($scope) {
-    
+app.controller('residencesListController', ['$scope', 'residencesService', 'residences', function($scope, residencesService, residences) {
+
+    $scope.residences = residences;
+
     this.callServer = function callServer(tableState) {
         
     }
