@@ -1,10 +1,29 @@
-app.controller('profileController', ['$scope', '$uibModal', 'membersService', 'transactionService', function ($scope, $uibModal, membersService, transactionService) {
+app.controller('profileController', ['$scope', '$stateParams', '$uibModal', 'membersService', 'transactionService', 'authService',
+    function ($scope, $stateParams, $uibModal, membersService, transactionService, authService) {
 
-    membersService.getCurrentUserProfile().then(function (response) {
-        $scope.user = response.data;
-    }).catch(function (response) {
-        //TODO
-    });
+    var getCurrentUserProfule = function () {
+        membersService.getCurrentUserProfile().then(function (response) {
+            $scope.user = response.data;
+        }).catch(function (response) {
+            //TODO
+        });
+    };
+
+    var getMemberProfile = function (id) {
+        membersService.getMemberProfile(id).then(function (response) {
+            $scope.user = response.data;
+        }).catch(function (response) {
+            //TODO
+        })
+    };
+
+    $scope.isCurrentUser = !angular.isDefined($stateParams.memberId);
+    $scope.isAdmin = authService.isAdmin();
+    if ($scope.isCurrentUser) {
+        getCurrentUserProfule();
+    } else {
+        getMemberProfile($stateParams.memberId);
+    }
 
     $scope.openModal = function () {
 
@@ -25,11 +44,19 @@ app.controller('profileController', ['$scope', '$uibModal', 'membersService', 't
     };
 
     $scope.update = function () {
-        membersService.updateUserProfile($scope.user).then(function (response) {
+        var successHandler = function (response) {
+          //TODO
+        };
+
+        var failureHandler = function (response) {
             //TODO
-        }).catch(function (response) {
-            //TODO
-        });
+        };
+
+        if ($scope.isCurrentUser) {
+            membersService.updateCurrentUserProfile($scope.user).then(successHandler.catch(failureHandler));
+        } else {
+            membersService.updateProfile($scope.user).then(successHandler).catch(failureHandler);
+        }
     }
 }]);
 

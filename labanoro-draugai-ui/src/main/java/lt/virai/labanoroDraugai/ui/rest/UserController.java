@@ -10,10 +10,12 @@ import lt.virai.labanoroDraugai.ui.security.Secured;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -34,7 +36,7 @@ public class UserController {
     @Inject
     private EmailService emailService;
 
-    @Secured
+    @Secured({UserRole.ADMIN})
     @POST
     @Path("/updateProfile")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -47,7 +49,21 @@ public class UserController {
         }
     }
 
-    @Secured({UserRole.ADMIN})
+    @Secured
+    @POST
+    @Path("/updateCurrentUserProfile")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateCurrentUserProfile(@Valid UserModel userModel, @Context SecurityContext securityContext) {
+        try {
+            userModel.setId(Integer.parseInt(securityContext.getUserPrincipal().getName()));
+            userService.updateUserProfile(userModel.mapTo());
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @GET
     @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,7 +86,7 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response invite(@Valid InvitationInfo invitationInfo) {
         try {
-            emailService.sendInvitationEmail(invitationInfo.getToEmail(), invitationInfo.getFullName());
+            emailService.sendInvitationEmail(invitationInfo.getToEmail(), invitationInfo.getFullName(), invitationInfo.getRedirectUrl());
             return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -85,6 +101,22 @@ public class UserController {
         try {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
             UserModel userModel = Optional.ofNullable(userService.get(userId))
+                    .map(UserModel::new)
+                    .orElseThrow(IllegalStateException::new);
+
+            return Response.ok().entity(userModel).build();
+        } catch (NumberFormatException | IllegalStateException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Secured
+    @GET
+    @Path("/getMemberProfile/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMemberProfile(@PathParam("id") @NotNull Integer id) {
+        try {
+            UserModel userModel = Optional.ofNullable(userService.get(id))
                     .map(UserModel::new)
                     .orElseThrow(IllegalStateException::new);
 

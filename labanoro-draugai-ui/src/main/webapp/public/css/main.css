@@ -79,3 +79,7 @@
 .form-group {
     position: initial;
 }
+
+.last-profile-row {
+    margin-bottom: 100px;
+}

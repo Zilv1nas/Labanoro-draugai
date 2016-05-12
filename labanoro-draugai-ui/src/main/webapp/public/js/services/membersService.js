@@ -23,9 +23,17 @@ app.service('membersService', ['$http', function ($http) {
         return $http.get(baseUrl + "getProfile");
     };
 
-    this.updateUserProfile = function(user) {
-        return $http.post(baseUrl + 'updateProfile', user);
+    this.getMemberProfile = function (id) {
+        return $http.get(baseUrl + "getMemberProfile/" + id);
     };
+
+    this.updateCurrentUserProfile = function(user) {
+        return $http.post(baseUrl + 'updateCurrentUserProfile', user);
+    };
+
+    this.updateProfile = function (user) {
+        return $http.post(baseUrl + 'updateProfile', user);
+    }
 
 }]);
 

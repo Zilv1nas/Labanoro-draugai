@@ -40,6 +40,11 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'profileController',
                 templateUrl: 'partials/profileView.html'
             })
+            .state('memberProfile', {
+                url: "/profile/:memberId",
+                controller: 'profileController',
+                templateUrl: 'partials/profileView.html'
+            })
             .state('residencesList', {
                 url: "/residencesList",
                 controller: 'residencesListController',

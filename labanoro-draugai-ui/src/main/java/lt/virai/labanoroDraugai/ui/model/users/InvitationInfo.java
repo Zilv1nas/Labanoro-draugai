@@ -15,6 +15,8 @@ public class InvitationInfo {
     private String fromSurname;
     @Email(regexp = EMAIL_REGEX)
     private String toEmail;
+    @NotEmpty
+    private String redirectUrl;
 
     public String getFromName() {
         return fromName;
@@ -42,5 +44,13 @@ public class InvitationInfo {
 
     public String getFullName() {
         return fromName + " " + fromSurname;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 }

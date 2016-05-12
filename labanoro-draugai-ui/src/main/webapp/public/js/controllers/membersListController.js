@@ -1,11 +1,7 @@
-app.controller('membersListController', ['$scope', '$state', 'authService', 'membersService', 'members', function ($scope, $state, authService, membersService, members) {
+app.controller('membersListController', ['$scope', '$state', '$window', 'authService', 'membersService', 'members',
+    function ($scope, $state, $window, authService, membersService, members) {
 
     $scope.members = members;
-    // membersService.getAllMembers().then(function (response) {
-    //     $scope.members = response.data;
-    // }).catch(function (response) {
-    //     //TODO
-    // });
 
     $scope.verifyUser = function (userId) {
         membersService.verifyUser(userId).then(function (response) {
@@ -19,7 +15,8 @@ app.controller('membersListController', ['$scope', '$state', 'authService', 'mem
         var invitationInfo = {
             toEmail: newUserEmail,
             fromName: authService.getAuthData().name,
-            fromSurname: authService.getAuthData().surname
+            fromSurname: authService.getAuthData().surname,
+            redirectUrl: $state.href('login', {}, {absolute: true})
         };
 
         membersService.invite(invitationInfo).then(function (response) {
