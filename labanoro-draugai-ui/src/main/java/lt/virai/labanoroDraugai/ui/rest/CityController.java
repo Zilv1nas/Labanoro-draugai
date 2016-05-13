@@ -71,7 +71,7 @@ public class CityController {
 
     @Secured
     @GET
-    @Path("/getall")
+    @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
