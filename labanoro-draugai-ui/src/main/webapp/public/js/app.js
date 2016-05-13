@@ -12,26 +12,28 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
 
         $urlRouterProvider.otherwise("/");
 
+        var memberUrlPrefix = 'partials/member';
+        var adminUrlPrefix = 'partials/admin';
         $stateProvider
             .state('main', {
                 url: "/",
                 controller: 'mainController',
-                templateUrl: 'partials/mainView.html'
+                templateUrl: memberUrlPrefix + '/mainView.html'
             })
             .state('login', {
                 url: "/login",
                 controller: 'loginController',
-                templateUrl: 'partials/loginView.html'
+                templateUrl: memberUrlPrefix + '/loginView.html'
             })
             .state('register', {
                 url: "/register",
                 controller: 'registrationController',
-                templateUrl: 'partials/registrationView.html'
+                templateUrl: memberUrlPrefix + '/registrationView.html'
             })
             .state('membersList', {
                 url: "/membersList",
                 controller: 'membersListController',
-                templateUrl: 'partials/membersListView.html',
+                templateUrl: memberUrlPrefix + '/membersListView.html',
                 resolve: {
                     members: function (membersService) {
                         console.log(membersService.getAllMembers());
@@ -42,17 +44,17 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('profile', {
                 url: "/profile",
                 controller: 'profileController',
-                templateUrl: 'partials/profileView.html'
+                templateUrl: memberUrlPrefix + '/profileView.html'
             })
             .state('memberProfile', {
                 url: "/profile/:memberId",
                 controller: 'profileController',
-                templateUrl: 'partials/profileView.html'
+                templateUrl: memberUrlPrefix + '/profileView.html'
             })
             .state('residencesList', {
                 url: "/residencesList",
                 controller: 'residencesListController',
-                templateUrl: 'partials/residencesListView.html',
+                templateUrl: memberUrlPrefix + '/residencesListView.html',
                 resolve: {
                      residences: function (residencesService) {
                          return residencesService.getAllResidences();
@@ -62,12 +64,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('createResidence', {
                 url: "/admin/createResidence",
                 controller: 'createResidenceController',
-                templateUrl: 'partials/admin/createResidenceView.html'
+                templateUrl: adminUrlPrefix + '/createResidenceView.html'
             })
             .state('editResidence', {
                 url: "/admin/editResidence",
                 controller: 'editResidenceController',
-                templateUrl: 'partials/admin/editResidenceView.html',
+                templateUrl: adminUrlPrefix + '/editResidenceView.html',
                 // resolve: {
                 //     residence: function (residencesService, $stateParams) {
                 //         return residencesService.getResidence($stateParams.id);
@@ -77,7 +79,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('adminResidencesList', {
                 url: "/admin/residencesLists",
                 controller: 'adminResidencesListController',
-                templateUrl: 'partials/admin/residencesListView.html',
+                templateUrl: adminUrlPrefix + '/residencesListView.html',
                 resolve: {
                     residences: function (residencesService) {
                         return residencesService.getAllResidences();
@@ -87,7 +89,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('adminMembersList', {
                 url: "/admin/membersList",
                 controller: 'adminMembersListController',
-                templateUrl: 'partials/admin/membersListView.html',
+                templateUrl: adminUrlPrefix + '/membersListView.html',
                 resolve: {
                     members: function (membersService) {
                         return membersService.getAllMembers();
@@ -97,7 +99,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('purchasesList', {
                 url: "/admin/purchasesList",
                 controller: 'purchasesConfirmationController',
-                templateUrl: 'partials/admin/purchasesConfirmationView.html',
+                templateUrl: adminUrlPrefix + '/purchasesConfirmationView.html',
                 resolve: {
                     purchases: function (transactionService) {
                         return transactionService.getAllPurchases();
@@ -107,7 +109,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('settings', {
                 url: "/admin/settings",
                 controller: 'settingsController',
-                templateUrl: 'partials/admin/settingsView.html',
+                templateUrl: adminUrlPrefix + '/settingsView.html',
                 // resolve: {
                 //     settings: function (membersService) {
                 //         return settingsService.getSettings();
