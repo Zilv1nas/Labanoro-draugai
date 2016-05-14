@@ -1,9 +1,12 @@
 app.controller('editResidenceController', ['$scope', '$state', 'residencesService', 'residence', function ($scope, $state, residencesService, residence) {
 
     $scope.residence = residence;
-    $scope.service = '';
+    $scope.residence.availability.dateFrom = new Date(residence.availability.dateFrom);
+    $scope.residence.availability.dateTo = new Date(residence.availability.dateTo);
+    console.log(residence);
 
     $scope.Title = "Yo, shitface";
+    $scope.service = '';
 
     if (angular.isDefined($scope.residence.services)) {
         $scope.services = $scope.residence.services;
@@ -11,9 +14,11 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
         $scope.services = [];
     }
 
-
     $scope.saveResidence = function () {
-        console.log(residence);
+        console.log($scope.residence);
+        $scope.residence.availability.dateFrom.setHours(3, 0, 0, 0);
+        $scope.residence.availability.dateTo.setHours(3, 0, 0, 0);
+
         residencesService.updateResidence($scope.residence)
             .then(function (response) {
                 $state.go('main');
@@ -32,6 +37,20 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
             $scope.services.push($scope.service);
             $scope.service = '';
         }
+    };
+
+    // Disable weekend selection
+    function disabled(data) {
+        var date = data.date,
+            mode = data.mode;
+        return mode === 'day' && (date.getDay() !== 0 && date.getDay() !== 1);
+    }
+
+    $scope.inlineOptions = {
+        dateDisabled: disabled,
+        startingDay: 1,
+        minDate: new Date(),
+        showWeeks: false
     };
 
     $scope.removeService = function (key) {
