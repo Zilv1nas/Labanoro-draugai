@@ -1,4 +1,4 @@
-app.controller('createResidenceController', ['$scope', 'residencesService', '$filter', function ($scope, residencesService, $filter) {
+app.controller('createResidenceController', ['$scope', 'residencesService', function ($scope, residencesService) {
     $scope.residence = {};
     $scope.residence.availability = {};
     $scope.service = {};
@@ -43,26 +43,5 @@ app.controller('createResidenceController', ['$scope', 'residencesService', '$fi
     $scope.removeService = function (key) {
         $scope.services.splice(key, 1);
     };
-
-    $scope.clear = function () {
-        $scope.dt = null;
-    };
-
-    $scope.open1 = function () {
-        $scope.popup1.opened = true;
-    };
-
-    $scope.open2 = function () {
-        $scope.popup2.opened = true;
-    };
-
-    $scope.popup1 = {
-        opened: false
-    };
-
-    $scope.popup2 = {
-        opened: false
-    };
-
 }]);
 
