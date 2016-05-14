@@ -18,6 +18,6 @@ public class WeekDayValidator implements ConstraintValidator<WeekDay, LocalDate>
     }
 
     public boolean isValid(LocalDate obj, ConstraintValidatorContext context) {
-        return dayOfWeek == obj.getDayOfWeek();
+        return obj != null && dayOfWeek == obj.getDayOfWeek();
     }
 }

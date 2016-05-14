@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,6 @@ public class ResidenceModel implements MappableTo<Residence> {
     @Size(min = 4, message = "Address cannot be shorter than 4.")
     private String address;
 
-    @NotNull(message = "City is required")
-    @Valid
     private CityModel city;
 
     @Pattern(regexp = "^data:image.*", message = "File type not supported.")
@@ -41,7 +40,7 @@ public class ResidenceModel implements MappableTo<Residence> {
 
     @NotNull(message = "Weekly price is required.")
     @Min(value = 1, message = "Weekly price cannot be less than 1.")
-    private Integer dailyPrice;
+    private Integer weeklyPrice;
 
     @NotNull(message = "Availability dates are required.")
     @Valid
@@ -59,9 +58,9 @@ public class ResidenceModel implements MappableTo<Residence> {
         name = residence.getName();
         description = residence.getDescription();
         address = residence.getAddress();
-        city = new CityModel(residence.getCity());
+        city = Optional.ofNullable(residence.getCity()).map(CityModel::new).orElse(null);
         image = residence.getImage();
-        dailyPrice = residence.getDailyPrice();
+        weeklyPrice = residence.getWeeklyPrice();
         extraServices = residence.getExtraServices().stream().map(ExtraServiceModel::new).collect(Collectors.toSet());
     }
 
@@ -72,12 +71,14 @@ public class ResidenceModel implements MappableTo<Residence> {
         residence.setName(name);
         residence.setCapacity(capacity);
         residence.setAddress(address);
-        residence.setCity(city.mapTo());
-        residence.setDailyPrice(dailyPrice);
+        residence.setCity(city != null ? city.mapTo() : null);
+        residence.setWeeklyPrice(weeklyPrice);
         residence.setDescription(description);
         residence.setImage(image);
-        residence.setAvailableFrom(availability.getDateFrom());
-        residence.setAvailableUntil(availability.getDateTo());
+        if (availability != null) {
+            residence.setAvailableFrom(availability.getDateFrom());
+            residence.setAvailableUntil(availability.getDateTo());
+        }
         residence.setExtraServices(extraServices.stream().map(ExtraServiceModel::mapTo).collect(Collectors.toSet()));
         return residence;
     }
@@ -138,12 +139,12 @@ public class ResidenceModel implements MappableTo<Residence> {
         this.image = image;
     }
 
-    public Integer getDailyPrice() {
-        return dailyPrice;
+    public Integer getWeeklyPrice() {
+        return weeklyPrice;
     }
 
-    public void setDailyPrice(Integer dailyPrice) {
-        this.dailyPrice = dailyPrice;
+    public void setWeeklyPrice(Integer weeklyPrice) {
+        this.weeklyPrice = weeklyPrice;
     }
 
     public WeekRangeModel getAvailability() {

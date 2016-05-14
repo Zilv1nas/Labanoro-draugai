@@ -12,13 +12,11 @@ import java.time.LocalDate;
  */
 public class WeekRangeModel {
     @NotNull(message = "Date from is required.")
-    @Future
     @WeekDay(value = DayOfWeek.MONDAY, message = "Date from always has to be monday.")
     private LocalDate dateFrom;
 
     @NotNull(message = "Date to is required.")
-    @Future
-    @WeekDay(value = DayOfWeek.SUNDAY, message = "Date from always has to be monday.")
+    @WeekDay(value = DayOfWeek.SUNDAY, message = "Date from always has to be sunday.")
     private LocalDate dateTo;
 
     public LocalDate getDateFrom() {

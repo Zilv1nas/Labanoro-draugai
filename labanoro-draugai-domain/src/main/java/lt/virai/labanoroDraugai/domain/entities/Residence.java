@@ -30,7 +30,7 @@ public class Residence {
     private String address;
     private City city;
     private String image;
-    private Integer dailyPrice;
+    private Integer weeklyPrice;
     private LocalDate availableFrom;
     private LocalDate availableUntil;
     private Set<ExtraService> extraServices = new HashSet<>();
@@ -105,13 +105,13 @@ public class Residence {
     }
 
     @Basic
-    @Column(name = "daily_price", nullable = false)
-    public Integer getDailyPrice() {
-        return dailyPrice;
+    @Column(name = "weekly_price", nullable = false)
+    public Integer getWeeklyPrice() {
+        return weeklyPrice;
     }
 
-    public void setDailyPrice(Integer weeklyPrice) {
-        this.dailyPrice = weeklyPrice;
+    public void setWeeklyPrice(Integer weeklyPrice) {
+        this.weeklyPrice = weeklyPrice;
     }
 
     @Basic
@@ -156,13 +156,13 @@ public class Residence {
                 Objects.equals(address, residence.address) &&
                 Objects.equals(city, residence.city) &&
                 Objects.equals(image, residence.image) &&
-                Objects.equals(dailyPrice, residence.dailyPrice) &&
+                Objects.equals(weeklyPrice, residence.weeklyPrice) &&
                 Objects.equals(availableFrom, residence.availableFrom) &&
                 Objects.equals(availableUntil, residence.availableUntil);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, capacity, address, city, image, dailyPrice, availableFrom, availableUntil);
+        return Objects.hash(id, name, description, capacity, address, city, image, weeklyPrice, availableFrom, availableUntil);
     }
 }

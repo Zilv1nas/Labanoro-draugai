@@ -24,10 +24,10 @@ app.controller('createResidenceController', ['$scope', 'residencesService', '$fi
     $scope.create = function () {
         console.log($scope.residence);
         if (angular.isDefined($scope.dateFrom)) {
-            $scope.residence.availability.dateFrom = $scope.dateFrom.getFullYear() + '-' + ($scope.dateFrom.getMonth() + 1) + '-' + $scope.dateFrom.getDate();
+            $scope.residence.availability.dateFrom = $scope.dateFrom;/*.getFullYear() + '-' + ($scope.dateFrom.getMonth() + 1) + '-' + $scope.dateFrom.getDate();*/
         }
         if (angular.isDefined($scope.dateTo)) {
-            $scope.residence.availability.dateTo = $scope.dateTo.getFullYear() + '-' + ($scope.dateTo.getMonth() + 1) + '-' + $scope.dateTo.getDate();
+            $scope.residence.availability.dateTo = $scope.dateTo;/*.getFullYear() + '-' + ($scope.dateTo.getMonth() + 1) + '-' + $scope.dateTo.getDate();*/
         }
         console.log($scope.residence.availability);
         $scope.residence.extraServices = $scope.services;
