@@ -61,6 +61,7 @@ public class ResidenceModel implements MappableTo<Residence> {
         city = Optional.ofNullable(residence.getCity()).map(CityModel::new).orElse(null);
         image = residence.getImage();
         weeklyPrice = residence.getWeeklyPrice();
+        availability = new WeekRangeModel (residence.getAvailableFrom(), residence.getAvailableUntil());
         extraServices = residence.getExtraServices().stream().map(ExtraServiceModel::new).collect(Collectors.toSet());
     }
 

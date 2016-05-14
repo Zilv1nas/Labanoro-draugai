@@ -19,6 +19,13 @@ public class WeekRangeModel {
     @WeekDay(value = DayOfWeek.SUNDAY, message = "\"Date to\" always has to be Sunday.")
     private LocalDate dateTo;
 
+    public WeekRangeModel () {}
+
+    public WeekRangeModel (LocalDate from, LocalDate to){
+        this.dateFrom = from;
+        this.dateTo = to;
+    }
+
     public LocalDate getDateFrom() {
         return dateFrom;
     }
