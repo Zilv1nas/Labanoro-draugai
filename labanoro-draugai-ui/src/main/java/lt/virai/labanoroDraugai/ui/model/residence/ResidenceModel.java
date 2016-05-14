@@ -21,7 +21,7 @@ public class ResidenceModel implements MappableTo<Residence> {
     private Integer id;
 
     @NotEmpty
-    @Size(min = 4, message = "Address cannot be shorter than 4.")
+    @Size(min = 4, message = "Name cannot be shorter than 4.")
     private String name;
 
     @NotEmpty
