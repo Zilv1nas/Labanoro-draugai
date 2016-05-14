@@ -10,15 +10,18 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
 
 
     $scope.update = function () {
-        $scope.residence.services = $scope.services;
-        console.log($scope.residence);
-        // residencesService.updateResidence($scope.residence)
-        //     .then(function (response) {
-        //         $state.go('main');
-        //     }).catch(function (response) {
-        //         //TODO error handling
-        //         alert("Couldn't create residence" + response.data);
-        //     })
+        console.log(residence);
+        residencesService.updateResidence($scope.residence)
+            .then(function (response) {
+                $state.go('main');
+            }).catch(function (response) {
+                //TODO error handling
+                var errorMessage = "";
+                for (var i = 0; i < response.data.length; i++)
+                    errorMessage += response.data[i].message + "\n"
+                console.log(response.data);
+                alert("Error: " + errorMessage);
+            })
     };
 
     $scope.createService = function () {
