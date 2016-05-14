@@ -35,10 +35,8 @@
                         <td>{{residence.capacity}}</td>
                         <td>{{residence.address}}</td>
                         <td>
-                            <button ng-click="updateResidence(residence.id)" class="btn btn-success btn-raised">Redaguoti
-                        </button>
-                            <button ng-click="deleteResidence(residence.id)" class="btn btn-danger btn-raised">Ištrinti
-                        </button>
+                        <button ng-click="editResidence(residence.id)" class="btn btn-success btn-raised">Redaguoti</button>
+                        <button ng-click="deleteResidence(residence.id)" class="btn btn-danger btn-raised">Ištrinti</button>
                         </td>
                     </tr>
                 </tbody>

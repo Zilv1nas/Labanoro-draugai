@@ -1,8 +1,9 @@
 app.service('residencesService', ['$http', function ($http) {
+
     var baseUrl = 'rest/residence/';
 
-    this.getAllResidences = function () {
-        return $http.get(baseUrl + "getAll")
+    var getFunc = function (prefix) {
+        return $http.get('rest/residence/' + prefix)
             .then(function (result) {
                 return result.data;
             }).catch(function (response) {
@@ -10,16 +11,24 @@ app.service('residencesService', ['$http', function ($http) {
             });
     };
 
+    this.getAllResidences = function () {
+        return getFunc("getAll/");
+    };
+
     this.getResidence = function (id) {
-        return $http.get(baseUrl + "get" + id);
+        return getFunc("get/" + id);
     };
 
     this.createResidence = function (residence) {
-        return $http.post(baseUrl + "save", residence);
+        return $http.post(baseUrl + "save/", residence);
+    };
+
+    this.deleteResidence = function (id) {
+        return $http.post(baseUrl + "delete/" + id);
     };
 
     this.updateResidence = function (residence) {
-        return $http.post(baseUrl + "update", residence);
+        return $http.post(baseUrl + "update/", residence);
     }
 
 }]);

@@ -36,7 +36,6 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: memberUrlPrefix + '/membersListView.html',
                 resolve: {
                     members: function (membersService) {
-                        console.log(membersService.getAllMembers());
                         return membersService.getAllMembers();
                     }
                 }
@@ -67,14 +66,14 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: adminUrlPrefix + '/createResidenceView.html'
             })
             .state('editResidence', {
-                url: "/admin/editResidence",
+                url: "/admin/editResidence/:ID",
                 controller: 'editResidenceController',
                 templateUrl: adminUrlPrefix + '/editResidenceView.html',
-                // resolve: {
-                //     residence: function (residencesService, $stateParams) {
-                //         return residencesService.getResidence($stateParams.id);
-                //     }
-                // }
+                resolve: {
+                    residence: function (residencesService, $stateParams) {
+                        return residencesService.getResidence($stateParams.ID);
+                    }
+                }
             })
             .state('adminResidencesList', {
                 url: "/admin/residencesLists",
