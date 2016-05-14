@@ -6,39 +6,23 @@ app.controller('createResidenceController', ['$scope', 'residencesService', '$fi
     $scope.name = '';
     $scope.services = [];
 
-    // $scope.$watch('residence.availability', function (newValue, oldValue) {
-    //     console.log('pasikeite');
-    //     if (angular.isDefined(newValue)) {
-    //         if (angular.isDefined(newValue.dateFrom)) {
-    //             var dateStrToSend = newValue.dateFrom.getFullYear() + '-' + (newValue.dateFrom.getMonth() + 1) +  '-' + newValue.dateFrom.getDate();
+    $scope.Title = 'Sukurti rezidenciją';
 
-    //             console.log(dateStrToSend);
-
-    //             // $filter('date')(newValue.dateFrom, 'yyyy-MM-dd');
-    //             //         console.log(newValue.dateFrom);
-    //         }
-    //     }
-
-    // });
-
-    $scope.create = function () {
+    $scope.saveResidence = function () {
         console.log($scope.residence);
-        if (angular.isDefined($scope.dateFrom)) {
-            $scope.residence.availability.dateFrom = $scope.dateFrom;/*.getFullYear() + '-' + ($scope.dateFrom.getMonth() + 1) + '-' + $scope.dateFrom.getDate();*/
-        }
-        if (angular.isDefined($scope.dateTo)) {
-            $scope.residence.availability.dateTo = $scope.dateTo;/*.getFullYear() + '-' + ($scope.dateTo.getMonth() + 1) + '-' + $scope.dateTo.getDate();*/
-        }
-        console.log($scope.residence.availability);
+
         $scope.residence.extraServices = $scope.services;
         residencesService.createResidence($scope.residence)
             .then(function (response) {
                 console.log(response);
                 // $state.go('main');
             }).catch(function (response) {
-                console.log(response);
                 //TODO error handling
-                // alert("Couldn't create residence" + response.data);
+                var errorMessage = "";
+                for (var i = 0; i < response.data.length; i++)
+                    errorMessage += response.data[i].message + "\n"
+                console.log(response.data);
+                alert("Error: " + errorMessage);
             })
     };
 

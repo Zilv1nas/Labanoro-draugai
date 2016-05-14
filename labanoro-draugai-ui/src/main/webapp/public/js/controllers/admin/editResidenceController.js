@@ -2,6 +2,9 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
 
     $scope.residence = residence;
     $scope.service = '';
+
+    $scope.Title = "Yo, shitface";
+
     if (angular.isDefined($scope.residence.services)) {
         $scope.services = $scope.residence.services;
     } else {
@@ -9,7 +12,7 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
     }
 
 
-    $scope.update = function () {
+    $scope.saveResidence = function () {
         console.log(residence);
         residencesService.updateResidence($scope.residence)
             .then(function (response) {

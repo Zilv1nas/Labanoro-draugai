@@ -63,12 +63,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('createResidence', {
                 url: "/admin/createResidence",
                 controller: 'createResidenceController',
-                templateUrl: adminUrlPrefix + '/createResidenceView.html'
+                templateUrl: adminUrlPrefix + '/residenceFormView.html'
             })
             .state('editResidence', {
                 url: "/admin/editResidence/:ID",
                 controller: 'editResidenceController',
-                templateUrl: adminUrlPrefix + '/editResidenceView.html',
+                templateUrl: adminUrlPrefix + '/residenceFormView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
                         return residencesService.getResidence($stateParams.ID);
