@@ -64,9 +64,8 @@
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text"
-                                   class="form-control"
-                                   uib-datepicker-popup
+                            <input type="text" ng-required="true"
+                                   class="form-control" uib-datepicker-popup
                                    ng-model="residence.availability.dateTo"
                                    is-open="popup2.opened"
                                    datepicker-options="inlineOptions"

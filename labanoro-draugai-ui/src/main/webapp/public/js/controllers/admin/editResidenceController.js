@@ -3,7 +3,7 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
     $scope.residence = residence;
     $scope.residence.availability.dateFrom = new Date(residence.availability.dateFrom);
     $scope.residence.availability.dateTo = new Date(residence.availability.dateTo);
-    console.log(residence);
+    console.log($scope.residence);
 
     $scope.Title = "Yo, shitface";
     $scope.service = '';
@@ -23,7 +23,6 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
             .then(function (response) {
                 $state.go('main');
             }).catch(function (response) {
-                //TODO error handling
                 var errorMessage = "";
                 for (var i = 0; i < response.data.length; i++)
                     errorMessage += response.data[i].message + "\n"

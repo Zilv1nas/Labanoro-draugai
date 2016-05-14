@@ -9,15 +9,17 @@ app.controller('createResidenceController', ['$scope', 'residencesService', '$fi
     $scope.Title = 'Sukurti rezidenciją';
 
     $scope.saveResidence = function () {
+        //FixMe: This compensates for the -1 day bug.
+        $scope.residence.availability.dateFrom.setHours(3, 0, 0, 0);
+        $scope.residence.availability.dateTo.setHours(3, 0, 0, 0);
         console.log($scope.residence);
 
         $scope.residence.extraServices = $scope.services;
         residencesService.createResidence($scope.residence)
             .then(function (response) {
                 console.log(response);
-                // $state.go('main');
+                $state.go('main');
             }).catch(function (response) {
-                //TODO error handling
                 var errorMessage = "";
                 for (var i = 0; i < response.data.length; i++)
                     errorMessage += response.data[i].message + "\n"
@@ -64,21 +66,3 @@ app.controller('createResidenceController', ['$scope', 'residencesService', '$fi
 
 }]);
 
-app.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                };
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
-        }
-    }
-}]);
