@@ -10,18 +10,13 @@ app.controller('createResidenceController', ['$scope', '$state', 'residencesServ
             $scope.residence.availability.dateFrom.setHours(3, 0, 0, 0);
         if ($scope.residence.availability.dateTo)
             $scope.residence.availability.dateTo.setHours(3, 0, 0, 0);
-
-        console.log($scope.residence);
-
+        
         residencesService.createResidence($scope.residence)
             .then(function (response) {
                 $state.go('main');
             }).catch(function (response) {
-                console.log(response.data);
-                var errorMessage = "";
-                for (var i = 0; i < response.data.length; i++)
-                    errorMessage += response.data[i].message + "\n"
-                alert("Error: " + errorMessage);
+                console.log(response);
+                //ToDo:
             })
     };
 }]);
