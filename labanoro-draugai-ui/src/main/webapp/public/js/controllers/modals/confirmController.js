@@ -1,4 +1,7 @@
-app.controller('confirmController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+app.controller('confirmController', ['$scope', '$uibModalInstance', 'message', function ($scope, $uibModalInstance, message) {
+
+    $scope.message = message;
+
     $scope.ok = function () {
         $uibModalInstance.close();
     };
