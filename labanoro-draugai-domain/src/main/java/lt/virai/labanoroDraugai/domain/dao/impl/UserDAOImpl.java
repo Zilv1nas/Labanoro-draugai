@@ -5,10 +5,12 @@ import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.AuthAttributeEnum;
+import lt.virai.labanoroDraugai.domain.model.UserRole;
 import org.jinq.orm.stream.JinqStream;
 import org.jinq.tuples.Pair;
 
 import javax.ejb.Stateless;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,5 +40,10 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
         return pairs.where(p -> p.getTwo().getName().equals(name)
                 && p.getTwo().getValue().equals(value)).select(Pair::getOne).findOne().orElse(null);
+    }
+
+    @Override
+    public List<User> getAllVerifiedMembers() {
+        return streams.streamAll(entityManager, User.class).where(u -> u.getRole() != UserRole.CANDIDATE).toList();
     }
 }

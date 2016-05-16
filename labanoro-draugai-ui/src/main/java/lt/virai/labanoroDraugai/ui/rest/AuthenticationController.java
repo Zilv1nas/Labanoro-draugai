@@ -3,6 +3,7 @@ package lt.virai.labanoroDraugai.ui.rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lt.virai.labanoroDraugai.bl.services.AuthService;
+import lt.virai.labanoroDraugai.bl.services.EmailService;
 import lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.AuthAttributeEnum;
@@ -47,6 +48,9 @@ public class AuthenticationController {
     @Inject
     private AuthService authService;
 
+    @Inject
+    private EmailService emailService;
+
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +81,7 @@ public class AuthenticationController {
             attrs.add(attr);
             user.setAuthenticationAttributes(attrs);
 
+            notifyMembers(user.getEmail(), user.getName(), user.getSurname());
             return Response.ok(authService.register(user)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -123,6 +128,7 @@ public class AuthenticationController {
         attr.setValue(facebookId);
         user.getAuthenticationAttributes().add(attr);
 
+        notifyMembers(user.getEmail(), user.getName(), user.getSurname());
         return Response.ok().entity(authService.registerFacebookUser(user)).build();
     }
 
@@ -144,5 +150,12 @@ public class AuthenticationController {
         OAuthRequest oauthRequest = new OAuthRequest(Verb.GET, "https://graph.facebook.com/v2.5/me?fields=id,first_name,last_name,email");
         fbService.signRequest(accessToken, oauthRequest);
         return oauthRequest.send();
+    }
+
+    private void notifyMembers(String email, String name, String surname) {
+        try {
+            emailService.notifyMembers(email, name, surname);
+        } catch (Exception ignore) {
+        }
     }
 }

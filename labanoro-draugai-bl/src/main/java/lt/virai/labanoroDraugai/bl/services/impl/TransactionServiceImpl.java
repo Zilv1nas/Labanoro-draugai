@@ -5,6 +5,7 @@ import lt.virai.labanoroDraugai.domain.dao.PointPurchaseDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.PointPurchase;
 import lt.virai.labanoroDraugai.domain.entities.User;
+import lt.virai.labanoroDraugai.domain.model.PurchaseStatus;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,5 +41,25 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<PointPurchase> getAllPurchases() {
         return pointPurchaseDAO.getAll();
+    }
+
+    @Override
+    public void confirmPurchase(int purchaseId) {
+        Optional.ofNullable(pointPurchaseDAO.get(purchaseId)).ifPresent(p -> {
+            if (p.getStatus() == PurchaseStatus.PENDING) {
+                User user = p.getUser();
+                user.setBalance(user.getBalance() + p.getAmount());
+                p.setStatus(PurchaseStatus.COMPLETED);
+            }
+        });
+    }
+
+    @Override
+    public void rejectPurchase(int purchaseId) {
+        Optional.ofNullable(pointPurchaseDAO.get(purchaseId)).ifPresent(p -> {
+            if (p.getStatus() == PurchaseStatus.PENDING) {
+                p.setStatus(PurchaseStatus.DENIED);
+            }
+        });
     }
 }

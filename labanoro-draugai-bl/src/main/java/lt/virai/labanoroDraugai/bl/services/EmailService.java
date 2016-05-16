@@ -7,4 +7,6 @@ import com.sendgrid.SendGridException;
  */
 public interface EmailService {
     void sendInvitationEmail(String email, String from, String redirectUrl) throws SendGridException;
+
+    void notifyMembers(String email, String name, String surname) throws SendGridException;
 }

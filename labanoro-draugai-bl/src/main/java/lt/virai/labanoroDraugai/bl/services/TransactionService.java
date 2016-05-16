@@ -11,4 +11,8 @@ public interface TransactionService {
     PointPurchase createPurchase(Integer userId, Integer amount);
 
     List<PointPurchase> getAllPurchases();
+
+    void confirmPurchase(int purchaseId);
+
+    void rejectPurchase(int purchaseId);
 }

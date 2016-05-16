@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -123,6 +124,32 @@ public class UserController {
             return Response.ok().entity(userModel).build();
         } catch (NumberFormatException | IllegalStateException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Secured({UserRole.ADMIN})
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") @NotNull Integer id) {
+        try {
+            userService.remove(id);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured()
+    @DELETE
+    @Path("/deleteCurrentUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCurrentUser(@Context SecurityContext securityContext) {
+        try {
+            userService.remove(Integer.parseInt(securityContext.getUserPrincipal().getName()));
+            return Response.ok().build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
         }
     }
 }

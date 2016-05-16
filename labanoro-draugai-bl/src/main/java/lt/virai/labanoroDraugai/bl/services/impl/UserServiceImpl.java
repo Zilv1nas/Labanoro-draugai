@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void remove(User user) {
-        userDAO.remove(Objects.requireNonNull(user));
+    public void remove(Integer userId) {
+        userDAO.remove(Objects.requireNonNull(userId));
     }
 
     @Override

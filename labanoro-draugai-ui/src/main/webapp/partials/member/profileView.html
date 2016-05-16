@@ -37,7 +37,8 @@
         </div>
         <div class="form-group">
             <div class="login-form-buttons">
-                <button ng-show="isAdmin" ng-click="update()" class="btn btn-info">Atnaujinti profilį</button>
+                <button ng-show="isAdmin || isCurrentUser" ng-click="update()" class="btn btn-info">Atnaujinti profilį</button>
+                <button ng-show="isCurrentUser" ng-click="remove()" class="btn btn-danger">Ištrinti paskyrą</button>
             </div>
         </div>
     </div>

@@ -3,8 +3,10 @@ package lt.virai.labanoroDraugai.bl.services.impl;
 import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
 import lt.virai.labanoroDraugai.bl.services.EmailService;
+import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.Objects;
 
 /**
@@ -12,6 +14,8 @@ import java.util.Objects;
  */
 @Stateless
 public class SendGridEmailService implements EmailService {
+    @Inject
+    private UserDAO userDAO;
 
     private static final String SEND_GRID_API_KEY = "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"; //TODO add to properties
 
@@ -31,6 +35,24 @@ public class SendGridEmailService implements EmailService {
                 "Norėdami užpildyti stojimo anketą apsilankykite šiame puslapyje: %s", from, redirectUrl);
 
         newEmail.setHtml(message);
+
+        sendgrid.send(newEmail);
+    }
+
+    @Override
+    public void notifyMembers(String email, String name, String surname) throws SendGridException {
+        Objects.requireNonNull(email);
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(surname);
+
+        SendGrid.Email newEmail = new SendGrid.Email();
+        newEmail.setFrom("info@labanoro-draugai.lt");
+        newEmail.setSubject("Užregistravo naujas kandidatas į klubą");
+
+        String message = String.format("Sveiki, pranešame, kad užsiregistravo naujas kandidatas į klubą: %s %s, %s", name, surname, email);
+        newEmail.setHtml(message);
+
+        userDAO.getAllVerifiedMembers().forEach(m -> newEmail.addTo(m.getEmail()));
 
         sendgrid.send(newEmail);
     }

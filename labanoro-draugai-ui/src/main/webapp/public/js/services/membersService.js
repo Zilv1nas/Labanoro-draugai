@@ -33,10 +33,14 @@ app.service('membersService', ['$http', function ($http) {
 
     this.updateProfile = function (user) {
         return $http.post(baseUrl + 'updateProfile', user);
-    }
+    };
 
     this.deleteMember = function (id) {
-        return $http.delete(baseUrl + 'delete/', + id);
+        return $http.delete(baseUrl + 'delete/' + id);
+    };
+
+    this.deleteCurrentMember = function () {
+        return $http.delete(baseUrl + 'deleteCurrentUser');
     }
 
 }]);

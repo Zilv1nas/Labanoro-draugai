@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Žilvinas on 2016-04-21.
@@ -19,7 +18,7 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
     public ObjectMapperContextResolver() {
         mapper = new ObjectMapper();
         JSR310Module jsr310Module = new JSR310Module();
-        jsr310Module.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer(DateTimeFormatter.ISO_DATE_TIME));
+        jsr310Module.addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
         mapper.registerModule(jsr310Module);
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }

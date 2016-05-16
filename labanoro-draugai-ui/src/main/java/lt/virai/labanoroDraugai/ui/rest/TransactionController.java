@@ -58,4 +58,30 @@ public class TransactionController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
+    @Secured({UserRole.ADMIN})
+    @POST
+    @Path("/confirmPurchase")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response confirmPurchase(@NotNull Integer purchaseId) {
+        try {
+            transactionService.confirmPurchase(purchaseId);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Secured({UserRole.ADMIN})
+    @POST
+    @Path("/rejectPurchase")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response rejectPurchase(@NotNull Integer purchaseId) {
+        try {
+            transactionService.rejectPurchase(purchaseId);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
