@@ -1,4 +1,4 @@
-app.controller('editResidenceController', ['$scope', '$state', 'residencesService', 'residence', function ($scope, $state, residencesService, residence) {
+app.controller('editResidenceController', ['$scope', '$state', 'residencesService', 'residence', 'growl', function ($scope, $state, residencesService, residence, growl) {
     $scope.Title = "Redaguoti rezidenciją";
     $scope.residence = residence;
     $scope.residence.availability.dateFrom = new Date(residence.availability.dateFrom);
@@ -12,10 +12,11 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
 
         residencesService.updateResidence($scope.residence)
             .then(function (response) {
-                $state.go('main');
+                growl.success('Vasarnamis atnaujintas sėkmingai!');
+                $state.go('adminResidencesList');
             }).catch(function (response) {
+                growl.error('Nepavyko atnaujinti vasarnamio!');
                 console.log(response);
-                //ToDo:
             })
     };
 

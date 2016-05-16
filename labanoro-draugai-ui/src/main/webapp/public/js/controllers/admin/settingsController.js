@@ -1,15 +1,14 @@
-app.controller('settingsController', ['$scope', 'settingsService', function ($scope, settingsService) {
+app.controller('settingsController', ['$scope', 'settingsService', 'growl', function ($scope, settingsService, growl) {
 
     $scope.settings = {};
 
     $scope.confirm = function () {
         settingsService.confirmSettings($scope.settings)
             .then(function (response) {
-                console.log(response);
-                $state.go('main');
+                growl.success('Nustatymai atnaujinti sėkmingai!');
+                $state.go('settings', {}, { reload: 'settings' });
             }).catch(function (response) {
-                console.log(response);
-                //TODO error handling
+                growl.error('Nepavyko atnaujinti nustatymų!');
             })
     }
 

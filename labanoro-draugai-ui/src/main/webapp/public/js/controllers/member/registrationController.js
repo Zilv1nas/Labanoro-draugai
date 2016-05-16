@@ -1,4 +1,4 @@
-app.controller('registrationController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
+app.controller('registrationController', ['$scope', '$state', 'authService', 'growl', function ($scope, $state, authService, growl) {
     $scope.signupType = "pw";
     
     $scope.register = function () {
@@ -14,8 +14,7 @@ app.controller('registrationController', ['$scope', '$state', 'authService', fun
             authService.setAuthData(response.data);
             $state.go('main');
         }).catch(function (response) {
-            //TODO error handling
-            alert("Couldn't register" + response.data);
+            growl.error('Nepavyko užsiregistruoti!');
         })
     };
 
@@ -24,7 +23,7 @@ app.controller('registrationController', ['$scope', '$state', 'authService', fun
             authService.setAuthData(response.data);
             $state.go('main');
         }).catch(function (response) {
-            alert("Couldn't register" + response.data);
+            growl.error('Nepavyko užsiregistruoti!');
         })
     }
 }]);

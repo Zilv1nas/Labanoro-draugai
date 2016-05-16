@@ -2,8 +2,4 @@ app.controller('residencesListController', ['$scope', 'residencesService', 'resi
 
     $scope.residences = residences;
 
-    this.callServer = function callServer(tableState) {
-        
-    }
-    
 }]);

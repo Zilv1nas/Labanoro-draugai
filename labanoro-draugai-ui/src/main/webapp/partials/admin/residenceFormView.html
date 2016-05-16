@@ -11,6 +11,7 @@
                         </input>
                     </div>
                 </div>
+                {{errorMessages}}
                 <div class="col-md-9 col-md-offset-2">
                     <img width="400" class="img-responsive" ng-src="{{residence.image}}">
                 </div>
@@ -18,6 +19,7 @@
                     <label class="col-md-2 control-label">Pavadinimas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.name" class="form-control" placeholder="Pavadinimas">
+                        <validation errors="errorMessages"></validation>
                     </div>
                 </div>
                 <div class="form-group">

@@ -1,16 +1,29 @@
-app.controller('adminMembersListController', ['$scope', 'residencesService', 'members', function ($scope, residencesService, members) {
+app.controller('adminMembersListController', ['$scope', 'residencesService', 'members', 'membersService', 'growl', '$state', '$uibModal', function ($scope, residencesService, members, membersService, growl, $state, $uibModal) {
 
     $scope.members = members;
 
-    $scope.create = function () {
-        residencesService.createService()
-            .then(function (response) {
-                authService.setAuthData(response.data);
-                $state.go('main');
-            }).catch(function (response) {
-            //TODO error handling
-            alert("Couldn't log in" + response.data);
-        })
-    }
+    $scope.deleteUser = function (id) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'partials/modals/confirmModal.html',
+            controller: 'confirmController',
+            size: 'md',
+            resolve: {
+                message: function () {
+                    return 'Ar tikrai norite ištrinti narį?';
+                }
+            }
+        });
+
+        modalInstance.result.then(function () {
+            membersService.deleteMember(id)
+                .then(function (response) {
+                    growl.success('Narys ištrintas sėkmingai!');
+                    $state.go('adminMembersList', {}, { reload: 'adminMembersList' });
+                }).catch(function (response) {
+                    growl.error('Nepavyko ištrinti nario!');
+                })
+        });
+    };
 
 }]);

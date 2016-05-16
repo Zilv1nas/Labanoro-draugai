@@ -25,6 +25,7 @@
                         <th>El. paštas</th>
                         <th>Pirkimo data</th>
                         <th>Kiekis</th>
+                        <th>Būsena</th>
                         <th>Veiksmai</th>
                     </tr>
                 </thead>
@@ -36,11 +37,14 @@
                         <td>{{purchase.username}}</td>
                         <td>{{purchase.purchaseDate}}</td>
                         <td>{{purchase.amount}}</td>
-                        <td>
+                        <td>{{purchase.status}}</td>
+                        <td ng-if="purchase.status === 'PENDING'">
                             <button ng-click="confirmPurchase(purchase.id)" class="btn btn-success btn-raised">Patvirtinti
                         </button>
                             <button ng-click="rejectPurchase(purchase.id)" class="btn btn-danger btn-raised">Atmesti
                         </button>
+                        </td>
+                        <td ng-if="purchase.status !== 'PENDING'">
                         </td>
                     </tr>
                 </tbody>

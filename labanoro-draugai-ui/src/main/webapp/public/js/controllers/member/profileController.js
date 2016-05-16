@@ -1,11 +1,11 @@
-app.controller('profileController', ['$scope', '$stateParams', '$uibModal', 'membersService', 'transactionService', 'authService',
-    function ($scope, $stateParams, $uibModal, membersService, transactionService, authService) {
+app.controller('profileController', ['$scope', '$stateParams', '$uibModal', 'membersService', 'transactionService', 'authService', 'growl',
+    function ($scope, $stateParams, $uibModal, membersService, transactionService, authService, growl) {
 
     var getCurrentUserProfule = function () {
         membersService.getCurrentUserProfile().then(function (response) {
             $scope.user = response.data;
         }).catch(function (response) {
-            //TODO
+            growl.error('Nepavyko gauti profilio duomenų!');
         });
     };
 
@@ -13,7 +13,7 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', 'mem
         membersService.getMemberProfile(id).then(function (response) {
             $scope.user = response.data;
         }).catch(function (response) {
-            //TODO
+            growl.error('Nepavyko gauti profilio duomenų!');
         })
     };
 
@@ -36,20 +36,20 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', 'mem
 
         modalInstance.result.then(function (points) {
             transactionService.createPurchase(points).then(function (response) {
-                //TODO 
+                growl.success('Užsakymas atliktas sėkmingai!');
             }).catch(function (response) {
-                //TODO
+                growl.error('Nepavyko atlikti užsakymo!');
             })
         });
     };
 
     $scope.update = function () {
         var successHandler = function (response) {
-          //TODO
+          growl.success('Profilis atnaujintas sėkmingai!');
         };
 
         var failureHandler = function (response) {
-            //TODO
+            growl.error('Nepavyko atnaujinti profilio!');
         };
 
         if ($scope.isCurrentUser) {

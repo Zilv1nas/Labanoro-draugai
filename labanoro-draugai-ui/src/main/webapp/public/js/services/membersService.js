@@ -27,12 +27,16 @@ app.service('membersService', ['$http', function ($http) {
         return $http.get(baseUrl + "getMemberProfile/" + id);
     };
 
-    this.updateCurrentUserProfile = function(user) {
+    this.updateCurrentUserProfile = function (user) {
         return $http.post(baseUrl + 'updateCurrentUserProfile', user);
     };
 
     this.updateProfile = function (user) {
         return $http.post(baseUrl + 'updateProfile', user);
+    }
+
+    this.deleteMember = function (id) {
+        return $http.delete(baseUrl + 'delete/', + id);
     }
 
 }]);

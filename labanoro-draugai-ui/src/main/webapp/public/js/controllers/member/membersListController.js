@@ -1,30 +1,48 @@
-app.controller('membersListController', ['$scope', '$state', '$window', 'authService', 'membersService', 'members',
-    function ($scope, $state, $window, authService, membersService, members) {
+app.controller('membersListController', ['$scope', '$state', '$window', 'authService', 'membersService', 'members', '$uibModal', 'growl',
+    function ($scope, $state, $window, authService, membersService, members, $uibModal, growl) {
 
-    $scope.members = members;
+        $scope.members = members;
 
-    $scope.verifyUser = function (userId) {
-        membersService.verifyUser(userId).then(function (response) {
-            $state.reload();
-        }).catch(function (response) {
-            //TODO show error
-        })
-    };
+        $scope.verifyUser = function (userId) {
 
-    $scope.invite = function (newUserEmail) {
-        var invitationInfo = {
-            toEmail: newUserEmail,
-            fromName: authService.getAuthData().name,
-            fromSurname: authService.getAuthData().surname,
-            redirectUrl: $state.href('login', {}, {absolute: true})
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'partials/modals/confirmModal.html',
+                controller: 'confirmController',
+                size: 'md',
+                resolve: {
+                    message: function () {
+                        return 'Ar tikrai norite patvirtinti kandidatą?';
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                membersService.verifyUser(userId)
+                    .then(function (response) {
+                        growl.success('Kandidatas patvirtintas sėkmingai!');
+                        $state.go('membersList', {}, { reload: 'membersList' });
+                    }).catch(function (response) {
+                        growl.error('Nepavyko patvirtintas kandidato!');
+                    })
+            });
         };
 
-        membersService.invite(invitationInfo).then(function (response) {
-            $scope.newUserEmail = null;
-            //TODO
-        }).catch(function (response) {
-            //TODO show error
-        })
-    }
-}]);
+        $scope.invite = function (newUserEmail) {
+            var invitationInfo = {
+                toEmail: newUserEmail,
+                fromName: authService.getAuthData().name,
+                fromSurname: authService.getAuthData().surname,
+                redirectUrl: $state.href('login', {}, { absolute: true })
+            };
+
+            membersService.invite(invitationInfo).then(function (response) {
+                $scope.newUserEmail = null;
+                growl.success('Sėkmingai išsiųstas pakvietimas!');
+            }).catch(function (response) {
+                growl.error('Nepavyko išsiųsti pakvietimo!');
+            })
+        }
+
+    }]);
 

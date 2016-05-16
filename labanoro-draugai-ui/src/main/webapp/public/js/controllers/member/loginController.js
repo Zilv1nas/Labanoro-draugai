@@ -1,21 +1,19 @@
-app.controller('loginController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
+app.controller('loginController', ['$scope', '$state', 'authService', 'growl', function ($scope, $state, authService, growl) {
     $scope.login = function () {
         authService.login($scope.loginInfo).then(function (response) {
             authService.setAuthData(response.data);
             $state.go('main');
         }).catch(function (response) {
-            //TODO error handling
-            alert("Couldn't log in" + response.data);
+            growl.error('Nepavyko prisijungti!');
         })
     };
-    
+
     $scope.loginWithFb = function () {
-      authService.authenticateFB().then(function (response) {
-          authService.setAuthData(response.data);
-          $state.go('main');
-      }).catch(function (response) {
-          //TODO
-          alert("Couldn't log in" + response.data);
-      })
+        authService.authenticateFB().then(function (response) {
+            authService.setAuthData(response.data);
+            $state.go('main');
+        }).catch(function (response) {
+            growl.error('Nepavyko prisijungti!');
+        })
     }
 }]);

@@ -1,4 +1,4 @@
-app.controller('createResidenceController', ['$scope', '$state', 'residencesService', function ($scope, $state, residencesService) {
+app.controller('createResidenceController', ['$scope', '$state', 'residencesService', 'growl', function ($scope, $state, residencesService, growl) {
     $scope.Title = 'Sukurti rezidenciją';
     $scope.residence = {};
     $scope.residence.availability = {};
@@ -10,13 +10,14 @@ app.controller('createResidenceController', ['$scope', '$state', 'residencesServ
             $scope.residence.availability.dateFrom.setHours(3, 0, 0, 0);
         if ($scope.residence.availability.dateTo)
             $scope.residence.availability.dateTo.setHours(3, 0, 0, 0);
-        
+
         residencesService.createResidence($scope.residence)
             .then(function (response) {
-                $state.go('main');
+                growl.success('Vasarnamis sukurtas sėkmingai!');
+                $state.go('adminResidencesList');
             }).catch(function (response) {
-                console.log(response);
-                //ToDo:
+                $scope.errorMessages = response.data;
+                growl.error('Nepavyko sukurti vasarnamio!');
             })
     };
 }]);
