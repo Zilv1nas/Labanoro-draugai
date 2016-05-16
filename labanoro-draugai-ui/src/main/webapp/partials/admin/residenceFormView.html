@@ -44,7 +44,6 @@
                         <textarea ng-model="residence.description" class="form-control" placeholder="Aprašymas" rows="3"></textarea>
                     </div>
                 </div>
-
                 <div class="form-group" ng-controller="datePickerController">
                     <label class="col-md-2 control-label">Galioja nuo</label>
                     <div class="col-md-9">
@@ -61,7 +60,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="form-group" ng-controller="datePickerController">
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
@@ -78,32 +76,32 @@
                         </p>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Papildomos paslaugos</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="Papildomos paslaugos pavadinimas" ng-model="name" />
+                <div class="form-group" ng-controller="servicesController" onload="myFunction()">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Papildomos paslaugos</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Papildomos paslaugos pavadinimas" ng-model="service.name" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Papildomos paslaugos kaina</label>
-                    <div class="col-md-9">
-                        <p class="input-group">
-                            <input type="number" class="form-control" placeholder="Papildomos paslaugos kaina" ng-model="price" />
-                            <span class="input-group-btn">
-            <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
-          </span>
-                        </p>
-                            <span style="margin-right: 10px" ng-repeat="service in services track by $index">
-                          <span>{{service.name}}, {{service.price}} tšk.</span>
-                            <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
-                            </span>
-
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Papildomos paslaugos kaina</label>
+                        <div class="col-md-9">
+                            <p class="input-group">
+                                <input type="number" class="form-control" placeholder="Papildomos paslaugos kaina" ng-model="service.price" ng-model="service.price"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
+                                </span>
+                            </p>
+                                <span style="margin-right: 10px" ng-repeat="service in services track by $index">
+                                <span>{{service.name}}, {{service.price}} tšk.</span>
+                                <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
+                                </span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="login-form-buttons">
-                        <button ng-click="saveResidence()" class="btn btn-primary">Išsaugoti</button>
+                    <div class="form-group">
+                        <div class="login-form-buttons">
+                            <button ng-click="saveResidence(services)" class="btn btn-primary">Išsaugoti</button>
+                        </div>
                     </div>
                 </div>
             </fieldset>
