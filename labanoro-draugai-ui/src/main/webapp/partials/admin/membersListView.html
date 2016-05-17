@@ -1,0 +1,44 @@
+<div class="col-md-12">
+    <div class="well">
+        <h2>Klubo narių administravimas</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
+                <div class="input-group">
+                    <label class="control-label">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <label>
+                        <input ng-model="filterKey" class="form-control">
+                    </label>
+                </div>
+                <span class="material-input"></span>
+            </div>
+        </div>
+        <div class="row table-responsive user-list">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vardas</th>
+                        <th>Elektroninis paštas</th>
+                        <th>Registracijos data</th>
+                        <th>Rolė</th>
+                        <th>Veiksmai</th>
+                    </tr>
+                </thead>
+                <tbody ng-cloak>
+                    <tr ng-repeat="member in members | filter : filterMyBitches">
+                        <td>{{member.id}}</td>
+                        <td><a class="member-link" ui-sref="memberProfile({memberId: member.id})">{{member.name + ' ' + member.surname}}</a></td>
+                        <td>{{member.email}}</td>
+                        <td>{{member.registrationDate | date}}</td>
+                        <td>{{member.role | rolesFilter}}</td>
+                        <td>
+                            <button ng-click="deleteUser(member.id)" class="btn btn-danger btn-raised">Ištrinti</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

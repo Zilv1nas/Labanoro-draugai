@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        userDAO.save(Objects.requireNonNull(user));
+    public User save(User user) {
+        return userDAO.save(Objects.requireNonNull(user));
     }
 
     @Override
@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void remove(User user) {
-        userDAO.remove(Objects.requireNonNull(user));
+    public void remove(Integer userId) {
+        userDAO.remove(Objects.requireNonNull(userId));
     }
 
     @Override
@@ -51,6 +51,18 @@ public class UserServiceImpl implements UserService {
             if (UserRole.CANDIDATE.equals(u.getRole())) {
                 u.setRole(UserRole.MEMBER);
             }
+        });
+    }
+
+    @Override
+    public void updateUserProfile(User user) {
+        Objects.requireNonNull(user);
+
+        Optional<User> persistenUser = Optional.ofNullable(userDAO.get(user.getId()));
+        persistenUser.ifPresent(u -> {
+            u.setEmail(user.getEmail());
+            u.setSurname(user.getSurname());
+            u.setName(user.getName());
         });
     }
 }

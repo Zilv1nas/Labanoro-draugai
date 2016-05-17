@@ -5,9 +5,6 @@ import lt.virai.labanoroDraugai.domain.dao.CityDAO;
 import lt.virai.labanoroDraugai.domain.entities.City;
 
 import javax.ejb.Stateless;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
 
 /**
  * Created by Mantas on 4/19/2016.

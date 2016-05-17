@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -67,7 +66,7 @@ public class User {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     public Set<AuthenticationAttribute> getAuthenticationAttributes() {
         return authenticationAttributes;
     }

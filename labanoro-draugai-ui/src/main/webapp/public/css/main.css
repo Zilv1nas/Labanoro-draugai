@@ -75,3 +75,11 @@
 .user-list table > tbody > tr >td {
     vertical-align: middle;
 }
+
+.form-group {
+    position: initial;
+}
+
+.last-profile-row {
+    margin-bottom: 100px;
+}

@@ -6,6 +6,7 @@ import lt.virai.labanoroDraugai.domain.model.UserRole;
 
 import javax.security.sasl.AuthenticationException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Žilvinas on 2016-04-13.
@@ -13,7 +14,7 @@ import java.util.List;
 public interface AuthService {
     AuthResult login(String username, String password) throws AuthenticationException;
 
-    boolean isAuthorized(String token);
+    Optional<String> getUserId(String token);
 
     boolean hasRoles(String token, List<UserRole> userRoles);
 
@@ -24,6 +25,4 @@ public interface AuthService {
     AuthResult loginWithFacebook(String facebookId) throws AuthenticationException;
 
     boolean isAlreadyRegistered(String email);
-
-    User getUser(String token);
 }

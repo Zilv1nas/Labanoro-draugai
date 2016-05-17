@@ -3,12 +3,13 @@ package lt.virai.labanoroDraugai.ui.rest;
 import lt.virai.labanoroDraugai.domain.dao.CityDAO;
 import lt.virai.labanoroDraugai.domain.entities.City;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
-import lt.virai.labanoroDraugai.ui.model.CityModel;
-import lt.virai.labanoroDraugai.ui.model.ModelState;
+import lt.virai.labanoroDraugai.ui.model.residence.CityModel;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,7 +19,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,15 +36,11 @@ public class CityController {
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response save(CityModel cityModel) {
+    public Response save(@Valid CityModel cityModel) {
         try {
-            ModelState modelState = cityModel.validate();
-            if (cityModel.getId() != null && cityModel.getId() != 0)
-                // todo property names hardcodinimas
-                modelState.addError("id", "Cannot create city which has id already set.");
-
-            if (modelState.hasErrors())
-                return modelState.buildBadResponse();
+            if (cityModel.getId() != null && cityModel.getId() != 0) {
+                throw new IllegalStateException("Cannot create city which has id already set.");
+            }
 
             City city = cityModel.mapTo();
             cityDAO.save(city);
@@ -60,14 +56,10 @@ public class CityController {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(CityModel cityModel) {
+    public Response update(@Valid CityModel cityModel) {
         try {
-            ModelState modelState = cityModel.validate();
             if (cityModel.getId() == null || cityModel.getId() == 0)
-                modelState.addError("id", "Cannot update city when id is not set.");
-
-            if (modelState.hasErrors())
-                return modelState.buildBadResponse();
+                throw new IllegalStateException("Cannot update city when id is not set.");
 
             City city = cityModel.mapTo();
             cityDAO.update(city);
@@ -79,7 +71,7 @@ public class CityController {
 
     @Secured
     @GET
-    @Path("/getall")
+    @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
@@ -96,7 +88,7 @@ public class CityController {
     @GET
     @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id") Integer id) {
+    public Response get(@PathParam("id") @NotNull Integer id) {
         try {
             return Response.ok(new CityModel(cityDAO.get(id))).build();
         } catch (Exception ex) {
@@ -108,21 +100,10 @@ public class CityController {
     @POST
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") Integer id) {
-        ModelState modelState = new ModelState();
+    public Response delete(@PathParam("id") @NotNull Integer id) {
         try {
-            if (id == null) {
-                modelState.addError("id", "Id not specified");
-                return modelState.buildBadResponse();
-            } else {
-                City city = cityDAO.get(id);
-                if (city == null)
-                    modelState.addError("", "City does not exist.");
-                if (modelState.hasErrors())
-                    return modelState.buildBadResponse();
-                cityDAO.remove(city);
-                return Response.ok().build();
-            }
+            cityDAO.remove(id);
+            return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }

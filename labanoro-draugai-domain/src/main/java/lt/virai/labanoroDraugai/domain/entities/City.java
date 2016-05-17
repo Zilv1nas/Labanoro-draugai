@@ -1,13 +1,19 @@
 package lt.virai.labanoroDraugai.domain.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
  * Created by Mantas on 4/13/2016.
  */
 @Entity
-@Table(name="city")
+@Table(name = "city")
 public class City {
     private Integer id;
     private String name;
