@@ -2,7 +2,21 @@
  * Created by Žilvinas on 2016-03-11.
  */
 $.material.init();
-var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap', 'angular-growl']);
+var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap', 'angular-growl'])
+    .filter('byFullName', function () {
+        return function (name, surname) {
+            var items = {
+                genres: genres,
+                out: []
+            };
+            angular.forEach(movies, function (value, key) {
+                if (this.genres[value.genre] === true) {
+                    this.out.push(value);
+                }
+            }, items);
+            return items.out;
+        };
+    });
 
 app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider', '$authProvider', 'cfpLoadingBarProvider', 'growlProvider',
     function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider, growlProvider) {

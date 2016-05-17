@@ -1,9 +1,10 @@
 app.controller('adminMembersListController', ['$scope', 'residencesService', 'members', 'membersService', 'growl', '$state', '$uibModal', function ($scope, residencesService, members, membersService, growl, $state, $uibModal) {
-
     $scope.members = members;
+    $scope.filterKey = '';
 
-    $scope.filterFunction = function(element) {
-        return element.name.match(/^Ma/);
+    $scope.filterMyBitches = function(member){
+        var fullName = (member.name.toLowerCase() + ' ' + member.surname.toLowerCase());
+        return (!$scope.filterKey || fullName.indexOf($scope.filterKey.toLowerCase()) != -1)
     };
 
     $scope.deleteUser = function (id) {
@@ -29,5 +30,4 @@ app.controller('adminMembersListController', ['$scope', 'residencesService', 'me
                 })
             });
     };
-
 }]);

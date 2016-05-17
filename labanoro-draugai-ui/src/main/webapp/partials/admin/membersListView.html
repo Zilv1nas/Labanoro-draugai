@@ -8,7 +8,7 @@
                         <i class="material-icons">search</i>
                     </label>
                     <label>
-                        <input ng-model="query" class="form-control">
+                        <input ng-model="filterKey" class="form-control">
                     </label>
                 </div>
                 <span class="material-input"></span>
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody ng-cloak>
-                    <tr ng-repeat="member in members | filter:query">
+                    <tr ng-repeat="member in members | filter : filterMyBitches">
                         <td>{{member.id}}</td>
                         <td><a class="member-link" ui-sref="memberProfile({memberId: member.id})">{{member.name + ' ' + member.surname}}</a></td>
                         <td>{{member.email}}</td>

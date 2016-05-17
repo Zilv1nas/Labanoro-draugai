@@ -2,10 +2,6 @@ app.controller('adminResidencesListController', ['$scope', '$state', '$uibModal'
 function ($scope, $state, $uibModal, transactionService, residencesService, authService, residences, growl) {
     $scope.residences = residences;
 
-    $scope.filterFunction = function(element) {
-        return element.name.match(/^Ma/);
-    };
-
     $scope.deleteResidence = function (id) {
         var modalInstance = $uibModal.open({
             animation: true,
@@ -29,5 +25,4 @@ function ($scope, $state, $uibModal, transactionService, residencesService, auth
                 })
         });
     };
-
 }]);
