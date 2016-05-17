@@ -65,12 +65,27 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'createResidenceController',
                 templateUrl: adminUrlPrefix + '/residenceFormView.html'
             })
+            //ToDo: Put next to other members' states.
+            .state('viewResidence', {
+                url: "/residence/:ID",
+                controller: 'viewResidenceController',
+                templateUrl: memberUrlPrefix + '/residenceView.html',
+                resolve: {
+                    residence: function (residencesService, $stateParams) {
+                        console.log("$stateParams: ");
+                        console.log($stateParams);
+                        return residencesService.getResidence($stateParams.ID);
+                    }
+                }
+            })
             .state('editResidence', {
                 url: "/admin/editResidence/:ID",
                 controller: 'editResidenceController',
                 templateUrl: adminUrlPrefix + '/residenceFormView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
+                        console.log("$stateParams: ");
+                        console.log($stateParams);
                         return residencesService.getResidence($stateParams.ID);
                     }
                 }

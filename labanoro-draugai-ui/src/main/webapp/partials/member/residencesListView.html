@@ -3,7 +3,7 @@
         <div class="well residences">
             <h2>Vasarnamiai</h2>
             <div class="list-group">
-                <div class="list-group-item residence" ng-repeat="residence in residences">
+                <div class="list-group-item residence" ng-repeat="residence in residences track by $index">
                         <div class=" col-md-3">
                             <figure class="pull-left">
                                 <img class=" img-thumbnail img-responsive" ng-src="{{residence.image}}" width="350" height="250" alt="placehold.it/350x250">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-md-3 text-center">
                             <h2> <small> Laisvos vietos: </small> {{residence.capacity}} </h2>
-                            <button type="button" class="btn btn-default btn-lg btn-block"> Bookmark Now! </button>
+                            <button ng-click="onView(residence.id)" type="button" class="btn btn-default btn-lg btn-block" > Peržiūrėti </button>
                             <div class="text-center">
                                 <span><i class="glyphicon glyphicon-euro"></i>{{residence.weeklyPrice}}</span>
                                 <span><i class="glyphicon glyphicon-tree-deciduous"></i>{{residence.city.name}} </span>
