@@ -4,13 +4,12 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
                 <div class="input-group">
-                    <label class="control-label" for="inviteMember">Filtruoti klubo narius</label>
-                    <input ng-model="search" type="email" id="inviteMember" class="form-control">
-                    <span class="input-group-btn">
-                <button ng-click="filter(search)" type="button" class="btn btn-fab btn-fab-mini">
-                  <i class="material-icons">search</i>
-                </button>
-              </span>
+                    <label class="control-label">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <label>
+                        <input ng-model="query" class="form-control">
+                    </label>
                 </div>
                 <span class="material-input"></span>
             </div>
@@ -28,15 +27,14 @@
                     </tr>
                 </thead>
                 <tbody ng-cloak>
-                    <tr ng-repeat="member in members">
+                    <tr ng-repeat="member in members | filter:query">
                         <td>{{member.id}}</td>
                         <td><a class="member-link" ui-sref="memberProfile({memberId: member.id})">{{member.name + ' ' + member.surname}}</a></td>
                         <td>{{member.email}}</td>
                         <td>{{member.registrationDate | date}}</td>
                         <td>{{member.role | rolesFilter}}</td>
                         <td>
-                            <button ng-click="deleteUser(member.id)" class="btn btn-danger btn-raised">Ištrinti
-                        </button>
+                            <button ng-click="deleteUser(member.id)" class="btn btn-danger btn-raised">Ištrinti</button>
                         </td>
                     </tr>
                 </tbody>

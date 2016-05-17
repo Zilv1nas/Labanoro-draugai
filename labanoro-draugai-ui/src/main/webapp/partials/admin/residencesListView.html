@@ -4,13 +4,12 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
                 <div class="input-group">
-                    <label class="control-label">Filtruoti rezidencijas</label>
-                    <input ng-model="searchInput" class="form-control">
-                    <span class="input-group-btn">
-                <button ng-click="search()" type="button" class="btn btn-fab btn-fab-mini">
-                  <i class="material-icons">search</i>
-                </button>
-              </span>
+                    <label class="control-label">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <label>
+                        <input ng-model="query" class="form-control">
+                    </label>
                 </div>
                 <span class="material-input"></span>
             </div>
@@ -28,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody ng-cloak>
-                    <tr ng-repeat="residence in residences">
+                    <tr ng-repeat="residence in residences | filter:query">
                         <td>{{residence.id}}</td>
                         <td><a class="residence-link" ui-sref="viewResidence({id: residence.id})">{{residence.name}}</a></td>
                         <td>{{residence.weeklyPrice}}</td>

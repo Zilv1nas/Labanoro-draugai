@@ -2,6 +2,10 @@ app.controller('adminMembersListController', ['$scope', 'residencesService', 'me
 
     $scope.members = members;
 
+    $scope.filterFunction = function(element) {
+        return element.name.match(/^Ma/);
+    };
+
     $scope.deleteUser = function (id) {
         var modalInstance = $uibModal.open({
             animation: true,
@@ -23,7 +27,7 @@ app.controller('adminMembersListController', ['$scope', 'residencesService', 'me
                 }).catch(function (response) {
                     growl.error('Nepavyko ištrinti nario!');
                 })
-        });
+            });
     };
 
 }]);
