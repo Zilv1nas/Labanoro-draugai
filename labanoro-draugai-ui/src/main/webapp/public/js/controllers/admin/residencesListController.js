@@ -3,10 +3,6 @@ app.controller('adminResidencesListController', ['$scope', '$state', '$uibModal'
 
         $scope.residences = residences;
 
-        $scope.editResidence = function (ID) {
-            $state.go('editResidence', { "ID": ID });
-        };
-
         $scope.deleteResidence = function (id) {
             var modalInstance = $uibModal.open({
                 animation: true,

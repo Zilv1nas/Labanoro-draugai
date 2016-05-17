@@ -10,12 +10,14 @@
                             </figure>
                         </div>
                     <div class="col-md-6">
-                            <a role="button"><h4> {{residence.name}} </h4></a>
+                            <a role="button" ui-sref="viewResidence({id: residence.id})">
+                                <h3> {{residence.name}} </h3>
+                            </a>
                             <p class="list-group-item-text"> {{residence.description}}</p>
                         </div>
                         <div class="col-md-3 text-center">
                             <h2> <small> Laisvos vietos: </small> {{residence.capacity}} </h2>
-                            <button ng-click="onView(residence.id)" type="button" class="btn btn-default btn-lg btn-block" > Peržiūrėti </button>
+                            <button ui-sref="viewResidence({id: residence.id})" type="button" class="btn btn-default btn-lg btn-block" > Peržiūrėti </button>
                             <div class="text-center">
                                 <span><i class="glyphicon glyphicon-euro"></i>{{residence.weeklyPrice}}</span>
                                 <span><i class="glyphicon glyphicon-tree-deciduous"></i>{{residence.city.name}} </span>

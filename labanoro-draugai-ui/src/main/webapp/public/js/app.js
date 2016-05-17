@@ -61,14 +61,13 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                  }
             })
             .state('viewResidence', {
-                url: "/residence/:ID",
+                url: "/residence/:id",
                 controller: 'viewResidenceController',
                 templateUrl: memberUrlPrefix + '/residenceView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
-                        console.log("$stateParams: ");
                         console.log($stateParams);
-                        return residencesService.getResidence($stateParams.ID);
+                        return residencesService.getResidence($stateParams.id);
                     }
                 }
             })
@@ -78,14 +77,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: adminUrlPrefix + '/residenceFormView.html'
             })
             .state('editResidence', {
-                url: "/admin/editResidence/:ID",
+                url: "/admin/editResidence/:id",
                 controller: 'editResidenceController',
                 templateUrl: adminUrlPrefix + '/residenceFormView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
-                        console.log("$stateParams: ");
-                        console.log($stateParams);
-                        return residencesService.getResidence($stateParams.ID);
+                        return residencesService.getResidence($stateParams.id);
                     }
                 }
             })

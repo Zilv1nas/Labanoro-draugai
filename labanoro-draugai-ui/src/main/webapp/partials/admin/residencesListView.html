@@ -30,12 +30,12 @@
                 <tbody ng-cloak>
                     <tr ng-repeat="residence in residences">
                         <td>{{residence.id}}</td>
-                        <td>{{residence.name}}</td>
+                        <td><a class="residence-link" ui-sref="viewResidence({id: residence.id})">{{residence.name}}</a></td>
                         <td>{{residence.weeklyPrice}}</td>
                         <td>{{residence.capacity}}</td>
                         <td>{{residence.address}}</td>
                         <td>
-                        <button ng-click="editResidence(residence.id)" class="btn btn-success btn-raised">Redaguoti</button>
+                        <button ui-sref="editResidence({id: residence.id})" class="btn btn-success btn-raised">Redaguoti</button>
                         <button ng-click="deleteResidence(residence.id)" class="btn btn-danger btn-raised">Ištrinti</button>
                         </td>
                     </tr>
