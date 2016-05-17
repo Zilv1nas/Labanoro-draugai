@@ -45,7 +45,7 @@ public class ResidenceModel implements ValidatableModel, MappableTo<Residence> {
             modelState.addError("city", "City is required.");
         else
             modelState.merge(city.validate(), "city");
-        if(image != null && image.startsWith("data:image"))
+        if(image != null && !image.startsWith("data:image"))
             modelState.addError("image", "File type not supported.");
         if(weeklyPrice == null)
             modelState.addError("weeklyPrice", "Weekly price is required.");
