@@ -60,12 +60,6 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                      }
                  }
             })
-            .state('createResidence', {
-                url: "/admin/createResidence",
-                controller: 'createResidenceController',
-                templateUrl: adminUrlPrefix + '/residenceFormView.html'
-            })
-            //ToDo: Put next to other members' states.
             .state('viewResidence', {
                 url: "/residence/:ID",
                 controller: 'viewResidenceController',
@@ -77,6 +71,11 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                         return residencesService.getResidence($stateParams.ID);
                     }
                 }
+            })
+            .state('createResidence', {
+                url: "/admin/createResidence",
+                controller: 'createResidenceController',
+                templateUrl: adminUrlPrefix + '/residenceFormView.html'
             })
             .state('editResidence', {
                 url: "/admin/editResidence/:ID",
