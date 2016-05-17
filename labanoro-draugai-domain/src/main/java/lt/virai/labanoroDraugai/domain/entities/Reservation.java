@@ -26,6 +26,7 @@ public class Reservation {
     private Integer id;
     private User user;
     private Residence residence;
+    private Integer amountSpent;
     private LocalDate dateFrom;
     private LocalDate dateTo;
     private Set<ExtraService> selectedExtraServices = new HashSet<>();
@@ -68,6 +69,16 @@ public class Reservation {
 
     public void setResidence(Residence residence) {
         this.residence = residence;
+    }
+
+    @Basic
+    @Column(name = "amount_spent", nullable = false)
+    public Integer getAmountSpent() {
+        return amountSpent;
+    }
+
+    public void setAmountSpent(Integer amountSpent) {
+        this.amountSpent = amountSpent;
     }
 
     @Basic
