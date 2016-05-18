@@ -2,6 +2,7 @@ app.controller('createResidenceController', ['$scope', '$state', 'residencesServ
     $scope.Title = 'Sukurti rezidenciją';
     $scope.residence = {};
     $scope.residence.availability = {};
+    $scope.errorMessages = [];
 
     $scope.saveResidence = function (services) {
         $scope.residence.extraServices = services;

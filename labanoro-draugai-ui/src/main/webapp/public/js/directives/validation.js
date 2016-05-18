@@ -1,19 +1,19 @@
 app.directive("validation", [function () {
     return {
-        scope: {
-            errorMessages: "="
-        },
+        restrict: "E",
+        templateUrl: 'partials/directives/validationView.html',
         link: function (scope, element, attributes) {
-            console.log(scope.errorMessages);
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                };
-                reader.readAsDataURL(changeEvent.target.files[0]);
+            scope.$watch('errorMessages', function (newValue, oldValue) {
+                scope.errors = [];
+                angular.forEach(scope.errorMessages, function (value, key) {
+                    if (value.key === attributes.key) {
+                        scope.errors.push(value);
+                        element.parent().parent().addClass('has-error');
+                    }
+                });
+                console.log(scope.errors);
             });
+
         }
     }
 }]);

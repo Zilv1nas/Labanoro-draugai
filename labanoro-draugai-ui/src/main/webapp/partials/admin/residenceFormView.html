@@ -9,9 +9,9 @@
                         <input role="button" type="file" fileread="residence.image">
                         <input type="text" class="form-control" placeholder="Pasirinkite nuotrauką...">
                         </input>
+                        <validation errorMessages="{{errorMessages}}" key="image"></validation>
                     </div>
                 </div>
-                {{errorMessages}}
                 <div class="col-md-9 col-md-offset-2">
                     <img width="400" class="img-responsive" ng-src="{{residence.image}}">
                 </div>
@@ -19,63 +19,61 @@
                     <label class="col-md-2 control-label">Pavadinimas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.name" class="form-control" placeholder="Pavadinimas">
-                        <validation errors="errorMessages"></validation>
+                        <validation errorMessages="{{errorMessages}}" key="name"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Kaina dienai taškais</label>
                     <div class="col-md-9">
                         <input type="number" ng-model="residence.weeklyPrice" class="form-control" placeholder="Kaina dienai">
+                        <validation errorMessages="{{errorMessages}}" key="weeklyPrice"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Vietų sk.</label>
                     <div class="col-md-9">
                         <input type="number" ng-model="residence.capacity" class="form-control" placeholder="Maksimalus vietų skaičius">
+                    <validation errorMessages="{{errorMessages}}" key="capacity"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Adresas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.address" class="form-control" placeholder="Vietovės adresas">
+                    <validation errorMessages="{{errorMessages}}" key="address"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Aprašymas</label>
                     <div class="col-md-9">
                         <textarea ng-model="residence.description" class="form-control" placeholder="Aprašymas" rows="3"></textarea>
+                        <validation errorMessages="{{errorMessages}}" key="description"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="datePickerController">
                     <label class="col-md-2 control-label">Galioja nuo</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" ng-required="true"
-                                   class="form-control" uib-datepicker-popup
-                                   ng-model="residence.availability.dateFrom"
-                                   is-open="popup.opened"
-                                   datepicker-options="inlineOptions"
-                            />
+                            <input type="text" ng-required="true" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateFrom"
+                                is-open="popup.opened" datepicker-options="inlineOptions" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
+                        <validation errorMessages="{{errorMessages}}" key="dateFrom"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="datePickerController">
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
                         <p class="input-group">
-                            <input type="text" ng-required="true"
-                                   class="form-control" uib-datepicker-popup
-                                   ng-model="residence.availability.dateTo"
-                                   is-open="popup.opened"
-                                   datepicker-options="inlineOptions"
-                            />
+                            <input type="text" ng-required="true" class="form-control" uib-datepicker-popup ng-model="residence.availability.dateTo"
+                                is-open="popup.opened" datepicker-options="inlineOptions" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
+                    <validation errorMessages="{{errorMessages}}" key="dateTo"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="servicesController" onload="myFunction()">
@@ -89,15 +87,16 @@
                         <label class="col-md-2 control-label">Papildomos paslaugos kaina</label>
                         <div class="col-md-9">
                             <p class="input-group">
-                                <input type="number" class="form-control" placeholder="Papildomos paslaugos kaina" ng-model="service.price" ng-model="service.price"/>
+                                <input type="number" class="form-control" placeholder="Papildomos paslaugos kaina" ng-model="service.price" ng-model="service.price"
+                                />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" uib-tooltip="Pridėti paslaugą" ng-click="createService()"><i class="glyphicon glyphicon-plus"></i></button>
                                 </span>
                             </p>
-                                <span style="margin-right: 10px" ng-repeat="service in services track by $index">
+                            <span style="margin-right: 10px" ng-repeat="service in services track by $index">
                                 <span>{{service.name}}, {{service.price}} tšk.</span>
-                                <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
-                                </span>
+                            <i role="button" style="color: #009688" ng-click="removeService($index)" uib-tooltip="Pašalinti paslaugą" class="glyphicon glyphicon-remove"></i>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
