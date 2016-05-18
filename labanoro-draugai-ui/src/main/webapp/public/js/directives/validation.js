@@ -11,7 +11,7 @@ app.directive("validation", [function () {
                         element.parent().parent().addClass('has-error');
                     }
                 });
-                console.log(scope.errors);
+                scope.$apply();
             });
 
         }
