@@ -1,5 +1,7 @@
 package lt.virai.labanoroDraugai.ui.model.residence;
 
+import lt.virai.labanoroDraugai.domain.entities.Reservation;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -36,5 +38,9 @@ public class ReservationModel {
 
     public WeekRangeModel getDuration() {
         return duration;
+    }
+
+    public ReservationModel(Reservation reservation){
+
     }
 }
