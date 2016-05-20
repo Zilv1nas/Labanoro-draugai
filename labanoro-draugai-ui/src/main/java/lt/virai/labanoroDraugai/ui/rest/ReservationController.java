@@ -5,13 +5,9 @@ import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
-import lt.virai.labanoroDraugai.domain.entities.Residence;
-import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
-import lt.virai.labanoroDraugai.ui.model.residence.CityModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationHistoryModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationModel;
-import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
@@ -19,7 +15,12 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -81,12 +82,10 @@ public class ReservationController {
                     reservationModel.getDuration().getDateFrom(), reservationModel.getDuration().getDateTo(), null);
 
             return Response.ok().build();
-        }
-        catch (LabanoroException ex){
+        } catch (LabanoroException ex) {
             // TODO pritempt prie fronto (struktura).
             return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             return Response.serverError().build();
         }
     }
@@ -98,12 +97,12 @@ public class ReservationController {
     public Response cancel(@PathParam("id") @NotNull Integer id) {
         try {
             Reservation reservation = reservationDAO.get(id);
-            if(reservation == null){
+            if (reservation == null) {
                 // TODO pritempt prie fronto (struktura).
                 return Response.status(Response.Status.BAD_REQUEST).entity("Reservation does not exist").build();
             }
             reservationService.cancel(reservation);
-            return  Response.ok().build();
+            return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }

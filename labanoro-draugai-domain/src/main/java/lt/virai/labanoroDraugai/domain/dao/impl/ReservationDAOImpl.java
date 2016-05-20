@@ -7,6 +7,7 @@ import lt.virai.labanoroDraugai.domain.entities.Residence;
 
 import javax.ejb.Stateless;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Mantas on 4/30/2016.
@@ -16,6 +17,6 @@ public class ReservationDAOImpl extends AbstractDAO<Reservation> implements Rese
     @Override
     public List<Reservation> getReservationsForResidence(Residence residence) {
         return streams.streamAll(entityManager, Reservation.class)
-                .where(u -> u.getResidence().getId() == residence.getId()).toList();
+                .where(u -> Objects.equals(u.getResidence().getId(), residence.getId())).toList();
     }
 }
