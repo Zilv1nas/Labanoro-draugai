@@ -5,6 +5,7 @@ import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
+import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Mantas on 4/20/2016.
  */
+@RequiresPayment
 @Stateless
 @Path("/residence")
 public class ResidenceController {

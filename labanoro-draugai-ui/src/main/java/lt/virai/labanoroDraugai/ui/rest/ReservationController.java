@@ -12,6 +12,7 @@ import lt.virai.labanoroDraugai.ui.model.residence.CityModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationHistoryModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
+import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
@@ -29,8 +30,9 @@ import java.util.stream.Collectors;
 /**
  * Created by Mantas on 5/19/2016.
  */
+@RequiresPayment
 @Stateless
-@Path("/residence")
+@Path("/reservation")
 public class ReservationController {
     @Inject
     private ReservationDAO reservationDAO;

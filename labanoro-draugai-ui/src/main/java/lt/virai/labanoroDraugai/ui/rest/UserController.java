@@ -1,10 +1,13 @@
 package lt.virai.labanoroDraugai.ui.rest;
 
+import lt.virai.labanoroDraugai.bl.services.ClubSettingService;
 import lt.virai.labanoroDraugai.bl.services.EmailService;
+import lt.virai.labanoroDraugai.bl.services.TransactionService;
 import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.users.InvitationInfo;
-import lt.virai.labanoroDraugai.ui.model.users.UserModel;
+import lt.virai.labanoroDraugai.ui.model.users.ProfileModel;
+import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
@@ -36,14 +39,19 @@ public class UserController {
     private UserService userService;
     @Inject
     private EmailService emailService;
+    @Inject
+    private ClubSettingService clubSettingService;
+    @Inject
+    private TransactionService transactionService;
 
+    @RequiresPayment
     @Secured({UserRole.ADMIN})
     @POST
     @Path("/updateProfile")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateProfile(@Valid UserModel userModel) {
+    public Response updateProfile(@Valid ProfileModel profileModel) {
         try {
-            userService.updateUserProfile(userModel.mapTo());
+            userService.updateUserProfile(profileModel.mapTo());
             return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -54,33 +62,44 @@ public class UserController {
     @POST
     @Path("/updateCurrentUserProfile")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateCurrentUserProfile(@Valid UserModel userModel, @Context SecurityContext securityContext) {
+    public Response updateCurrentUserProfile(@Valid ProfileModel profileModel, @Context SecurityContext securityContext) {
         try {
-            userModel.setId(Integer.parseInt(securityContext.getUserPrincipal().getName()));
-            userService.updateUserProfile(userModel.mapTo());
+            profileModel.setId(Integer.parseInt(securityContext.getUserPrincipal().getName()));
+            userService.updateUserProfile(profileModel.mapTo());
             return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
+    @RequiresPayment
     @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @GET
     @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         return Response.ok().entity(userService.getAll()
-                .stream().map(UserModel::new).collect(Collectors.toList())).build();
+                .stream().map(ProfileModel::new).collect(Collectors.toList())).build();
     }
 
+    @RequiresPayment
     @Secured({UserRole.ADMIN})
     @POST
     @Path("/verify")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void verifyUser(int userId) {
-        userService.verifyUser(userId);
+    public Response verifyUser(int userId) {
+        try {
+            if (clubSettingService.isMemberCapacityExceeded()) {
+                return Response.status(Response.Status.CONFLICT).entity("Maximum member capacity exceeded").build();
+            }
+            userService.verifyUser(userId);
+            return Response.ok().build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
+    @RequiresPayment
     @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @POST
     @Path("/invite")
@@ -101,32 +120,37 @@ public class UserController {
     public Response getProfile(@Context SecurityContext securityContext) {
         try {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
-            UserModel userModel = Optional.ofNullable(userService.get(userId))
-                    .map(UserModel::new)
+            ProfileModel profileModel = Optional.ofNullable(userService.get(userId))
+                    .map(ProfileModel::new)
                     .orElseThrow(IllegalStateException::new);
 
-            return Response.ok().entity(userModel).build();
-        } catch (NumberFormatException | IllegalStateException e) {
+            profileModel.setLastPaymentDate(transactionService.getLastAnnualPaymentDate(profileModel.getId()));
+            profileModel.setAnnualPaymentSize(clubSettingService.getAnnualPaymentSize());
+            return Response.ok().entity(profileModel).build();
+        } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
         }
     }
 
+    @RequiresPayment
     @Secured
     @GET
     @Path("/getMemberProfile/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMemberProfile(@PathParam("id") @NotNull Integer id) {
         try {
-            UserModel userModel = Optional.ofNullable(userService.get(id))
-                    .map(UserModel::new)
+            ProfileModel profileModel = Optional.ofNullable(userService.get(id))
+                    .map(ProfileModel::new)
                     .orElseThrow(IllegalStateException::new);
-
-            return Response.ok().entity(userModel).build();
+            return Response.ok().entity(profileModel).build();
         } catch (NumberFormatException | IllegalStateException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
+    @RequiresPayment
     @Secured({UserRole.ADMIN})
     @DELETE
     @Path("/delete/{id}")
@@ -140,7 +164,7 @@ public class UserController {
         }
     }
 
-    @Secured()
+    @Secured
     @DELETE
     @Path("/deleteCurrentUser")
     @Produces(MediaType.APPLICATION_JSON)

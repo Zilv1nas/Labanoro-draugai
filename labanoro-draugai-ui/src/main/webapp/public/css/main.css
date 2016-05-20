@@ -61,15 +61,15 @@
 }
 
 #loading-bar .peg {
-    -moz-box-shadow: #004849 1px 0 6px 1px;
-    -ms-box-shadow: #004849 1px 0 6px 1px;
-    -webkit-box-shadow: #004849 1px 0 6px 1px;
-    box-shadow: #004849 1px 0 6px 1px;
+    -moz-box-shadow: #00CCB9 1px 0 6px 1px;
+    -ms-box-shadow: #00CCB9 1px 0 6px 1px;
+    -webkit-box-shadow: #00CCB9 1px 0 6px 1px;
+    box-shadow: #00CCB9 1px 0 6px 1px;
 }
 
 #loading-bar-spinner .spinner-icon {
-    border-top-color:  #004849;
-    border-left-color: #004849;
+    border-top-color:  #00CCB9;
+    border-left-color: #00CCB9;
 }
 
 .user-list table > tbody > tr >td {

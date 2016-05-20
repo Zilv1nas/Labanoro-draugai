@@ -1,8 +1,10 @@
 package lt.virai.labanoroDraugai.ui.rest;
 
+import lt.virai.labanoroDraugai.bl.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.TransactionService;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.purchases.PointPurchaseModel;
+import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
 import javax.ejb.Stateless;
@@ -44,7 +46,6 @@ public class TransactionController {
         }
     }
 
-
     @Secured({UserRole.ADMIN})
     @GET
     @Path("/getAllPurchases")
@@ -82,6 +83,24 @@ public class TransactionController {
             return Response.ok().build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Secured
+    @GET
+    @Path("/payAnnualPayment")
+    public Response payAnnualPayment(@Context SecurityContext securityContext) {
+        try {
+            Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
+            if (transactionService.hasUserPaidAnnualPayment(userId)) {
+                throw new LabanoroException("Nario mokestis jau yra sumokėtas!");
+            }
+            transactionService.payAnnualPayment(userId);
+            return Response.ok().build();
+        } catch (LabanoroException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
         }
     }
 }

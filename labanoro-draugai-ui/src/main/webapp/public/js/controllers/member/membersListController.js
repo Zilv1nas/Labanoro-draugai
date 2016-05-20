@@ -23,7 +23,11 @@ app.controller('membersListController', ['$scope', '$state', '$window', 'authSer
                         growl.success('Kandidatas patvirtintas sėkmingai!');
                         $state.go('membersList', {}, { reload: 'membersList' });
                     }).catch(function (response) {
-                        growl.error('Nepavyko patvirtintas kandidato!');
+                        if (response.status === 409) {
+                            growl.error('Peržengtas maksimalus narių skaičius!');
+                        } else {
+                            growl.error('Nepavyko patvirtintas kandidato!');
+                        }
                     })
             });
         };

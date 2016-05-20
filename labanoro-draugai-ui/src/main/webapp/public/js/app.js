@@ -22,6 +22,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
     function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider, growlProvider) {
 
         growlProvider.globalTimeToLive(5000);
+        growlProvider.globalDisableCountDown(true);
         growlProvider.globalPosition('top-right');
 
         $urlRouterProvider.otherwise("/");
@@ -144,6 +145,8 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
         $locationProvider.html5Mode({
             enabled: true
         });
+
+        $httpProvider.interceptors.push('annualPaymentInterceptor');
 
         cfpLoadingBarProvider.includeSpinner = false;
         $authProvider.loginUrl = 'rest/login';
