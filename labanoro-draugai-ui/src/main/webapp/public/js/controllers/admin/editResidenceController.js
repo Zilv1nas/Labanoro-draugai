@@ -15,8 +15,12 @@ app.controller('editResidenceController', ['$scope', '$state', 'residencesServic
                 growl.success('Vasarnamis atnaujintas sėkmingai!');
                 $state.go('adminResidencesList');
             }).catch(function (response) {
-                growl.error('Nepavyko atnaujinti vasarnamio!');
-                console.log(response);
+                if (response.status == 409) {
+                    growl.error('Atsiprašome, bet įvyko vasarnamio redagavimo konfliktas. ' +
+                        'Norėdami atnaujinti vasarnamio aprašą, perkraukite puslapį.');
+                } else {
+                    growl.error('Nepavyko atnaujinti vasarnamio!');
+                }
             })
     };
 

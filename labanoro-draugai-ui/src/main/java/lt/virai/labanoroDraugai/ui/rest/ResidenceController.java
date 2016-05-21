@@ -8,8 +8,10 @@ import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -63,6 +65,13 @@ public class ResidenceController {
 
             residenceDAO.update(residenceModel.mapTo());
             return Response.ok().build();
+        } catch (EJBTransactionRolledbackException e) {
+            while (e.getCause() != null) {
+                if (e.getCause() instanceof OptimisticLockException) {
+                    return Response.status(Response.Status.CONFLICT).build();
+                }
+            }
+            throw e;
         } catch (Exception ex) {
             return Response.serverError().build();
         }

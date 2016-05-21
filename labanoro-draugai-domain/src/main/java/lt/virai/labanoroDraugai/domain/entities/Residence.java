@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import java.util.Set;
 @Table(name = "residence")
 public class Residence {
     private Integer id;
+    private Integer version;
     private String name;
     private String description;
     private Integer capacity;
@@ -43,6 +45,15 @@ public class Residence {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Basic

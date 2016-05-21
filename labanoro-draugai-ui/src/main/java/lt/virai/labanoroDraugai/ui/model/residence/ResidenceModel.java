@@ -48,6 +48,8 @@ public class ResidenceModel implements MappableTo<Residence> {
     @Valid
     private WeekRangeModel availability;
 
+    private int version;
+
     @Valid
     private Set<ExtraServiceModel> extraServices = new HashSet<>();
 
@@ -65,6 +67,7 @@ public class ResidenceModel implements MappableTo<Residence> {
         weeklyPrice = residence.getWeeklyPrice();
         availability = new WeekRangeModel (residence.getAvailableFrom(), residence.getAvailableUntil());
         extraServices = residence.getExtraServices().stream().map(ExtraServiceModel::new).collect(Collectors.toSet());
+        version = residence.getVersion();
     }
 
     @Override
@@ -83,6 +86,7 @@ public class ResidenceModel implements MappableTo<Residence> {
             residence.setAvailableUntil(availability.getDateTo());
         }
         residence.setExtraServices(extraServices.stream().map(ExtraServiceModel::mapTo).collect(Collectors.toSet()));
+        residence.setVersion(version);
         return residence;
     }
 
@@ -164,5 +168,13 @@ public class ResidenceModel implements MappableTo<Residence> {
 
     public void setExtraServices(Set<ExtraServiceModel> extraServices) {
         this.extraServices = extraServices;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }
