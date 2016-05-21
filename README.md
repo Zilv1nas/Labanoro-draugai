@@ -1,10 +1,6 @@
 ﻿# Labanoro-draugai
 PSK
 
-Projektas jau sukonfigintas, galima kažką pradėti daryti.
-
-Kol kas pakūriau Azure mysql duombazę 20 mb. Max 4 connectionai vienu metu. Jei neužteks, vėliau kur nors kitur pahostinsim.
-
 DB connectionas:
 Į savo wildfly instaliacijos folderį įmeskit viską, kas projekto wildfly folderio viduje.
 
