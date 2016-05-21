@@ -1,6 +1,6 @@
 package lt.virai.labanoroDraugai.bl.services;
 
-import lt.virai.labanoroDraugai.bl.LabanoroException;
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.domain.entities.PointPurchase;
 
 import java.time.LocalDate;

@@ -1,5 +1,6 @@
 package lt.virai.labanoroDraugai.ui.filters;
 
+import lt.virai.labanoroDraugai.bl.context.ThreadLocalContext;
 import lt.virai.labanoroDraugai.bl.services.AuthService;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 import lt.virai.labanoroDraugai.ui.util.AuthUtils;
@@ -33,10 +34,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String token = AuthUtils.extractToken(requestContext.getHeaderString(HttpHeaders.AUTHORIZATION));
         Optional<String> userId = authService.getUserId(token);
-        if (!userId.isPresent()) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-        } else {
+        if (userId.isPresent()) {
             overrideSecurityFilter(requestContext, userId.get());
+            ThreadLocalContext.put("userid", userId.get());
+        } else {
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
     }
 

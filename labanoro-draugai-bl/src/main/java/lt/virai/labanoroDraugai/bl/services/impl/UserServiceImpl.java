@@ -18,7 +18,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Inject
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Override
     public User get(Integer id) {
@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserProfile(User user) {
         Objects.requireNonNull(user);
-
         Optional<User> persistenUser = Optional.ofNullable(userDAO.get(user.getId()));
         persistenUser.ifPresent(u -> {
             u.setEmail(user.getEmail());

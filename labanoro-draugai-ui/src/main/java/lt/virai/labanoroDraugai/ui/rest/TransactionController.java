@@ -1,11 +1,11 @@
 package lt.virai.labanoroDraugai.ui.rest;
 
-import lt.virai.labanoroDraugai.bl.LabanoroException;
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.TransactionService;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.purchases.PointPurchaseModel;
-import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
+import org.hibernate.validator.constraints.Range;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class TransactionController {
     @POST
     @Path("/createPurchase")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPurchase(@NotNull(message = "Point amount is required") Integer amount,
+    public Response createPurchase(@NotNull(message = "Point amount is required") @Range(min = 1) Integer amount,
                                    @Context SecurityContext securityContext) {
         try {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());

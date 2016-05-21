@@ -18,7 +18,7 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
     private Integer maxClubMembers;
     @NotNull
     @Range(min = 0)
-    private Integer annualPaymentSIze;
+    private Integer annualPaymentSize;
 
     public ClubSettingsModel() {
     }
@@ -28,7 +28,7 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
             if (s.getName() == ClubSettingName.MAX_MEMBERS) {
                 maxClubMembers = Integer.parseInt(s.getValue());
             } else if (s.getName() == ClubSettingName.ANNUAL_PAYMENT_SIZE) {
-                annualPaymentSIze = Integer.parseInt(s.getValue());
+                annualPaymentSize = Integer.parseInt(s.getValue());
             }
         });
     }
@@ -41,12 +41,12 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
         this.maxClubMembers = maxClubMembers;
     }
 
-    public Integer getAnnualPaymentSIze() {
-        return annualPaymentSIze;
+    public Integer getAnnualPaymentSize() {
+        return annualPaymentSize;
     }
 
-    public void setAnnualPaymentSIze(Integer annualPaymentSIze) {
-        this.annualPaymentSIze = annualPaymentSIze;
+    public void setAnnualPaymentSize(Integer annualPaymentSize) {
+        this.annualPaymentSize = annualPaymentSize;
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
             maxClubMembersEntity = new ClubSetting(ClubSettingName.MAX_MEMBERS, maxClubMembers.toString());
             clubSettings.add(maxClubMembersEntity);
         }
-        if (annualPaymentSIze != null) {
-            maxClubMembersEntity = new ClubSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE, annualPaymentSIze.toString());
+        if (annualPaymentSize != null) {
+            maxClubMembersEntity = new ClubSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE, annualPaymentSize.toString());
             clubSettings.add(maxClubMembersEntity);
         }
         return clubSettings;

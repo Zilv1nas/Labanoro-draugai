@@ -1,6 +1,6 @@
 package lt.virai.labanoroDraugai.ui.rest;
 
-import lt.virai.labanoroDraugai.bl.LabanoroException;
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;

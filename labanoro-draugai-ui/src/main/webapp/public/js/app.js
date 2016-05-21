@@ -134,7 +134,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('settings', {
                 url: "/admin/settings",
                 controller: 'settingsController',
-                templateUrl: adminUrlPrefix + '/settingsView.html',
+                templateUrl: adminUrlPrefix + '/settingsView.html'
                 // resolve: {
                 //     settings: function (membersService) {
                 //         return settingsService.getSettings();

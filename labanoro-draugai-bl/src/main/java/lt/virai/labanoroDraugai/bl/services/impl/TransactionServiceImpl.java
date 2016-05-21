@@ -1,13 +1,13 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
-import lt.virai.labanoroDraugai.bl.LabanoroException;
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
+import lt.virai.labanoroDraugai.bl.interceptors.binding.Logged;
 import lt.virai.labanoroDraugai.bl.services.TransactionService;
 import lt.virai.labanoroDraugai.domain.dao.AnnualPaymentDAO;
 import lt.virai.labanoroDraugai.domain.dao.ClubSettingDAO;
 import lt.virai.labanoroDraugai.domain.dao.PointPurchaseDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.AnnualPayment;
-import lt.virai.labanoroDraugai.domain.entities.ClubSetting;
 import lt.virai.labanoroDraugai.domain.entities.PointPurchase;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.ClubSettingName;
@@ -24,6 +24,7 @@ import java.util.Optional;
 /**
  * Created by Žilvinas on 2016-05-10.
  */
+@Logged
 @Stateless
 public class TransactionServiceImpl implements TransactionService {
 
