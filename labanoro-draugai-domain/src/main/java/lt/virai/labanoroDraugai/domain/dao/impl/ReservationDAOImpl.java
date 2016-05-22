@@ -16,7 +16,9 @@ import java.util.Objects;
 public class ReservationDAOImpl extends AbstractDAO<Reservation> implements ReservationDAO {
     @Override
     public List<Reservation> getReservationsForResidence(Residence residence) {
+        Integer residenceId = residence.getId();
+
         return streams.streamAll(entityManager, Reservation.class)
-                .where(u -> Objects.equals(u.getResidence().getId(), residence.getId())).toList();
+                .where(u -> u.getResidence().getId().equals(residenceId)).toList();
     }
 }

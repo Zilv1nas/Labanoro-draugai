@@ -4,8 +4,10 @@ import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
+import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
+import lt.virai.labanoroDraugai.ui.model.residence.ExtraServiceModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationHistoryModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
@@ -79,7 +81,8 @@ public class ReservationController {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
 
             reservationService.reserve(userDAO.get(userId), reservationModel.getResidence().mapTo(),
-                    reservationModel.getDuration().getDateFrom(), reservationModel.getDuration().getDateTo(), null);
+                    reservationModel.getDuration().getDateFrom(), reservationModel.getDuration().getDateTo(),
+                    reservationModel.getExtraServices().stream().map(ExtraServiceModel::mapTo).collect(Collectors.toSet()));
 
             return Response.ok().build();
         } catch (LabanoroException ex) {
