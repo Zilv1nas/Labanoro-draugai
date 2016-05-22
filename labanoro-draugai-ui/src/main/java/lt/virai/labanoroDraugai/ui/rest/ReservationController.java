@@ -3,9 +3,11 @@ package lt.virai.labanoroDraugai.ui.rest;
 import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
+import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
+import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.residence.ExtraServiceModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationHistoryModel;
@@ -43,6 +45,8 @@ public class ReservationController {
     private ReservationService reservationService;
     @Inject
     private UserDAO userDAO;
+    @Inject
+    private ResidenceDAO residenceDAO;
 
     @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @GET
@@ -65,6 +69,21 @@ public class ReservationController {
     public Response get(@PathParam("id") @NotNull Integer id) {
         try {
             return Response.ok(new ReservationHistoryModel(reservationDAO.get(id))).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured({UserRole.MEMBER, UserRole.ADMIN})
+    @GET
+    @Path("/getResidenceHistory/{residenceId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResidenceHistory(@PathParam("residenceId") @NotNull Integer residenceId) {
+        try {
+            Residence residence = residenceDAO.get(residenceId);
+            List<ReservationHistoryModel> reservations = reservationDAO.getReservationsForResidence(residence)
+                    .stream().map(ReservationHistoryModel::new).collect(Collectors.toList());
+            return Response.ok(reservations).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
