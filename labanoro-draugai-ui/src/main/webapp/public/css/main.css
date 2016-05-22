@@ -83,3 +83,40 @@
 .last-profile-row {
     margin-bottom: 100px;
 }
+
+.residence-divider {
+    margin-left: 8px;
+    margin-right: 8px;
+    border-bottom: solid 1px #d2d2d2;
+    padding-bottom: 30px;
+}
+
+.residence-secondary {
+    padding-top: 10px;
+}
+
+.residence-extra-features {
+    margin-left: 10px;
+}
+
+.well .residence-info-well {
+    background: #009688 !important;
+}
+
+.residence-h3 {
+    color: #FFFFFF;
+    margin: 20px auto;
+}
+
+.residence-h4 {
+    color: #FFFFFF;
+}
+
+.residence-info-small {
+    color: #d2d2d2;
+    font-weight: bold;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
+    background-color: #009688;
+}
