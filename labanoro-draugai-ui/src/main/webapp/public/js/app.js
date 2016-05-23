@@ -81,8 +81,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: memberUrlPrefix + '/residenceView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
-                        console.log($stateParams);
                         return residencesService.getResidence($stateParams.id);
+                    },
+                    residenceHistory: function (residencesService, $stateParams) {
+                        return residencesService.getResidenceHistory($stateParams.id);
                     }
                 }
             })

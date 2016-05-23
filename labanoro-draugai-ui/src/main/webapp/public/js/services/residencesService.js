@@ -12,6 +12,16 @@ app.service('residencesService', ['$http', function ($http) {
             });
     };
 
+    this.getResidenceHistory = function (id) {
+        return $http.get('rest/reservation/getResidenceHistory/' + id)
+            .then(function (result) {
+                console.log(result.data);
+                return result.data;
+            }).catch(function (response) {
+                console.log(response);
+            });
+    };
+
     this.getAllResidences = function () {
         return getFunc("getAll/");
     };
