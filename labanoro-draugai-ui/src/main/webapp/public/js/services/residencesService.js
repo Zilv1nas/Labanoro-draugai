@@ -1,6 +1,7 @@
 app.service('residencesService', ['$http', function ($http) {
 
     var baseUrl = 'rest/residence/';
+    var reservationUrl = 'rest/reservation/';
 
     var getFunc = function (prefix) {
         return $http.get('rest/residence/' + prefix)
@@ -31,4 +32,7 @@ app.service('residencesService', ['$http', function ($http) {
         return $http.post(baseUrl + "update/", residence);
     }
 
+    this.reserveResidence = function (reservation){
+        return $http.post(reservationUrl + "reserve", reservation);
+    }
 }]);

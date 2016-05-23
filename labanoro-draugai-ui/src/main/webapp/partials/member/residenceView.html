@@ -1,78 +1,71 @@
 <body>
 
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-
-        <div class="col-md-3">
-            <p class="lead">{{residence.name}}</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Info</a>
-                <a href="#" class="list-group-item">Extras</a>
-                <a href="#" class="list-group-item">Reviews</a>
+<!-- "residence.name" "residence.weeklyPrice" "residence.capacity" "residence.address" "residence.description" -->
+<div class="col-md-8 col-md-offset-2">
+    <div class="well row">
+        <h2>{{residence.name}}</h2>
+        <div class="row residence-divider">
+            <div class="col-md-7">
+                <img class="img-thumbnail img-responsive" ng-src="{{residence.image}}" width="400" height="300">
             </div>
-        </div>
-
-        <!-- "residence.name" "residence.weeklyPrice" "residence.capacity" "residence.address" "residence.description" -->
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <img style="width: 700px; height: 300px;" class="img-responsive" ng-src="{{residence.image}}">
-                <hr>
-                <div class="caption-full">
-                    <p>{{residence.description}}</p>
-                </div>
-            </div>
-            <hr>
-
-
-        <div class="well">
-            <div class="text-right">
-                <h4 class="pull-left">Full price: {{residence.weeklyPrice}} points</h4>
-                <a class="btn btn-success">PIRK MANE</a>
-            </div>
-        </div>
-        <div class="well">
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">10 days ago</span>
-                    <p>This product was great in terms of quality. I would definitely buy another!</p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">12 days ago</span>
-                    <p>I've alredy ordered another one!</p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    Anonymous
-                    <span class="pull-right">15 days ago</span>
-                    <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
+            <div class="col-md-5 col-sm-6 col-xs-6">
+                <div class="well residence-info-well">
+                    <h3 class="residence-h3">Informacija</h3>
+                    <h4 class="residence-h4 glyphicon glyphicon-bed">
+                        <small class="residence-info-small">Laisvos vietos:</small>
+                        {{residence.capacity}}
+                    </h4>
+                    <h4 class="residence-h4 glyphicon glyphicon-tower">
+                        <small class="residence-info-small">Miestas:</small>
+                        {{residence.city.name}}
+                    </h4>
+                    <h4 class="residence-h4 glyphicon glyphicon-screenshot">
+                        <small class="residence-info-small">Adresas:</small>
+                        {{residence.address}}
+                    </h4>
+                    <h4 class="residence-h4 glyphicon glyphicon-time">
+                        <small class="residence-info-small">Rezervavimas:</small>
+                        nuo {{residence.availability.dateFrom}} iki {{residence.availability.dateTo}}
+                    </h4>
                 </div>
             </div>
         </div>
+        <div class="row residence-secondary residence-divider">
+            <div class="container col-md-12 col-sm-12">
+                <ul class="nav nav-pills">
+                    <li class="active"><a data-toggle="tab" href data-target="#details">Aprašymas</a></li>
+                    <li><a data-toggle="tab" href data-target="#extraServices">Papildomos paslaugos</a></li>
+                    <li><a data-toggle="tab" href data-target="#history">Užsakymų istorija</a></li>
+                </ul>
+                <br>
+            </div>
+
+            <div class="tab-content">
+                <div id="details" class="tab-pane fade in active">
+                    <div class="col-md-12">
+                        <p class="list-group-item-text"> {{residence.description}}</p>
+                    </div>
+                </div>
+                <div id="extraServices" class="tab-pane fade">
+                    <div class="col-md-12">
+                        <div class="residence-extra-features">
+                            <form ng-repeat="extraService in residence.extraServices track by $index">
+                                <input class="extraService" type="checkbox" ng-model="extraService.selected" ng-change="setFullPrice()">
+                                {{extraService.name}}:
+                                {{extraService.price}}<br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="history" class="tab-pane fade">
+                    <p>TODO</p>
+                </div>
+            </div>
+        </div>
+        <div class="raw text-center">
+            <h4>Kaina: {{fullPrice}} taškai</h4>
+            <button class="btn btn-success btn-raised">Rezervuoti</button>
+            </h4>
         </div>
     </div>
 </div>

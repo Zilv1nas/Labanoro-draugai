@@ -15,4 +15,6 @@ public interface UserDAO extends DAO<User> {
     User getUserByAuthAttribute(AuthAttributeEnum name, String value);
 
     List<User> getAllVerifiedMembers();
+
+    long getVerifiedMemberCount();
 }

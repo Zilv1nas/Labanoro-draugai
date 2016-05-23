@@ -2,7 +2,7 @@
  * Created by Žilvinas on 2016-03-11.
  */
 $.material.init();
-var app = angular.module('labanoroDraugaiApp', ['ui.router', 'satellizer', 'angular-loading-bar', 'ui.bootstrap', 'angular-growl'])
+var app = angular.module('labanoroDraugaiApp', ['ui.router', 'ui.select', 'satellizer', 'angular-loading-bar', 'ui.bootstrap', 'angular-growl'])
     .filter('byFullName', function () {
         return function (name, surname) {
             var items = {
@@ -22,6 +22,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
     function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $authProvider, cfpLoadingBarProvider, growlProvider) {
 
         growlProvider.globalTimeToLive(5000);
+        growlProvider.globalDisableCountDown(true);
         growlProvider.globalPosition('top-right');
 
         $urlRouterProvider.otherwise("/");
@@ -133,7 +134,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('settings', {
                 url: "/admin/settings",
                 controller: 'settingsController',
-                templateUrl: adminUrlPrefix + '/settingsView.html',
+                templateUrl: adminUrlPrefix + '/settingsView.html'
                 // resolve: {
                 //     settings: function (membersService) {
                 //         return settingsService.getSettings();
@@ -144,6 +145,8 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
         $locationProvider.html5Mode({
             enabled: true
         });
+
+        $httpProvider.interceptors.push('annualPaymentInterceptor');
 
         cfpLoadingBarProvider.includeSpinner = false;
         $authProvider.loginUrl = 'rest/login';

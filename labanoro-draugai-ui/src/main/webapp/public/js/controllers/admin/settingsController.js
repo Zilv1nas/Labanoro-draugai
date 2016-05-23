@@ -1,6 +1,10 @@
-app.controller('settingsController', ['$scope', 'settingsService', 'growl', function ($scope, settingsService, growl) {
+app.controller('settingsController', ['$scope', '$state', 'settingsService', 'growl', function ($scope, $state, settingsService, growl) {
 
-    $scope.settings = {};
+    settingsService.getAllSettings().then(function (response) {
+         $scope.settings = response.data;
+    }).catch(function (response) {
+        growl.error('Nepavyko gauti duomenų!');
+    });
 
     $scope.confirm = function () {
         settingsService.confirmSettings($scope.settings)

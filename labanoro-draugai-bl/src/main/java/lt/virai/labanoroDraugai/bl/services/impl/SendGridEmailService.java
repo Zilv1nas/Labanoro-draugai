@@ -5,6 +5,7 @@ import com.sendgrid.SendGridException;
 import lt.virai.labanoroDraugai.bl.services.EmailService;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Objects;
@@ -40,6 +41,7 @@ public class SendGridEmailService implements EmailService {
     }
 
     @Override
+    @Asynchronous
     public void notifyMembers(String email, String name, String surname) throws SendGridException {
         Objects.requireNonNull(email);
         Objects.requireNonNull(name);

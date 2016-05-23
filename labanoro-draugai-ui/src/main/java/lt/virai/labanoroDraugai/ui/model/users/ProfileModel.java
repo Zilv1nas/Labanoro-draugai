@@ -13,7 +13,7 @@ import java.time.LocalDate;
 /**
  * Created by Žilvinas on 2016-04-21.
  */
-public class UserModel implements MappableTo<User> {
+public class ProfileModel implements MappableTo<User> {
     @NotNull(message = "User id is required")
     private Integer id;
 
@@ -33,10 +33,16 @@ public class UserModel implements MappableTo<User> {
 
     private Integer balance;
 
-    public UserModel() {
+    /*Mapped externally*/
+    private LocalDate lastPaymentDate;
+
+    /*Mapped externally*/
+    private Integer annualPaymentSize;
+
+    public ProfileModel() {
     }
 
-    public UserModel(User user) {
+    public ProfileModel(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.name = user.getName();
@@ -100,6 +106,22 @@ public class UserModel implements MappableTo<User> {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    public LocalDate getLastPaymentDate() {
+        return lastPaymentDate;
+    }
+
+    public void setLastPaymentDate(LocalDate lastPaymentDate) {
+        this.lastPaymentDate = lastPaymentDate;
+    }
+
+    public Integer getAnnualPaymentSize() {
+        return annualPaymentSize;
+    }
+
+    public void setAnnualPaymentSize(Integer annualPaymentSize) {
+        this.annualPaymentSize = annualPaymentSize;
     }
 
     @Override

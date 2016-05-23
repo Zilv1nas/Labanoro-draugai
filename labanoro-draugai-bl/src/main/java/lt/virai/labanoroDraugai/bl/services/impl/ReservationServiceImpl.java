@@ -1,8 +1,8 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
-import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
@@ -14,8 +14,7 @@ import javax.inject.Inject;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
-import java.util.Locale;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,44 +25,62 @@ import static java.lang.Math.toIntExact;
  */
 
 @Stateless
-public class ReservationServiceImpl implements ReservationService{
+public class ReservationServiceImpl implements ReservationService {
 
     @Inject
-    ReservationDAO reservationDAO;
+    private ReservationDAO reservationDAO;
 
     @Inject
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Override
-    public void reserve(User user, Residence residence, LocalDate dateFrom, LocalDate dateTo, Set<ExtraService> extraServices) {
+    public void reserve(User user, Residence residence, LocalDate dateFrom, LocalDate dateTo, Set<ExtraService> extraServices) throws LabanoroException {
         Objects.requireNonNull(user);
         Objects.requireNonNull(residence);
         Objects.requireNonNull(dateFrom);
         Objects.requireNonNull(dateTo);
-        if(dateFrom.getDayOfWeek() != DayOfWeek.MONDAY){
-            throw new IllegalArgumentException("Date from has to be on monday.");
+        if (dateFrom.getDayOfWeek() != DayOfWeek.MONDAY) {
+            throw new LabanoroException("Date from has to be on monday.");
         }
-        if(dateTo.getDayOfWeek() != DayOfWeek.SUNDAY){
-            throw new IllegalArgumentException("Date to has to be on sunday.");
+        if (dateTo.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            throw new LabanoroException("Date to has to be on sunday.");
         }
-        if(dateFrom.isBefore(residence.getAvailableFrom())){
-            throw new IllegalArgumentException("Date from is less than residence is available from.");
+        if (dateFrom.isBefore(residence.getAvailableFrom())) {
+            throw new LabanoroException("Date from is less than residence is available from.");
         }
-        if(dateTo.isAfter(residence.getAvailableUntil())){
-            throw new IllegalArgumentException("Date to is more than residence is available until.");
+        if (dateTo.isAfter(residence.getAvailableUntil())) {
+            throw new LabanoroException("Date to is more than residence is available until.");
+        }
+        if (dateTo.isBefore(dateFrom)) {
+            throw new LabanoroException("Date to cannot be less than date from");
         }
 
-        Integer totalWeeks = toIntExact(Duration.between(dateFrom.atTime(0, 0), dateTo.atTime(0, 0)).toDays() / 7);
+        List<Reservation> reservationsForResidence = reservationDAO.getReservationsForResidence(residence);
+        for (Reservation existingReservation : reservationsForResidence) {
+            // Per du if'us, kad skaitomiau butu.
+            if ((dateFrom.isAfter(existingReservation.getDateFrom()) && dateFrom.isBefore(existingReservation.getDateTo()))
+                    || dateFrom.atStartOfDay().equals(existingReservation.getDateFrom().atStartOfDay())) {
+                throw new LabanoroException("There already are reservations for this period.");
+            }
+            if ((dateTo.isBefore(existingReservation.getDateTo()) && dateTo.isAfter(existingReservation.getDateFrom()))
+                    || dateTo.atStartOfDay().equals(existingReservation.getDateTo().atStartOfDay())) {
+                throw new LabanoroException("There already are reservations for this period.");
+            }
+        }
+        //TODO check if user has paid yearly fee.
+
+        //Note: is akies primetu, kad gerai skaiciuot turetu
+        Integer totalWeeks = toIntExact(Duration.between(dateFrom.atTime(0, 0), dateTo.atTime(0, 0)).toDays() / 7) + 1;
         Integer amountToSpend = totalWeeks * residence.getWeeklyPrice();
 
-        if(extraServices != null && !extraServices.isEmpty()){
-            for (ExtraService service : extraServices){
+        if (extraServices != null) {
+            for (ExtraService service : extraServices) {
                 amountToSpend += service.getPrice();
             }
         }
 
-        if(user.getBalance() < amountToSpend){
-            throw new IllegalArgumentException("Balance is too low.");
+        if (user.getBalance() < amountToSpend) {
+            throw new LabanoroException("Balance is too low.");
         }
 
         Reservation reservation = new Reservation(user, residence, dateFrom, dateTo);
@@ -80,15 +97,14 @@ public class ReservationServiceImpl implements ReservationService{
     public void cancel(Reservation reservation) {
         Objects.requireNonNull(reservation);
 
-        if(LocalDate.now().isAfter(reservation.getDateFrom())){
+        if (LocalDate.now().isAfter(reservation.getDateFrom())) {
             Integer weeksPassedAlready = toIntExact(Duration.between(LocalDate.now().with(DayOfWeek.MONDAY).atTime(0, 0),
-                    reservation.getDateTo().atTime(0, 0)).toDays() / 7);
-            Integer totalWeeks = toIntExact(Duration.between(reservation.getDateFrom().atTime(0, 0), reservation.getDateTo().atTime(0, 0)).toDays() / 7);
+                    reservation.getDateTo().atTime(0, 0)).toDays() / 7) + 1;
+            Integer totalWeeks = toIntExact(Duration.between(reservation.getDateFrom().atTime(0, 0), reservation.getDateTo().atTime(0, 0)).toDays() / 7) + 1;
 
-            if(totalWeeks == weeksPassedAlready){
+            if (Objects.equals(totalWeeks, weeksPassedAlready)) {
                 fullyRefund(reservation);
-            }
-            else{
+            } else {
                 Integer amountToRefund = reservation.getAmountSpent() * weeksPassedAlready / totalWeeks;
 
                 User user = reservation.getUser();
@@ -100,13 +116,12 @@ public class ReservationServiceImpl implements ReservationService{
                 userDAO.update(user);
                 reservationDAO.update(reservation);
             }
-        }
-        else{
+        } else {
             fullyRefund(reservation);
         }
     }
 
-    private void fullyRefund(Reservation reservation){
+    private void fullyRefund(Reservation reservation) {
         User user = reservation.getUser();
         user.setBalance(user.getBalance() + reservation.getAmountSpent());
 

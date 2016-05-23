@@ -28,5 +28,9 @@
             <groupId>org.jinq</groupId>
             <artifactId>jinq-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
     </dependencies>
 </project>

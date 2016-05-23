@@ -5,10 +5,13 @@ import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
+import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -19,13 +22,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Created by Mantas on 4/20/2016.
  */
+@RequiresPayment
 @Stateless
 @Path("/residence")
 public class ResidenceController {
@@ -62,6 +65,13 @@ public class ResidenceController {
 
             residenceDAO.update(residenceModel.mapTo());
             return Response.ok().build();
+        } catch (EJBTransactionRolledbackException e) {
+            while (e.getCause() != null) {
+                if (e.getCause() instanceof OptimisticLockException) {
+                    return Response.status(Response.Status.CONFLICT).build();
+                }
+            }
+            throw e;
         } catch (Exception ex) {
             return Response.serverError().build();
         }

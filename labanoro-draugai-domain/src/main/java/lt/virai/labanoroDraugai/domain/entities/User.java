@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -34,6 +34,7 @@ public class User {
     private UserRole role = UserRole.CANDIDATE;
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
+    private Set<AnnualPayment> annualPayments = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,23 +76,6 @@ public class User {
         this.authenticationAttributes = authenticationAttributes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(surname, user.surname) &&
-                Objects.equals(role, user.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, name, surname, role);
-    }
-
     @Basic
     @Column(name = "name", nullable = false, length = 32)
     public String getName() {
@@ -131,5 +115,14 @@ public class User {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<AnnualPayment> getAnnualPayments() {
+        return annualPayments;
+    }
+
+    public void setAnnualPayments(Set<AnnualPayment> annualPayments) {
+        this.annualPayments = annualPayments;
     }
 }

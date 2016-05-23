@@ -24,6 +24,7 @@
     "angular-loading-bar": "^0.9.0",
     "satellizer": "^0.14.0",
     "angular-bootstrap": "^1.3.2",
-    "angular-growl-v2": "^0.7.9"
+    "angular-growl-v2": "^0.7.9",
+    "angular-ui-select": "^0.17.1"
   }
 }
