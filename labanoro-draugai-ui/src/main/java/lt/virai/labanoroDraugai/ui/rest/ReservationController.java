@@ -8,6 +8,7 @@ import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
+import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.residence.ExtraServiceModel;
 import lt.virai.labanoroDraugai.ui.model.residence.ReservationHistoryModel;
@@ -30,6 +31,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -82,6 +84,25 @@ public class ReservationController {
         try {
             Residence residence = residenceDAO.get(residenceId);
             List<ReservationHistoryModel> reservations = reservationDAO.getReservationsForResidence(residence)
+                    .stream().map(ReservationHistoryModel::new).collect(Collectors.toList());
+            return Response.ok(reservations).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured({UserRole.MEMBER, UserRole.ADMIN})
+    @GET
+    @Path("/getUserHistory/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserHistory(@PathParam("userId") Integer userId,
+                                   @Context SecurityContext securityContext) {
+        try {
+            if(Objects.isNull(userId)){
+                userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
+            }
+            User user = userDAO.get(userId);
+            List<ReservationHistoryModel> reservations = reservationDAO.getReservationsForUser(user)
                     .stream().map(ReservationHistoryModel::new).collect(Collectors.toList());
             return Response.ok(reservations).build();
         } catch (Exception ex) {
