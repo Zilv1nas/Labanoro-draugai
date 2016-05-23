@@ -1,8 +1,10 @@
 app.directive("validation", [function () {
     return {
         restrict: "E",
+
         templateUrl: 'partials/directives/validationView.html',
         link: function (scope, element, attributes) {
+            console.log(scope.errorMessages);
             scope.$watch('errorMessages', function (newValue, oldValue) {
                 scope.errors = [];
                 angular.forEach(scope.errorMessages, function (value, key) {
@@ -11,9 +13,7 @@ app.directive("validation", [function () {
                         element.parent().parent().addClass('has-error');
                     }
                 });
-                scope.$apply();
             });
-
         }
     }
 }]);
