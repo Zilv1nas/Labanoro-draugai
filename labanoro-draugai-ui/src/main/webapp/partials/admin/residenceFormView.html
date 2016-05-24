@@ -9,7 +9,7 @@
                         <input role="button" type="file" fileread="residence.image">
                         <input type="text" class="form-control" placeholder="Pasirinkite nuotrauką...">
                         </input>
-                        <validation errorMessages="{{errorMessages}}" key="image"></validation>
+                        <validation errors="errorMessages" key="image"></validation>
                     </div>
                 </div>
                 <div class="col-md-9 col-md-offset-2">
@@ -19,35 +19,35 @@
                     <label class="col-md-2 control-label">Pavadinimas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.name" class="form-control" placeholder="Pavadinimas">
-                        <validation errorMessages="{{errorMessages}}" key="name"></validation>
+                        <validation errors="errorMessages" key="name"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Kaina dienai taškais</label>
                     <div class="col-md-9">
                         <input type="number" ng-model="residence.weeklyPrice" class="form-control" placeholder="Kaina dienai">
-                        <validation errorMessages="{{errorMessages}}" key="weeklyPrice"></validation>
+                        <validation errors="errorMessages" key="weeklyPrice"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Vietų sk.</label>
                     <div class="col-md-9">
                         <input type="number" ng-model="residence.capacity" class="form-control" placeholder="Maksimalus vietų skaičius" min="1">
-                    <validation errorMessages="{{errorMessages}}" key="capacity"></validation>
+                        <validation errors="errorMessages" key="capacity"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Adresas</label>
                     <div class="col-md-9">
                         <input ng-model="residence.address" class="form-control" placeholder="Vietovės adresas">
-                    <validation errorMessages="{{errorMessages}}" key="address"></validation>
+                        <validation errors="errorMessages" key="address"></validation>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Aprašymas</label>
                     <div class="col-md-9">
                         <textarea ng-model="residence.description" class="form-control" placeholder="Aprašymas" rows="3"></textarea>
-                        <validation errorMessages="{{errorMessages}}" key="description"></validation>
+                        <validation errors="errorMessages" key="description"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="datePickerController">
@@ -60,7 +60,7 @@
                                 <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
-                        <validation errorMessages="{{errorMessages}}" key="dateFrom"></validation>
+                        <validation errors="errorMessages" key="dateFrom"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="datePickerController">
@@ -73,7 +73,7 @@
                                 <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
-                    <validation errorMessages="{{errorMessages}}" key="dateTo"></validation>
+                        <validation errors="errorMessages" key="dateTo"></validation>
                     </div>
                 </div>
                 <div class="form-group" ng-controller="servicesController" onload="myFunction()">

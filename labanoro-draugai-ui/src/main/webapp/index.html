@@ -37,14 +37,20 @@
                     <li ng-show="isAdmin()" class="dropdown">
                         <a role="button" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a ui-sref="adminResidencesList">Residences</a></li>
+                            <li><a ui-sref="adminResidencesList">Vasarnamiai</a></li>
                             <li><a ui-sref="createResidence">Create residence</a></li>
                             <li><a ui-sref="adminMembersList">Members</a></li>
                             <li><a ui-sref="purchasesList">Purchases</a></li>
                             <li><a ui-sref="settings">Settings</a></li>
                         </ul>
                     </li>
-                    <li ng-show="isAuthenticated"><a ui-sref="profile">{{userName}}</a></li>
+                    <li ng-show="isAuthenticated" class="dropdown">
+                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="profile">Profilis</a></li>
+                            <li><a ui-sref="reservationsList">Mano rezervacijos</a></li>
+                        </ul>
+                    </li>
                     <li ng-show="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
                     <li ng-show="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
                 </ul>
@@ -93,6 +99,7 @@
     <script src="public/js/controllers/modals/reservationController.js"></script>
     <script src="public/js/controllers/uiControls/datePickerController.js"></script>
     <script src="public/js/controllers/uiControls/servicesController.js"></script>
+    <script src="public/js/controllers/member/reservationsListController.js"></script>
 
     <!--Interceptors-->
     <script src="public/js/interceptors/annualPaymentInterceptor.js"></script>

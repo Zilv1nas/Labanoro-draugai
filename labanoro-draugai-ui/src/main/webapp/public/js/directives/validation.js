@@ -1,16 +1,21 @@
 app.directive("validation", [function () {
     return {
         restrict: "E",
-
+        replace: true,
+        scope: {
+            errorMessages: "=errors"
+        },
         templateUrl: 'partials/directives/validationView.html',
         link: function (scope, element, attributes) {
-            console.log(scope.errorMessages);
+            var parentElement = angular.element(element.parent().parent());
             scope.$watch('errorMessages', function (newValue, oldValue) {
                 scope.errors = [];
                 angular.forEach(scope.errorMessages, function (value, key) {
                     if (value.key === attributes.key) {
                         scope.errors.push(value);
-                        element.parent().parent().addClass('has-error');
+                        if (parentElement !== undefined) {
+                            parentElement.addClass("has-error");
+                        }
                     }
                 });
             });

@@ -6,7 +6,8 @@
                 <div class="list-group-item residence" ng-repeat="residence in residences track by $index">
                         <div class=" col-md-3">
                             <figure class="pull-left">
-                                <img class=" img-thumbnail img-responsive" ng-src="{{residence.image}}" width="350" height="250" alt="placehold.it/350x250">
+                                <img ng-show="residence.image" class=" img-thumbnail img-responsive" ng-src="{{residence.image}}" width="350" height="250">
+                                <img ng-show="!residence.image" class=" img-thumbnail img-responsive" src="public/images/defaultResidence.png" width="350" height="250">
                             </figure>
                         </div>
                     <div class="col-md-6">

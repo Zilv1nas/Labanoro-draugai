@@ -35,7 +35,12 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
                 animation: true,
                 templateUrl: 'partials/modals/addPointsModal.html',
                 controller: 'addPointsController',
-                size: 'md'
+                size: 'md',
+                resolve: {
+                    header: function () {
+                        return 'Klubo taškų pirkimas';
+                    }
+                }
             });
 
             modalInstance.result.then(function (points) {
