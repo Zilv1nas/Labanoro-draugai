@@ -39,6 +39,7 @@ public class Residence implements Serializable {
     private LocalDate availableFrom;
     private LocalDate availableUntil;
     private Set<ExtraService> extraServices = new HashSet<>();
+    private Set<Reservation> reservations = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,7 +100,7 @@ public class Residence implements Serializable {
         this.address = address;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public City getCity() {
         return city;
     }
@@ -156,6 +157,15 @@ public class Residence implements Serializable {
 
     public void setExtraServices(Set<ExtraService> extraServices) {
         this.extraServices = extraServices;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "residence")
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override
