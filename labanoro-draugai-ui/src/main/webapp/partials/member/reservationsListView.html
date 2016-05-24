@@ -1,0 +1,34 @@
+<div class="col-md-12">
+    <div class="well">
+        <h2>Mano rezervacijos</h2>
+        <div class="row table-responsive user-list">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Pavadinimas</th>
+                    <th>Kaina</th>
+                    <th>Rezervacijos pradžia</th>
+                    <th>Rezervacijos pabaiga</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody ng-cloak>
+                <tr ng-repeat="reservation in reservations">
+                    <td>{{reservation.id}}</td>
+                    <td><a class="member-link" ui-sref="viewResidence({id: reservation.id})">{{reservation.name}}</a></td>
+                    <td>{{reservation.price}}</td>
+                    <td>{{reservation.begins | date}}</td>
+                    <td>{{reservation.ends | date}}</td>
+                    <td>{{member.role | rolesFilter}}</td>
+                    <td>
+                        <button ng-click="verifyUser(member.id)" ng-show="reservation.state === 'PENDING'"
+                                class="btn btn-danger btn-raised">Atšaukti
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
