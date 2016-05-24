@@ -25,6 +25,10 @@ app.service('residencesService', ['$http', function ($http) {
     this.getAllResidences = function () {
         return getFunc("getAll/");
     };
+    
+    this.searchResidences = function (residenceSearchRequest) {
+      return $http.post(baseUrl + 'searchResidences', residenceSearchRequest);  
+    };
 
     this.getResidence = function (id) {
         return getFunc("get/" + id);
@@ -40,7 +44,7 @@ app.service('residencesService', ['$http', function ($http) {
 
     this.updateResidence = function (residence) {
         return $http.post(baseUrl + "update/", residence);
-    }
+    };
 
     this.reserveResidence = function (reservation){
         return $http.post(reservationUrl + "reserve", reservation);

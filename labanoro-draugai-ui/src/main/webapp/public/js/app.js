@@ -69,11 +69,6 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 url: "/residencesList",
                 controller: 'residencesListController',
                 templateUrl: memberUrlPrefix + '/residencesListView.html',
-                resolve: {
-                     residences: function (residencesService) {
-                         return residencesService.getAllResidences();
-                     }
-                 }
             })
             .state('viewResidence', {
                 url: "/residence/:id",
