@@ -47,12 +47,12 @@
                     <li ng-show="isAuthenticated" class="dropdown">
                         <a role="button" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a ui-sref="profile">Profilis</a></li>
-                            <li><a ui-sref="reservationsList">Mano rezervacijos</a></li>
+                            <li ui-sref-active="active"><a ui-sref="profile">Profilis</a></li>
+                            <li ui-sref-active="active"><a ui-sref="reservationsList">Mano rezervacijos</a></li>
                         </ul>
                     </li>
-                    <li ng-show="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
-                    <li ng-show="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
+                    <li ui-sref-active="active" ng-if="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
+                    <li ui-sref-active="active" ng-if="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
                 </ul>
             </div>
         </div>
@@ -88,6 +88,7 @@
     <script src="public/js/controllers/member/profileController.js"></script>
     <script src="public/js/controllers/member/navigationController.js"></script>
     <script src="public/js/controllers/member/viewResidenceController.js"></script>
+    <script src="public/js/controllers/member/reservationsListController.js"></script>
     <script src="public/js/controllers/admin/createResidenceController.js"></script>
     <script src="public/js/controllers/admin/editResidenceController.js"></script>
     <script src="public/js/controllers/admin/residencesListController.js"></script>
