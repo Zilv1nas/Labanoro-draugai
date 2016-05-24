@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,7 +25,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "residence")
-public class Residence {
+public class Residence implements Serializable {
+    private static final long serialVersionUID = 7056138902041189214L;
     private Integer id;
     private Integer version;
     private String name;
@@ -96,7 +99,7 @@ public class Residence {
         this.address = address;
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     public City getCity() {
         return city;
     }

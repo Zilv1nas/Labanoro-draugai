@@ -82,6 +82,9 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 resolve: {
                     residence: function (residencesService, $stateParams) {
                         return residencesService.getResidence($stateParams.id);
+                    },
+                    residenceHistory: function (residencesService, $stateParams) {
+                        return residencesService.getResidenceHistory($stateParams.id);
                     }
                 }
             })

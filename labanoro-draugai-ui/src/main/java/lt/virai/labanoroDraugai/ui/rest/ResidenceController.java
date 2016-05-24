@@ -4,6 +4,7 @@ import lt.virai.labanoroDraugai.bl.services.ResidenceService;
 import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.entities.Residence;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
+import lt.virai.labanoroDraugai.domain.model.search.ResidenceSearchRequest;
 import lt.virai.labanoroDraugai.ui.model.residence.ResidenceModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
@@ -34,8 +35,6 @@ import java.util.stream.Collectors;
 public class ResidenceController {
     @Inject
     private ResidenceService residenceService;
-    @Inject
-    private ResidenceDAO residenceDAO;
 
     @Secured({UserRole.ADMIN})
     @POST
@@ -63,7 +62,7 @@ public class ResidenceController {
             if (residenceModel.getId() == null || residenceModel.getId() == 0)
                 throw new IllegalStateException("Cannot update residence when id is not set.");
 
-            residenceDAO.update(residenceModel.mapTo());
+            residenceService.update(residenceModel.mapTo());
             return Response.ok().build();
         } catch (EJBTransactionRolledbackException e) {
             while (e.getCause() != null) {
@@ -83,9 +82,22 @@ public class ResidenceController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            List<ResidenceModel> residences = residenceDAO.getAll()
+            List<ResidenceModel> residences = residenceService.getAll()
                     .stream().map(ResidenceModel::new).collect(Collectors.toList());
             return Response.ok(residences).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured
+    @POST
+    @Path("/searchResidences")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchResidences(@NotNull ResidenceSearchRequest residenceSearchRequest) {
+        try {
+            return Response.ok(residenceService.searchResidences(residenceSearchRequest)).build();
         } catch (Exception ex) {
             return Response.serverError().build();
         }
@@ -97,7 +109,7 @@ public class ResidenceController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") @NotNull Integer id) {
         try {
-            Residence residence = residenceDAO.get(id);
+            Residence residence = residenceService.get(id);
             ResidenceModel residenceModel = new ResidenceModel(residence);
             return Response.ok(residenceModel).build();
         } catch (Exception ex) {
@@ -111,7 +123,7 @@ public class ResidenceController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") @NotNull Integer id) {
         try {
-            residenceDAO.remove(id);
+            residenceService.remove(id);
             return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();

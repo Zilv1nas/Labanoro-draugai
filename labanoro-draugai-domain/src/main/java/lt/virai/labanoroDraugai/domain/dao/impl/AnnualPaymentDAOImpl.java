@@ -10,6 +10,10 @@ import lt.virai.labanoroDraugai.domain.entities.AnnualPayment;
 public class AnnualPaymentDAOImpl extends AbstractDAO<AnnualPayment> implements AnnualPaymentDAO {
     @Override
     public AnnualPayment getLatestAnnualPayment(int userId) {
-        return streams.streamAll(entityManager, AnnualPayment.class).sortedDescendingBy(AnnualPayment::getPaymentDate).findFirst().orElse(null);
+        return streams.streamAll(entityManager, AnnualPayment.class)
+                .where(p -> p.getUser().getId().equals(userId))
+                .sortedDescendingBy(AnnualPayment::getPaymentDate)
+                .findFirst()
+                .orElse(null);
     }
 }

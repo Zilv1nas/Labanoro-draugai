@@ -2,6 +2,61 @@
     <div class="row">
         <div class="well residences">
             <h2>Vasarnamiai</h2>
+            <span>
+
+            <a class="btn btn-link" ng-class="searchRowOpened ? 'search-opened' : 'search-collapsed'" ng-click="searchRowOpened = !searchRowOpened">Paieška</a>
+            </span>
+            <div ng-show="searchRowOpened" class="row search-row">
+                <div class="col-md-4">
+                    <div class="form-group label-floating is-empty">
+                        <div class="input-group">
+                            <label class="control-label" for="title">Pavadinimas</label>
+                            <input ng-model="searchRequest.title" class="form-control" id="title" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group label-floating is-empty">
+                        <div class="input-group">
+                            <label class="control-label" for="address">Adresas</label>
+                            <input ng-model="searchRequest.address" class="form-control" id="address" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating is-empty">
+                        <div class="input-group">
+                            <label class="control-label" for="priceFrom">Savaitės kaina nuo</label>
+                            <input ng-model="searchRequest.priceFrom" class="form-control" id="priceFrom" type="number">
+                        </div>
+                    </div>
+
+                    <div class="form-group label-floating is-empty">
+                        <div class="input-group">
+                            <label class="control-label" for="priceTo">Savaitės kaina iki</label>
+                            <input ng-model="searchRequest.priceTo" class="form-control" id="priceTo" type="number">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group label-floating">
+                        <div class="input-group" >
+                            <label class="control-label" for="unoccupiedFrom">Laisva nuo</label>
+                            <input ng-model="searchRequest.unoccupiedFrom" class="form-control" id="unoccupiedFrom" type="date">
+                        </div>
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <div class="input-group">
+                            <label class="control-label" for="unoccupiedTo">Laisva iki</label>
+                            <input ng-model="searchRequest.unoccupiedTo" class="form-control" id="unoccupiedTo" type="date">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="text-align: center">
+                    <button ng-click="search()" class="btn btn-defaul">Ieškoti</button>
+                    <button ng-click="clearSearch()" class="btn btn-defaul">Išvalyti</button>
+                </div>
+            </div>
             <div class="list-group">
                 <div class="list-group-item residence" ng-repeat="residence in residences track by $index">
                         <div class=" col-md-3">
@@ -31,6 +86,20 @@
                             -->
                         </div>
                     </div>
+            </div>
+            <div class="row pagination">
+                <div class="col-md-12">
+                    <uib-pagination boundary-links="true"
+                                    total-items="totalItems"
+                                    ng-model="searchRequest.page"
+                                    items-per-page="searchRequest.pageSize"
+                                    ng-change="pageChanged()"
+                                    previous-text="&lsaquo;"
+                                    next-text="&rsaquo;"
+                                    first-text="&laquo;"
+                                    last-text="&raquo;">
+                    </uib-pagination>
+                </div>
             </div>
         </div>
     </div>

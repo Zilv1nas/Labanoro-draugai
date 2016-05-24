@@ -1,13 +1,16 @@
-app.controller('viewResidenceController', ['$scope', '$state', 'residencesService', 'residence', 'growl', function ($scope, $state, residencesService, residence, growl) {
+app.controller('viewResidenceController', ['$scope', '$state', '$uibModal', 'residencesService', 'residence', 'residenceHistory', 'growl', function ($scope, $state, $uibModal, residencesService, residence, residenceHistory, growl) {
     $scope.residence = residence;
+    $scope.residenceHistory = residenceHistory;
 
-    $scope.fullPrice = $scope.residence.weeklyPrice;
-
-    $scope.setFullPrice = function(){
-        var price = $scope.residence.weeklyPrice;
-        angular.forEach($scope.residence.extraServices, function(extraService){
-            if (!!extraService.selected) price += extraService.price;
-        })
-        $scope.fullPrice = price;
+    $scope.reserveResidence = function (id) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'partials/modals/reservationModal.html',
+            controller: 'reservationController',
+            resolve: {
+                residence: function () {
+                    return residencesService.getResidence(id);
+                }
+            }
+        });
     }
 }]);

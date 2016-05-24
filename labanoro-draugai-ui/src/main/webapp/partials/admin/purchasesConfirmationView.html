@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 form-group label-floating is-empty">
                 <div class="input-group">
-                    <label class="control-label" for="inviteMember">Filtruoti pirkimus</label>
+                    <label class="control-label">Filtruoti pirkimus</label>
                     <input ng-model="searchInput" class="form-control">
                     <span class="input-group-btn">
                 <button ng-click="search()" type="button" class="btn btn-fab btn-fab-mini">
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody ng-cloak>
                     <tr ng-repeat="purchase in purchases">
-                        <td>{{purchase.id}}</td>
+                        <td>{{$index + 1}}</td>
                         <td>{{purchase.name}}</td>
                         <td>{{purchase.surname}}</td>
                         <td>{{purchase.username}}</td>
