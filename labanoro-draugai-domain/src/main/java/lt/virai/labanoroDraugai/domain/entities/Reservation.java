@@ -1,6 +1,7 @@
 package lt.virai.labanoroDraugai.domain.entities;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -61,7 +63,7 @@ public class Reservation {
         this.user = user;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "residence_id", nullable = false)
     public Residence getResidence() {
         return residence;
@@ -101,7 +103,7 @@ public class Reservation {
         this.dateTo = dateTo;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "reservation_extra_service",
             joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "extra_service_id", referencedColumnName = "id"))

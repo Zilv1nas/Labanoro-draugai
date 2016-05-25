@@ -6,6 +6,7 @@
 
             <div class="col-md-10">
                 <input ng-readonly="!isAdmin" ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
+                 <validation errors="errorMessages" key="name"></validation>
             </div>
         </div>
         <div class="form-group">
@@ -14,6 +15,7 @@
             <div class="col-md-10">
                 <input ng-readonly="!isAdmin" ng-model="user.surname" type="text" class="form-control" id="inputSurname"
                        placeholder="Pavardė">
+                <validation errors="errorMessages" key="surname"></validation>
             </div>
         </div>
         <div class="form-group">
@@ -22,6 +24,7 @@
             <div class="col-md-10">
                 <input ng-readonly="!isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail"
                        placeholder="El. paštas">
+               <validation errors="errorMessages" key="email"></validation>
             </div>
         </div>
         <div>

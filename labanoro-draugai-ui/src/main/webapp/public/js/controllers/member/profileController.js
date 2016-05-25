@@ -4,6 +4,7 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
         $scope.isCurrentUser = !angular.isDefined($stateParams.memberId);
         $scope.isAdmin = authService.isAdmin();
         $scope.isMember = authService.isMember() || $scope.isAdmin;
+        $scope.errorMessages = [];
 
         var getCurrentUserProfule = function () {
             membersService.getCurrentUserProfile().then(function (response) {
@@ -35,7 +36,12 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
                 animation: true,
                 templateUrl: 'partials/modals/addPointsModal.html',
                 controller: 'addPointsController',
-                size: 'md'
+                size: 'md',
+                resolve: {
+                    header: function () {
+                        return 'Klubo taškų pirkimas';
+                    }
+                }
             });
 
             modalInstance.result.then(function (points) {
@@ -105,6 +111,7 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
             };
 
             var failureHandler = function (response) {
+                $scope.errorMessages = response.data;
                 growl.error('Nepavyko atnaujinti profilio!');
             };
 

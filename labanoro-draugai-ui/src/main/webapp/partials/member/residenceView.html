@@ -8,26 +8,35 @@
             <div class="col-md-7">
                 <img class="img-thumbnail img-responsive" ng-src="{{residence.image}}" width="400" height="300">
             </div>
-            <div class="col-md-5 col-sm-6 col-xs-6">
-                <div class="well residence-info-well">
-                    <h3 class="residence-h3">Informacija</h3>
-                    <h4 class="residence-h4 glyphicon glyphicon-bed">
-                        <small class="residence-info-small">Laisvos vietos:</small>
-                        {{residence.capacity}}
-                    </h4>
-                    <h4 class="residence-h4 glyphicon glyphicon-tower">
-                        <small class="residence-info-small">Miestas:</small>
-                        {{residence.city.name}}
-                    </h4>
-                    <h4 class="residence-h4 glyphicon glyphicon-screenshot">
-                        <small class="residence-info-small">Adresas:</small>
-                        {{residence.address}}
-                    </h4>
-                    <h4 class="residence-h4 glyphicon glyphicon-time">
-                        <small class="residence-info-small">Rezervavimas:</small>
-                        nuo {{residence.availability.dateFrom}} iki {{residence.availability.dateTo}}
-                    </h4>
+            <div class="col-md-5 col-sm-6 col-xs-7">
+                <div class="info-panel panel panel-default">
+                    <div class="panel-heading">Informacija</div>
+                    <table class="table">
+                        <tr>
+                            <td>Vietos</td>
+                            <td>{{residence.capacity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Miestas</td>
+                            <td>{{residence.city.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Adresas</td>
+                            <td>{{residence.address}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sav. kaina</td>
+                            <td>{{residence.weeklyPrice}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rezervavimas</td>
+                            <td>nuo {{residence.availability.dateFrom}} iki {{residence.availability.dateTo}}</td>
+                        </tr>
+                    </table>
                 </div>
+                <button ng-click="reserveResidence(residence.id)" type="button" class="btn btn-success btn-raised">
+                    Rezervuoti
+                </button>
             </div>
         </div>
         <div class="row residence-secondary residence-divider">
@@ -47,25 +56,46 @@
                     </div>
                 </div>
                 <div id="extraServices" class="tab-pane fade">
-                    <div class="col-md-12">
-                        <div class="residence-extra-features">
-                            <form ng-repeat="extraService in residence.extraServices track by $index">
-                                <input class="extraService" type="checkbox" ng-model="extraService.selected" ng-change="setFullPrice()">
-                                {{extraService.name}}:
-                                {{extraService.price}}<br>
-                            </form>
-                        </div>
+                    <div class="col-md-12 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="extraService-tr">Pavadinimas</th>
+                                <th class="extraService-tr">Taškai</th>
+                                <th class="extraService-tr">Aprašymas</th>
+                            </tr>
+                            </thead>
+                            <tbody ng-cloak>
+                            <tr ng-repeat="extraService in residence.extraServices track by $index">
+                                <td>{{extraService.name}}</td>
+                                <td>{{extraService.price}}</td>
+                                <td>Info todo</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div id="history" class="tab-pane fade">
-                    <p>TODO</p>
+                    <div id="history" class="tab-pane fade">
+                        <div class="col-md-12 ">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th class="extraService-tr">Narys</th>
+                                    <th class="extraService-tr">Nuo</th>
+                                    <th class="extraService-tr">Iki</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-cloak>
+                                <tr ng-repeat="residenceEvent in residenceHistory track by $index">
+                                    <td>{{residenceEvent.user.fullName}}</td>
+                                    <td>{{residenceEvent.duration.dateFrom}}</td>
+                                    <td>{{residenceEvent.duration.dateTo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
-        </div>
-        <div class="raw text-center">
-            <h4>Kaina: {{fullPrice}} taškai</h4>
-            <button class="btn btn-success btn-raised">Rezervuoti</button>
-            </h4>
         </div>
     </div>
 </div>

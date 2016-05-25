@@ -12,8 +12,22 @@ app.service('residencesService', ['$http', function ($http) {
             });
     };
 
+    this.getResidenceHistory = function (id) {
+        return $http.get('rest/reservation/getResidenceHistory/' + id)
+            .then(function (result) {
+                console.log(result.data);
+                return result.data;
+            }).catch(function (response) {
+                console.log(response);
+            });
+    };
+
     this.getAllResidences = function () {
         return getFunc("getAll/");
+    };
+    
+    this.searchResidences = function (residenceSearchRequest) {
+      return $http.post(baseUrl + 'searchResidences', residenceSearchRequest);  
     };
 
     this.getResidence = function (id) {
@@ -30,7 +44,7 @@ app.service('residencesService', ['$http', function ($http) {
 
     this.updateResidence = function (residence) {
         return $http.post(baseUrl + "update/", residence);
-    }
+    };
 
     this.reserveResidence = function (reservation){
         return $http.post(reservationUrl + "reserve", reservation);

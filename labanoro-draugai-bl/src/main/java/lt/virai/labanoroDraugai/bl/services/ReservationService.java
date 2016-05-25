@@ -13,6 +13,8 @@ import java.util.Set;
  * Created by Mantas on 5/17/2016.
  */
 public interface ReservationService {
-    void reserve(User user, Residence residence, LocalDate dateFrom, LocalDate dateTo, Set<ExtraService> extraServices) throws LabanoroException;
+
+    void reserve(User user, Integer residenceId, LocalDate dateFrom, LocalDate dateTo, Set<Integer> extraServiceIds) throws LabanoroException;
+
     void cancel(Reservation reservation);
 }

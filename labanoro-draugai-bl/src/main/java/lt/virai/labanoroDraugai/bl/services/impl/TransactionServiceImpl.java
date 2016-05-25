@@ -15,6 +15,7 @@ import lt.virai.labanoroDraugai.domain.model.PurchaseStatus;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -24,7 +25,6 @@ import java.util.Optional;
 /**
  * Created by Žilvinas on 2016-05-10.
  */
-@Logged
 @Stateless
 public class TransactionServiceImpl implements TransactionService {
 
@@ -40,6 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Inject
     private ClubSettingDAO clubSettingDAO;
 
+    @Logged
     @Override
     public PointPurchase createPurchase(Integer userId, Integer amount) {
         Objects.requireNonNull(userId);
@@ -60,6 +61,7 @@ public class TransactionServiceImpl implements TransactionService {
         return pointPurchaseDAO.getAll();
     }
 
+    @Logged
     @Override
     public void confirmPurchase(int purchaseId) {
         Optional.ofNullable(pointPurchaseDAO.get(purchaseId)).ifPresent(p -> {
@@ -71,6 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
         });
     }
 
+    @Logged
     @Override
     public void rejectPurchase(int purchaseId) {
         Optional.ofNullable(pointPurchaseDAO.get(purchaseId)).ifPresent(p -> {
@@ -93,6 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .orElse(null);
     }
 
+    @Logged
     @Override
     public void payAnnualPayment(Integer userId) throws LabanoroException {
         Objects.requireNonNull(userId);
@@ -113,5 +117,13 @@ public class TransactionServiceImpl implements TransactionService {
         user.getAnnualPayments().add(payment);
 
         userDAO.update(user);
+    }
+
+    @Logged
+    @Override
+    public void sendPointsToUser(Integer userId, Integer amount) {
+        Objects.requireNonNull(amount);
+        Optional.ofNullable(userDAO.get(Objects.requireNonNull(userId)))
+                .ifPresent(u -> u.setBalance(u.getBalance() + amount));
     }
 }

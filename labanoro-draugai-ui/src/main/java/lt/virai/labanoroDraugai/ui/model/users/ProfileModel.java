@@ -14,19 +14,19 @@ import java.time.LocalDate;
  * Created by Žilvinas on 2016-04-21.
  */
 public class ProfileModel implements MappableTo<User> {
-    @NotNull(message = "User id is required")
+    @NotNull(message = "Vartotojo id yra privalomas")
     private Integer id;
 
-    @Email(regexp = ValidationUtils.EMAIL_REGEX)
+    @Email(regexp = ValidationUtils.EMAIL_REGEX, message = "Blogas el. pašto formatas")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Vardas negali būti tuščias")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Pavardė negali būti tuščia")
     private String surname;
 
-    @NotNull
+    @NotNull(message = "Registracijos data negali būti tuščia")
     private LocalDate registrationDate;
 
     private String role;

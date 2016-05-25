@@ -12,9 +12,9 @@ import java.util.Objects;
  */
 public class ExtraServiceModel implements MappableTo<ExtraService> {
     private Integer id;
-    @NotEmpty
+    @NotEmpty(message = "Vardas negali būti tuščias")
     private String name;
-    @Range(min = 0)
+    @Range(min = 0, message = "Kaina negali būti neigiama")
     private Integer price;
 
     public ExtraServiceModel() {

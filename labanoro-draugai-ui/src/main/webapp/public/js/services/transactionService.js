@@ -5,6 +5,10 @@ app.service('transactionService', ['$http', function ($http) {
         return $http.post(baseUrl + 'createPurchase', amount);
     };
 
+    this.sendPoints = function (id, amount) {
+        return $http.post(baseUrl + 'sendPoints/' + id, amount);
+    };
+
     this.payAnnualPayment = function () {
         return $http.get(baseUrl + 'payAnnualPayment');
     };

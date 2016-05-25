@@ -34,11 +34,12 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     	model.duration.dateFrom = $filter('date')(model.duration.dateFrom, 'yyyy-MM-dd');
     	model.duration.dateTo = $filter('date')(model.duration.dateTo, 'yyyy-MM-dd');
 
-    	residencesService.reserveResidence(model).then(function(success){
-    		growl.success("Rezervacija atlikta sėkmingai!");
+    	residencesService.reserveResidence(model).then(function(success) {
+    		growl.success("Vasarnamis sėkmingai rezervuotas");
     		$uibModalInstance.close();
-    	}, function(error){
-    		growl.warning(error.data);
+    	}).catch(function(error){
+			growl.error(error.message); //TODO?
+			$uibModalInstance.close();
     	});
     };
 
@@ -65,7 +66,6 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
 
     function updateTotalPrice(){
     	$scope.weekCount = calculateWeekCount($scope.duration.dateFrom, $scope.duration.dateTo);
-    	console.log($scope.selected.services);
     	var servicesPrice = 0;
     	angular.forEach($scope.selected.services, function(value, key){
     		servicesPrice += value.price;

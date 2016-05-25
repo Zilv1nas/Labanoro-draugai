@@ -23,4 +23,6 @@ public interface TransactionService {
     LocalDate getLastAnnualPaymentDate(int userId);
 
     void payAnnualPayment(Integer userId) throws LabanoroException;
+
+    void sendPointsToUser(Integer userId, Integer amount);
 }

@@ -15,9 +15,9 @@ public class PointPurchaseModel {
     private Integer id;
     private String name;
     private String surname;
-    @Email(regexp = EMAIL_REGEX)
+    @Email(regexp = EMAIL_REGEX, message = "Blogas el. pašto formatas")
     private String username;
-    @Range(min = 0)
+    @Range(min = 0, message = "Taškų kiekis negali būti neigiamas")
     private Integer amount;
     private LocalDateTime purchaseDate;
     private String status;

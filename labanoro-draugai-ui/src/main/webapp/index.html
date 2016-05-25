@@ -30,23 +30,29 @@
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul ng-cloak class="nav navbar-nav">
-                    <li ng-show="isMember()"><a ui-sref="membersList">Members</a></li>
-                    <li ng-show="isMember()"><a ui-sref="residencesList">Residences</a></li>
+                    <li ui-sref-active="active" ng-show="isMember()"><a ui-sref="membersList">Klubo nariai</a></li>
+                    <li ui-sref-active="active" ng-show="isMember()"><a ui-sref="residencesList">Vasarnamiai</a></li>
                 </ul>
                 <ul ng-cloak class="nav navbar-nav navbar-right">
-                    <li ng-show="isAdmin()" class="dropdown">
-                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+                    <li ng-if="isAdmin()" class="dropdown">
+                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">Aministravimas<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a ui-sref="adminResidencesList">Residences</a></li>
-                            <li><a ui-sref="createResidence">Create residence</a></li>
-                            <li><a ui-sref="adminMembersList">Members</a></li>
-                            <li><a ui-sref="purchasesList">Purchases</a></li>
-                            <li><a ui-sref="settings">Settings</a></li>
+                            <li ui-sref-active="active"><a ui-sref="adminResidencesList">Vasarnamiai</a></li>
+                            <li ui-sref-active="active"><a ui-sref="createResidence">Sukurti vasarnamį</a></li>
+                            <li ui-sref-active="active"><a ui-sref="adminMembersList">Klubo nariai</a></li>
+                            <li ui-sref-active="active"><a ui-sref="purchasesList">Pirkimai</a></li>
+                            <li ui-sref-active="active"><a ui-sref="settings">Nustatymai</a></li>
                         </ul>
                     </li>
-                    <li ng-show="isAuthenticated"><a ui-sref="profile">{{userName}}</a></li>
-                    <li ng-show="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
-                    <li ng-show="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
+                    <li ng-show="isAuthenticated" class="dropdown">
+                        <a role="button" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active="active"><a ui-sref="profile">Profilis</a></li>
+                            <li ui-sref-active="active"><a ui-sref="reservationsList">Mano rezervacijos</a></li>
+                        </ul>
+                    </li>
+                    <li ui-sref-active="active" ng-if="!isAuthenticated"><a ui-sref="login">Prisijungti</a></li>
+                    <li ui-sref-active="active" ng-if="isAuthenticated"><a ng-click="logout()" href="javascript:void(0)">Atsijungti</a></li>
                 </ul>
             </div>
         </div>
@@ -82,6 +88,7 @@
     <script src="public/js/controllers/member/profileController.js"></script>
     <script src="public/js/controllers/member/navigationController.js"></script>
     <script src="public/js/controllers/member/viewResidenceController.js"></script>
+    <script src="public/js/controllers/member/reservationsListController.js"></script>
     <script src="public/js/controllers/admin/createResidenceController.js"></script>
     <script src="public/js/controllers/admin/editResidenceController.js"></script>
     <script src="public/js/controllers/admin/residencesListController.js"></script>

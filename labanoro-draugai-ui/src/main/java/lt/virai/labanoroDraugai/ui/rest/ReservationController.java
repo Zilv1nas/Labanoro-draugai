@@ -120,9 +120,9 @@ public class ReservationController {
         try {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
 
-            reservationService.reserve(userDAO.get(userId), reservationModel.getResidence().mapTo(),
+            reservationService.reserve(userDAO.get(userId), reservationModel.getResidence().getId(),
                     reservationModel.getDuration().getDateFrom(), reservationModel.getDuration().getDateTo(),
-                    reservationModel.getExtraServices().stream().map(ExtraServiceModel::mapTo).collect(Collectors.toSet()));
+                    reservationModel.getExtraServices().stream().map(ExtraServiceModel::getId).collect(Collectors.toSet()));
 
             return Response.ok().build();
         } catch (LabanoroException ex) {

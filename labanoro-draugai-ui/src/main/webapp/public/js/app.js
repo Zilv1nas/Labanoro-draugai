@@ -70,10 +70,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'residencesListController',
                 templateUrl: memberUrlPrefix + '/residencesListView.html',
                 resolve: {
-                     residences: function (residencesService) {
-                         return residencesService.getAllResidences();
-                     }
-                 }
+                    residences: function (residencesService) {
+                        return residencesService.getAllResidences();
+                    }
+                }
             })
             .state('viewResidence', {
                 url: "/residence/:id",
@@ -81,8 +81,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: memberUrlPrefix + '/residenceView.html',
                 resolve: {
                     residence: function (residencesService, $stateParams) {
-                        console.log($stateParams);
                         return residencesService.getResidence($stateParams.id);
+                    },
+                    residenceHistory: function (residencesService, $stateParams) {
+                        return residencesService.getResidenceHistory($stateParams.id);
                     }
                 }
             })
@@ -134,10 +136,20 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('settings', {
                 url: "/admin/settings",
                 controller: 'settingsController',
-                templateUrl: adminUrlPrefix + '/settingsView.html'
+                templateUrl: adminUrlPrefix + '/settingsView.html',
+                resolve: {
+                    settings: function (settingsService) {
+                        return settingsService.getAllSettings();
+                    }
+                }
+            })
+            .state('reservationsList', {
+                url: "/reservationsList",
+                controller: 'reservationsListController',
+                templateUrl: memberUrlPrefix + '/reservationsListView.html'
                 // resolve: {
-                //     settings: function (membersService) {
-                //         return settingsService.getSettings();
+                //     reservations: function (reservationsService) {
+                //         return reservationsService.getReservations();
                 //     }
                 // }
             });

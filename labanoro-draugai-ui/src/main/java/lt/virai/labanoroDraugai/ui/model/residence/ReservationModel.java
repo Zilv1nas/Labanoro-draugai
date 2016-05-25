@@ -11,9 +11,9 @@ import java.util.Set;
  */
 public class ReservationModel {
     private Integer id;
-    @NotNull(message = "Residence is required.")
+    @NotNull(message = "Vasarnamio laukas negali būti tuščias")
     private ResidenceModel residence;
-    @NotNull(message = "Duration is required.")
+    @NotNull(message = "Trukmė yra privaloma")
     @Valid
     private WeekRangeModel duration;
 

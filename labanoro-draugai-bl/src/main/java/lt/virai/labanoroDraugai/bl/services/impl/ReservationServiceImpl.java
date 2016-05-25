@@ -1,8 +1,10 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
 import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
+import lt.virai.labanoroDraugai.bl.interceptors.binding.Logged;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
+import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.ExtraService;
 import lt.virai.labanoroDraugai.domain.entities.Reservation;
@@ -14,9 +16,12 @@ import javax.inject.Inject;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.toIntExact;
 
@@ -33,12 +38,17 @@ public class ReservationServiceImpl implements ReservationService {
     @Inject
     private UserDAO userDAO;
 
+    @Inject
+    private ResidenceDAO residenceDAO;
+
+    @Logged
     @Override
-    public void reserve(User user, Residence residence, LocalDate dateFrom, LocalDate dateTo, Set<ExtraService> extraServices) throws LabanoroException {
+    public void reserve(User user, Integer residenceId, LocalDate dateFrom, LocalDate dateTo, Set<Integer> extraServiceIds) throws LabanoroException {
         Objects.requireNonNull(user);
-        Objects.requireNonNull(residence);
+        Objects.requireNonNull(residenceId);
         Objects.requireNonNull(dateFrom);
         Objects.requireNonNull(dateTo);
+        Residence residence = residenceDAO.get(residenceId);
         if (dateFrom.getDayOfWeek() != DayOfWeek.MONDAY) {
             throw new LabanoroException("Date from has to be on monday.");
         }
@@ -73,10 +83,16 @@ public class ReservationServiceImpl implements ReservationService {
         Integer totalWeeks = toIntExact(Duration.between(dateFrom.atTime(0, 0), dateTo.atTime(0, 0)).toDays() / 7) + 1;
         Integer amountToSpend = totalWeeks * residence.getWeeklyPrice();
 
-        if (extraServices != null) {
-            for (ExtraService service : extraServices) {
-                amountToSpend += service.getPrice();
-            }
+        Set<ExtraService> extraServices = new HashSet<>();
+        if (extraServiceIds != null) {
+            extraServices = residence.getExtraServices().stream()
+                    .filter(es -> extraServiceIds.contains(es.getId()))
+                    .collect(Collectors.toSet());
+
+            amountToSpend += extraServices.stream()
+                    .map(ExtraService::getPrice)
+                    .reduce((e1, e2) -> e1 + e2)
+                    .orElse(0);
         }
 
         if (user.getBalance() < amountToSpend) {

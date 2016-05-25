@@ -9,13 +9,13 @@ import static lt.virai.labanoroDraugai.ui.util.ValidationUtils.EMAIL_REGEX;
  * Created by Žilvinas on 2016-04-24.
  */
 public class InvitationInfo {
-    @NotEmpty
+    @NotEmpty(message = "Pakvietėjo vardas negali būti tuščias")
     private String fromName;
-    @NotEmpty
+    @NotEmpty(message = "Pakvietėjo pavardė negali būti tuščias")
     private String fromSurname;
-    @Email(regexp = EMAIL_REGEX)
+    @Email(regexp = EMAIL_REGEX, message = "Blogas el. pašto formatas")
     private String toEmail;
-    @NotEmpty
+    @NotEmpty(message = "Nenurodyta pakvietimo nuoroda")
     private String redirectUrl;
 
     public String getFromName() {
