@@ -14,6 +14,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -99,6 +100,19 @@ public class TransactionController {
             return Response.ok().build();
         } catch (LabanoroException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured({UserRole.ADMIN})
+    @POST
+    @Path("sendPoints/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response sendPoints(@PathParam("id") @NotNull Integer id, @NotNull @Range(min = 0) Integer amount) {
+        try {
+            transactionService.sendPointsToUser(id, amount);
+            return Response.ok().build();
         } catch (Exception e) {
             return Response.serverError().build();
         }

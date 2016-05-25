@@ -1,6 +1,7 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
 import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
+import lt.virai.labanoroDraugai.bl.interceptors.binding.Logged;
 import lt.virai.labanoroDraugai.bl.services.ReservationService;
 import lt.virai.labanoroDraugai.domain.dao.ReservationDAO;
 import lt.virai.labanoroDraugai.domain.dao.ResidenceDAO;
@@ -40,6 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Inject
     private ResidenceDAO residenceDAO;
 
+    @Logged
     @Override
     public void reserve(User user, Integer residenceId, LocalDate dateFrom, LocalDate dateTo, Set<Integer> extraServiceIds) throws LabanoroException {
         Objects.requireNonNull(user);
