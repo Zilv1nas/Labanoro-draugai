@@ -5,6 +5,12 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     $scope.selected.services = [];
     $scope.duration = {};
     $scope.totalPrice = 0;
+    $scope.servicesPrice = 0;
+    $scope.weekCount = 0;
+
+    $scope.datePickerOptions = {
+    	availability: $scope.residence.availability
+    }
 
     $scope.$watch('selected.services', function(o, n){
     	updateTotalPrice();
@@ -28,12 +34,11 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     	model.duration.dateFrom = $filter('date')(model.duration.dateFrom, 'yyyy-MM-dd');
     	model.duration.dateTo = $filter('date')(model.duration.dateTo, 'yyyy-MM-dd');
 
-    	console.log(model);
     	residencesService.reserveResidence(model).then(function(success){
-    		growl.success("valio");
+    		growl.success("Rezervacija atlikta sėkmingai!");
     		$uibModalInstance.close();
     	}, function(error){
-    		console.log(error);
+    		growl.warning(error.data);
     	});
     };
 
@@ -59,17 +64,14 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     }
 
     function updateTotalPrice(){
-    	var weekCount = calculateWeekCount($scope.duration.dateFrom, $scope.duration.dateTo);
+    	$scope.weekCount = calculateWeekCount($scope.duration.dateFrom, $scope.duration.dateTo);
+    	console.log($scope.selected.services);
     	var servicesPrice = 0;
-    	console.log(weekCount);
-
     	angular.forEach($scope.selected.services, function(value, key){
     		servicesPrice += value.price;
     	});
-
-    	$scope.totalPrice = (servicesPrice + $scope.residence.weeklyPrice) * weekCount;
-
-    	console.log($scope.totalPrice);
+    	$scope.servicesPrice = servicesPrice;
+    	$scope.totalPrice = ($scope.servicesPrice + $scope.residence.weeklyPrice) * $scope.weekCount;
     }
 
 }]);

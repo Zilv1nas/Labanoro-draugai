@@ -2,40 +2,55 @@
 	<h3 class="modal-title">Rezervacija</h3>
 </div>
 <div class="modal-body">
-	<p>{{residence.name}}</p>
+	<h2>{{residence.name}}</h2>
 	<ui-select multiple ng-model="selected.services" theme="bootstrap">
-	<ui-select-match placeholder="Select extra services">{{$item.name}}</ui-select-match>
+	<ui-select-match placeholder="Pasirinkite papildomas paslaugas">{{$item.name}}</ui-select-match>
 	<ui-select-choices repeat="service in residence.extraServices | filter:$select.search">
 	{{service.name}} {{service.price}}
 </ui-select-choices>
 </ui-select>
-<div class="form-group" ng-controller="datePickerController">
-	<label class="col-md-2 control-label">Nuo</label>
-	<div class="col-md-9">
-		<p class="input-group">
-			<input type="text" class="form-control" uib-datepicker-popup ng-model="duration.dateFrom"
-			is-open="popup.opened" datepicker-options="inlineOptions" />
-			<span class="input-group-btn">
-				<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
-			</span>
-		</p>
-		<validation errorMessages="{{errorMessages}}" key="dateFrom"></validation>
+<div class="row">
+	<div class="col-md-7">
+		<div class="form-group" ng-controller="datePickerController" ng-init="dayFilter='monday'">
+			<label class="col-md-2 control-label">Nuo</label>
+			<div class="col-md-10">
+				<p class="input-group">
+					<input type="text" class="form-control" uib-datepicker-popup ng-model="duration.dateFrom"
+					is-open="popup.opened" datepicker-options="inlineOptions" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<validation errorMessages="{{errorMessages}}" key="dateFrom"></validation>
+			</div>
+		</div>
+		<div class="form-group" ng-controller="datePickerController" ng-init="dayFilter='sunday'">
+		<label class="col-md-2 control-label">Iki</label>
+			<div class="col-md-10">
+				<p class="input-group">
+					<input type="text" class="form-control" uib-datepicker-popup ng-model="duration.dateTo"
+					is-open="popup.opened" datepicker-options="inlineOptions" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<validation errorMessages="{{errorMessages}}" key="dateTo"></validation>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5 pull-right">
+		<div class="panel panel-default height">
+                    <div class="panel-heading">Kaina</div>
+                    <div class="panel-body">
+                        <strong>Savaitinė kaina:</strong>
+                        {{ residence.weeklyPrice }}<br>
+                        Papildomos paslaugos: {{ servicesPrice }}<br>
+                        Savaičių skaičius: {{ weekCount }}<br>
+                        <strong>Viso: {{ totalPrice }}</strong><br>
+                    </div>
+                </div>
 	</div>
 </div>
-<div class="form-group" ng-controller="datePickerController">
-<label class="col-md-2 control-label">Iki</label>
-	<div class="col-md-9">
-		<p class="input-group">
-			<input type="text" class="form-control" uib-datepicker-popup ng-model="duration.dateTo"
-			is-open="popup.opened" datepicker-options="inlineOptions" />
-			<span class="input-group-btn">
-				<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
-			</span>
-		</p>
-		<validation errorMessages="{{errorMessages}}" key="dateTo"></validation>
-	</div>
-</div>
-<p>Total price: {{ totalPrice }}</p>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" type="button" ng-click="ok()">Patvirtinti</button>
