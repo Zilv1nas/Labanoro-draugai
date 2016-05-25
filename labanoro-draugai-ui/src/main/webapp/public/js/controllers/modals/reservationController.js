@@ -29,11 +29,12 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     	model.duration.dateTo = $filter('date')(model.duration.dateTo, 'yyyy-MM-dd');
 
     	console.log(model);
-    	residencesService.reserveResidence(model).then(function(success){
-    		growl.success("valio");
+    	residencesService.reserveResidence(model).then(function(success) {
+    		growl.success("Vasarnamis sėkmingai rezervuotas");
     		$uibModalInstance.close();
-    	}, function(error){
-    		console.log(error);
+    	}).catch(function(error){
+			growl.error(error.message); //TODO?
+			$uibModalInstance.close();
     	});
     };
 

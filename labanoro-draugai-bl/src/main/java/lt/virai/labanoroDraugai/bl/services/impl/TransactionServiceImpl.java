@@ -15,6 +15,7 @@ import lt.virai.labanoroDraugai.domain.model.PurchaseStatus;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -116,5 +117,13 @@ public class TransactionServiceImpl implements TransactionService {
         user.getAnnualPayments().add(payment);
 
         userDAO.update(user);
+    }
+
+    @Logged
+    @Override
+    public void sendPointsToUser(Integer userId, Integer amount) {
+        Objects.requireNonNull(amount);
+        Optional.ofNullable(userDAO.get(Objects.requireNonNull(userId)))
+                .ifPresent(u -> u.setBalance(u.getBalance() + amount));
     }
 }
