@@ -11,12 +11,12 @@ import java.time.LocalDate;
  * Created by Mantas on 4/30/2016.
  */
 public class WeekRangeModel {
-    @NotNull(message = "Date from is required.")
-    @WeekDay(value = DayOfWeek.MONDAY, message = "\"Date from\" always has to be Monday.")
+    @NotNull(message = "Data nuo yra privaloma")
+    @WeekDay(value = DayOfWeek.MONDAY, message = "\"Data nuo\" privalo būti pirmadienis")
     private LocalDate dateFrom;
 
-    @NotNull(message = "Date to is required.")
-    @WeekDay(value = DayOfWeek.SUNDAY, message = "\"Date to\" always has to be Sunday.")
+    @NotNull(message = "Data iki yra privaloma")
+    @WeekDay(value = DayOfWeek.SUNDAY, message = "\"Data nuo\" privalo būti sekmadienis")
     private LocalDate dateTo;
 
     public WeekRangeModel () {}

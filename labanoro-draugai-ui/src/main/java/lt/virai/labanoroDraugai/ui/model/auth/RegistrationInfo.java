@@ -12,14 +12,14 @@ import static lt.virai.labanoroDraugai.ui.util.ValidationUtils.EMAIL_REGEX;
  * Created by Žilvinas on 2016-04-17.
  */
 public class RegistrationInfo {
-    @Email(regexp = EMAIL_REGEX)
+    @Email(regexp = EMAIL_REGEX, message = "Blogas el. pašto formatas")
     private String email;
-    @NotEmpty
+    @NotEmpty(message = "Vardas negali būti tuščias")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "Pavardė negali būti tuščia")
     private String surname;
-    @NotNull
-    @Size(min = 2, max = 50)
+    @NotNull(message = "Slaptažodžio negali būti tuščias")
+    @Size(min = 6, max = 20, message = "Slaptažodžio ilgis turi būti nuo 6 iki 20 simbolių")
     private String password;
 
     public String getEmail() {

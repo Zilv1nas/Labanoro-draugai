@@ -6,10 +6,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Created by Žilvinas on 2016-04-19.
  */
 public class FbRegistrationInfo {
-    @NotEmpty
+    @NotEmpty(message = "Kliento id negali būti tuščias")
     private String clientId;
     private String redirectUri;
-    @NotEmpty
+    @NotEmpty(message = "Kodas negali būti tuščias")
     private String code;
 
     public String getClientId() {

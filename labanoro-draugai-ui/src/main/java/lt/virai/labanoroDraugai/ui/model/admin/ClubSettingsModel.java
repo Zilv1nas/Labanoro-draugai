@@ -13,11 +13,11 @@ import java.util.List;
  * Created by Žilvinas on 2016-05-19.
  */
 public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
-    @NotNull
-    @Range(min = 1)
+    @NotNull(message = "Negali būti tuščias")
+    @Range(min = 1, message = "Minimalus narių skaičius yra 1")
     private Integer maxClubMembers;
-    @NotNull
-    @Range(min = 0)
+    @NotNull(message = "Negali būti tuščias")
+    @Range(min = 0, message = "Metinis mokestis negali būti neigiamas")
     private Integer annualPaymentSize;
 
     public ClubSettingsModel() {

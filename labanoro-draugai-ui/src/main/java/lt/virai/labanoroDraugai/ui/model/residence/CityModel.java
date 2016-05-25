@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 public class CityModel implements MappableTo<City> {
     private Integer id;
 
-    @NotNull(message = "Name is required.")
-    @Size(min = 4, message = "Name must have atleast 4 symbols.")
+    @NotNull(message = "Vardas negali būti tuščias")
+    @Size(min = 4, message = "Vardas turi būti bent iš 4 simbolių")
     private String name;
 
     public CityModel(City city) {

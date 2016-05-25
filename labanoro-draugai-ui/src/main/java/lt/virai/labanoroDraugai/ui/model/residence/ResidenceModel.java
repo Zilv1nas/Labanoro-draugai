@@ -20,31 +20,31 @@ import java.util.stream.Collectors;
 public class ResidenceModel implements MappableTo<Residence> {
     private Integer id;
 
-    @NotEmpty
-    @Size(min = 4, message = "Name cannot be shorter than 4.")
+    @NotEmpty(message = "Pavadinimas negali būti tuščias")
+    @Size(min = 4, message = "Pavadinimas negali būti trumpesnis nei 4 simboliai")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Aprašymas negali būti tuščias")
     private String description;
 
-    @NotNull
-    @Min(value = 1, message = "Capacity cannot be less than 1.")
+    @NotNull(message = "Laisvos vietos negali būti tuščios")
+    @Min(value = 1, message = "Laisvų vietų negali būti mažiau nei 1")
     private Integer capacity;
 
-    @NotEmpty
-    @Size(min = 4, message = "Address cannot be shorter than 4.")
+    @NotEmpty(message = "Adresas negali būti tuščias")
+    @Size(min = 4, message = "Adresas negali būti trumpesnis nei 4 simboliai")
     private String address;
 
     private CityModel city;
 
-    @Pattern(regexp = "^data:image.*", message = "File type not supported.")
+    @Pattern(regexp = "^data:image.*", message = "Nepalaikomas failo tipas")
     private String image;
 
-    @NotNull(message = "Weekly price is required.")
-    @Min(value = 1, message = "Weekly price cannot be less than 1.")
+    @NotNull(message = "Savaitinė kaina negali būti tuščia")
+    @Min(value = 1, message = "Savaitinė kaina negali būti mažiau nei 1")
     private Integer weeklyPrice;
 
-    @NotNull(message = "Availability dates are required.")
+    @NotNull(message = "Turi būti nurodytos užsakymo datos")
     @Valid
     private WeekRangeModel availability;
 
