@@ -37,6 +37,9 @@ app.controller('residencesListController', ['$scope', '$state', '$uibModal', 're
 	      resolve: {
 	        residence: function () {
 	          return residencesService.getResidence(id);
+	        },
+	        residenceHistory: function() {
+	        	return residencesService.getResidenceHistory(id);
 	        }
 	      }
 	    });

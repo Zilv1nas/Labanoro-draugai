@@ -1,4 +1,4 @@
-app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModalInstance', 'residencesService', 'residence', function ($scope, growl, $filter ,$uibModalInstance, residencesService, residence) {
+app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModalInstance', 'residencesService', 'residence', 'residenceHistory', function ($scope, growl, $filter ,$uibModalInstance, residencesService, residence, residenceHistory) {
 
 	$scope.residence = residence;
 	$scope.selected = {};
@@ -8,8 +8,14 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     $scope.servicesPrice = 0;
     $scope.weekCount = 0;
 
+    var unavailableRanges = []
+    angular.forEach(residenceHistory, function(value, key){
+    	unavailableRanges.push(value.duration);
+    });
+
     $scope.datePickerOptions = {
-    	availability: $scope.residence.availability
+    	availability: $scope.residence.availability,
+    	unavailableRanges: unavailableRanges
     }
 
     $scope.$watch('selected.services', function(o, n){
