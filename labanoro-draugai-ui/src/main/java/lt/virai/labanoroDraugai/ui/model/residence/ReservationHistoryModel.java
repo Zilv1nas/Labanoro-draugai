@@ -8,6 +8,7 @@ import lt.virai.labanoroDraugai.ui.model.users.ShortUserModel;
  */
 public class ReservationHistoryModel {
     private Integer id;
+    private Integer price;
     private ResidenceModel residence;
     private ShortUserModel user;
     private WeekRangeModel duration;
@@ -17,6 +18,7 @@ public class ReservationHistoryModel {
 
     public ReservationHistoryModel(Reservation reservation) {
         id = reservation.getId();
+        price = reservation.getAmountSpent();
         residence = new ResidenceModel(reservation.getResidence());
         user = new ShortUserModel(reservation.getUser());
         duration = new WeekRangeModel();
@@ -30,6 +32,14 @@ public class ReservationHistoryModel {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public ResidenceModel getResidence() {

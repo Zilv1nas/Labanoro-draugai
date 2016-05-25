@@ -30,4 +30,10 @@ public class ReservationDAOImpl extends AbstractDAO<Reservation> implements Rese
         return streams.streamAll(entityManager, Reservation.class)
                 .where(u -> u.getUser().getId().equals(userId)).toList();
     }
+
+    @Override
+    public void remove(Reservation entity) {
+        entity.getSelectedExtraServices().clear();
+        super.remove(entity);
+    }
 }

@@ -38,7 +38,7 @@ app.controller('reservationController', ['$scope', 'growl', '$filter', '$uibModa
     		growl.success("Vasarnamis sėkmingai rezervuotas");
     		$uibModalInstance.close();
     	}).catch(function(error){
-			growl.error(error.message); //TODO?
+			growl.error(error.data.message);
 			$uibModalInstance.close();
     	});
     };

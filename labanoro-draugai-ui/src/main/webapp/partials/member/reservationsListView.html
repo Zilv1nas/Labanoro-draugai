@@ -10,20 +10,19 @@
                     <th>Kaina</th>
                     <th>Rezervacijos pradžia</th>
                     <th>Rezervacijos pabaiga</th>
-                    <th>Actions</th>
+                    <th>Veiksmai</th>
                 </tr>
                 </thead>
                 <tbody ng-cloak>
                 <tr ng-repeat="reservation in reservations">
-                    <td>{{reservation.id}}</td>
-                    <td><a class="member-link" ui-sref="viewResidence({id: reservation.id})">{{reservation.name}}</a></td>
+                    <td>{{$index + 1}}</td>
+                    <td><a class="member-link" ui-sref="viewResidence({id: reservation.residence.id})">{{reservation.residence.name}}</a>
+                    </td>
                     <td>{{reservation.price}}</td>
-                    <td>{{reservation.begins | date}}</td>
-                    <td>{{reservation.ends | date}}</td>
-                    <td>{{member.role | rolesFilter}}</td>
+                    <td>{{reservation.duration.dateFrom | date}}</td>
+                    <td>{{reservation.duration.dateTo | date}}</td>
                     <td>
-                        <button ng-click="verifyUser(member.id)" ng-show="reservation.state === 'PENDING'"
-                                class="btn btn-danger btn-raised">Atšaukti
+                        <button ng-click="cancelReservation(reservation.id)" class="btn btn-danger btn-raised">Atšaukti Rezervaciją
                         </button>
                     </td>
                 </tr>

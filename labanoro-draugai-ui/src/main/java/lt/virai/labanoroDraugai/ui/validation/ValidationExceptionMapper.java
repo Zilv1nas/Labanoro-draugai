@@ -1,5 +1,7 @@
 package lt.virai.labanoroDraugai.ui.validation;
 
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
+
 import javax.ejb.EJBException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -18,14 +20,19 @@ import java.util.stream.StreamSupport;
 public class ValidationExceptionMapper implements ExceptionMapper<EJBException> {
     @Override
     public Response toResponse(EJBException exception) {
-        if (exception.getCause() instanceof ConstraintViolationException) {
-            ConstraintViolationException ex = (ConstraintViolationException) exception.getCause();
-            List<ValidationError> validationErrors = ex.getConstraintViolations().stream().map(this::mapToValidationError).collect(Collectors.toList());
+        Throwable cause = exception;
+        while (cause.getCause() != null) {
+            if (cause.getCause() instanceof ConstraintViolationException) {
+                ConstraintViolationException ex = (ConstraintViolationException) cause.getCause();
+                List<ValidationError> validationErrors = ex.getConstraintViolations().stream().map(this::mapToValidationError).collect(Collectors.toList());
 
-            return Response.status(Response.Status.BAD_REQUEST).entity(validationErrors).build();
-        } else {
-            throw exception;
+                return Response.status(Response.Status.BAD_REQUEST).entity(validationErrors).build();
+            } else if (cause.getCause() instanceof LabanoroException) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationError("", cause.getCause().getMessage())).build();
+            }
+            cause = cause.getCause();
         }
+        throw exception;
     }
 
     private ValidationError mapToValidationError(ConstraintViolation<?> constraintViolation) {

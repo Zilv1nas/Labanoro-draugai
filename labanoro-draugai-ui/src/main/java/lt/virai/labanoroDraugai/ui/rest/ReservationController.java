@@ -93,14 +93,11 @@ public class ReservationController {
 
     @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @GET
-    @Path("/getUserHistory/{userId}")
+    @Path("/getUserHistory")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserHistory(@PathParam("userId") Integer userId,
-                                   @Context SecurityContext securityContext) {
+    public Response getUserHistory(@Context SecurityContext securityContext) {
         try {
-            if(Objects.isNull(userId)){
-                userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
-            }
+            Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
             User user = userDAO.get(userId);
             List<ReservationHistoryModel> reservations = reservationDAO.getReservationsForUser(user)
                     .stream().map(ReservationHistoryModel::new).collect(Collectors.toList());
@@ -116,7 +113,7 @@ public class ReservationController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response reserve(@Valid ReservationModel reservationModel,
-                            @Context SecurityContext securityContext) {
+                            @Context SecurityContext securityContext) throws LabanoroException {
         try {
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
 
@@ -126,8 +123,7 @@ public class ReservationController {
 
             return Response.ok().build();
         } catch (LabanoroException ex) {
-            // TODO pritempt prie fronto (struktura).
-            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            throw ex;
         } catch (Exception ex) {
             return Response.serverError().build();
         }
@@ -135,9 +131,9 @@ public class ReservationController {
 
     @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @POST
-    @Path("/cancel/{id}")
+    @Path("/cancel")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cancel(@PathParam("id") @NotNull Integer id) {
+    public Response cancel(@NotNull Integer id) {
         try {
             Reservation reservation = reservationDAO.get(id);
             if (reservation == null) {

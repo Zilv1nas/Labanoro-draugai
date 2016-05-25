@@ -1,5 +1,3 @@
-<body>
-
 <!-- "residence.name" "residence.weeklyPrice" "residence.capacity" "residence.address" "residence.description" -->
 <div class="col-md-8 col-md-offset-2">
     <div class="well row">
@@ -62,14 +60,12 @@
                             <tr>
                                 <th class="extraService-tr">Pavadinimas</th>
                                 <th class="extraService-tr">Taškai</th>
-                                <th class="extraService-tr">Aprašymas</th>
                             </tr>
                             </thead>
                             <tbody ng-cloak>
                             <tr ng-repeat="extraService in residence.extraServices track by $index">
                                 <td>{{extraService.name}}</td>
                                 <td>{{extraService.price}}</td>
-                                <td>Info todo</td>
                             </tr>
                             </tbody>
                         </table>
@@ -99,4 +95,3 @@
         </div>
     </div>
 </div>
-</body>
