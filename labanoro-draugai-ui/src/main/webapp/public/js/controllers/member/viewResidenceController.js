@@ -9,6 +9,9 @@ app.controller('viewResidenceController', ['$scope', '$state', '$uibModal', 'res
             resolve: {
                 residence: function () {
                     return residencesService.getResidence(id);
+                },
+                residenceHistory: function() {
+                    return residencesService.getResidenceHistory(id);
                 }
             }
         });
