@@ -47,5 +47,17 @@ app.service('residencesService', ['$http', function ($http) {
 
     this.reserveResidence = function (reservation){
         return $http.post(reservationUrl + "reserve", reservation);
+    };
+
+    this.getUserReservationHistory = function () {
+        return $http.get(reservationUrl + "getUserHistory").then(function (response) {
+            return response.data;
+        }).catch(function (response) {
+            console.log(response);
+        });
+    };
+    
+    this.cancelReservation = function (reservationId) {
+      return $http.post(reservationUrl + "cancel", reservationId);  
     }
 }]);

@@ -8,7 +8,7 @@ app.service('settingsService', ['$http', function ($http) {
             }).catch(function (response) {
                 console.log(response);
             });
-    }
+    };
 
 
     this.confirmSettings = function (settings) {

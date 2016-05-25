@@ -146,12 +146,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             .state('reservationsList', {
                 url: "/reservationsList",
                 controller: 'reservationsListController',
-                templateUrl: memberUrlPrefix + '/reservationsListView.html'
-                // resolve: {
-                //     reservations: function (reservationsService) {
-                //         return reservationsService.getReservations();
-                //     }
-                // }
+                templateUrl: memberUrlPrefix + '/reservationsListView.html',
+                resolve: {
+                    reservations: function (residencesService) {
+                        return residencesService.getUserReservationHistory();
+                    }
+                }
             });
 
         $locationProvider.html5Mode({
