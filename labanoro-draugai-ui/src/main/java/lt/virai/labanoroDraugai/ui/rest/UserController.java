@@ -9,6 +9,7 @@ import lt.virai.labanoroDraugai.ui.model.users.InvitationInfo;
 import lt.virai.labanoroDraugai.ui.model.users.ProfileModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -25,6 +26,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -173,6 +175,21 @@ public class UserController {
             userService.remove(Integer.parseInt(securityContext.getUserPrincipal().getName()));
             return Response.ok().build();
         } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @Secured
+    @POST
+    @Path("/askForRecommendations")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response askForRecommendations(@NotEmpty(message = "El. paštų sąrašas negali būti tuščias") List<String> emails,
+                                          @Context SecurityContext securityContext) {
+        try {
+            Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
+            emailService.askForRecommendations(emails, userId);
+            return Response.ok().build();
+        } catch (Exception e) {
             return Response.serverError().build();
         }
     }
