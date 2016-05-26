@@ -4,10 +4,11 @@
             <h2>Vasarnamiai</h2>
             <span>
 
-            <a class="btn btn-link" ng-class="searchRowOpened ? 'search-opened' : 'search-collapsed'" ng-click="searchRowOpened = !searchRowOpened">Paieška</a>
+            <a class="btn btn-link" ng-class="searchRowOpened ? 'search-opened' : 'search-collapsed'"
+               ng-click="searchRowOpened = !searchRowOpened">Paieška</a>
             </span>
             <div ng-show="searchRowOpened" class="row search-row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4 col-xs-8">
                     <div class="form-group label-floating is-empty">
                         <div class="input-group">
                             <label class="control-label" for="title">Pavadinimas</label>
@@ -22,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4 col-xs-8">
                     <div class="form-group label-floating is-empty">
                         <div class="input-group">
                             <label class="control-label" for="priceFrom">Savaitės kaina nuo</label>
@@ -37,52 +38,61 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4 col-xs-8">
                     <div class="form-group label-floating">
-                        <div class="input-group" >
+                        <div class="input-group">
                             <label class="control-label" for="unoccupiedFrom">Laisva nuo</label>
-                            <input ng-model="searchRequest.unoccupiedFrom" class="form-control" id="unoccupiedFrom" type="date">
+                            <input ng-model="searchRequest.unoccupiedFrom" class="form-control" id="unoccupiedFrom"
+                                   type="date">
                         </div>
                     </div>
 
                     <div class="form-group label-floating">
                         <div class="input-group">
                             <label class="control-label" for="unoccupiedTo">Laisva iki</label>
-                            <input ng-model="searchRequest.unoccupiedTo" class="form-control" id="unoccupiedTo" type="date">
+                            <input ng-model="searchRequest.unoccupiedTo" class="form-control" id="unoccupiedTo"
+                                   type="date">
                         </div>
                     </div>
                 </div>
-                <div class="row" style="text-align: center">
-                    <button ng-click="search()" class="btn btn-defaul">Ieškoti</button>
-                    <button ng-click="clearSearch()" class="btn btn-defaul">Išvalyti</button>
+                <div class="text-center col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-2 col-xs-12">
+                    <div class="row">
+                        <button ng-click="search()" class="btn btn-defaul">Ieškoti</button>
+                        <button ng-click="clearSearch()" class="btn btn-defaul">Išvalyti</button>
+                    </div>
                 </div>
             </div>
             <div class="list-group">
                 <div class="list-group-item residence" ng-repeat="residence in residences track by $index">
-                        <div class=" col-md-3">
-                            <figure class="pull-left">
-                                <img ng-show="residence.image" class="  " ng-src="{{residence.image}}" width="250" height="150">
-                                <img ng-show="!residence.image" class="" src="public/images/defaultResidence.png" width="250" height="150">
-                            </figure>
-                        </div>
-                    <div class="col-md-6">
-                            <a role="button" ui-sref="viewResidence({id: residence.id})">
-                                <h3 style="margin-top: 0"> {{residence.name}} </h3>
-                            </a>
-                            <p style="color: #777; margin-bottom: 10px;" class="list-group-item-text"> {{residence.address}}</p>
-                            <p class="list-group-item-text"> {{residence.description}}</p>
-                        </div>
-                        <div style="vertical-align: bottom;" class="col-md-3 text-center">
-                            <h4> Laisvos vietos: {{residence.capacity}} </h4>
-                            <h4> Savaitinė kaina: {{residence.weeklyPrice}} </h4>
-                            <button ng-click="reserveResidence(residence.id)" type="button" class="btn btn-default btn-raised" > Rezervuoti </button>
-                            <!--
-                            <button type="button" class="btn btn-default" aria-label="Right Align">
-                                <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-                            </button>
-                            -->
-                        </div>
+                    <div class=" col-md-4 col-sm-4 col-xs-12">
+                        <figure class="pull-left">
+                            <img ng-show="residence.image" class="  " ng-src="{{residence.image}}" width="280"
+                                 height="160">
+                            <img ng-show="!residence.image" class="" src="public/images/defaultResidence.png"
+                                 width="280" height="160">
+                        </figure>
                     </div>
+                    <div class="col-md-5 col-sm-12 col-xs-12">
+                        <a role="button" ui-sref="viewResidence({id: residence.id})">
+                            <h3 style="margin-top: 0"> {{residence.name}} </h3>
+                        </a>
+                        <p style="color: #777; margin-bottom: 10px;" class="list-group-item-text">
+                            {{residence.address}}</p>
+                        <p class="list-group-item-text"> {{residence.description}}</p>
+                    </div>
+                    <div style="vertical-align: bottom;" class="col-md-3 text-center">
+                        <h4> Laisvos vietos: {{residence.capacity}} </h4>
+                        <h4> Savaitinė kaina: {{residence.weeklyPrice}} </h4>
+                        <button ng-click="reserveResidence(residence.id)" type="button"
+                                class="btn btn-default btn-raised"> Rezervuoti
+                        </button>
+                        <!--
+                        <button type="button" class="btn btn-default" aria-label="Right Align">
+                            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                        </button>
+                        -->
+                    </div>
+                </div>
             </div>
             <div class="row pagination">
                 <div class="col-md-12">

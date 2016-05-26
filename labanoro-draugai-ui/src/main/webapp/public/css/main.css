@@ -171,3 +171,7 @@
 .extraService-tr {
     color: #9d9d9d;
 }
+
+.navbar .navbar-nav>li>a {
+    padding-bottom: 17px;
+}
