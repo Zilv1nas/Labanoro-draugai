@@ -51,4 +51,11 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
     public long getVerifiedMemberCount() {
         return streams.streamAll(entityManager, User.class).where(u -> u.getRole() != UserRole.CANDIDATE).count();
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        Objects.requireNonNull(email);
+
+        return streams.streamAll(entityManager, User.class).where(u -> u.getEmail().equals(email)).count() > 0;
+    }
 }

@@ -17,4 +17,6 @@ public interface UserDAO extends DAO<User> {
     List<User> getAllVerifiedMembers();
 
     long getVerifiedMemberCount();
+
+    boolean emailExists(String email);
 }

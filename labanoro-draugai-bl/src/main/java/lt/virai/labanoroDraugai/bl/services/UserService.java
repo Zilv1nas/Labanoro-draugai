@@ -21,4 +21,6 @@ public interface UserService {
     void verifyUser(int userId);
 
     void updateUserProfile(User user);
+
+    boolean emailExists(String email);
 }

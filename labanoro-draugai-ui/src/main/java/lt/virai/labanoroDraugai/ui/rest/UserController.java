@@ -9,6 +9,7 @@ import lt.virai.labanoroDraugai.ui.model.users.InvitationInfo;
 import lt.virai.labanoroDraugai.ui.model.users.ProfileModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
+import lt.virai.labanoroDraugai.ui.validation.ValidationExceptionMapper;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.ejb.Stateless;
@@ -26,9 +27,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static lt.virai.labanoroDraugai.ui.validation.ValidationExceptionMapper.*;
 
 /**
  * Created by Žilvinas on 2016-04-21.
@@ -183,9 +188,19 @@ public class UserController {
     @POST
     @Path("/askForRecommendations")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response askForRecommendations(@NotEmpty(message = "El. paštų sąrašas negali būti tuščias") List<String> emails,
+    public Response askForRecommendations(@NotEmpty(message = "El. paštų sąrašas negali būti tuščias") Set<String> emails,
                                           @Context SecurityContext securityContext) {
         try {
+            List<ValidationExceptionMapper.ValidationError> errors = new ArrayList<>();
+            emails.forEach(e -> {
+                if (!userService.emailExists(e)) {
+                    errors.add(new ValidationExceptionMapper.ValidationError("recommendations", "Nerastas el. pašto adresas: " + e));
+                }
+            });
+
+            if (!errors.isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(errors).build();
+            }
             Integer userId = Integer.parseInt(securityContext.getUserPrincipal().getName());
             emailService.askForRecommendations(emails, userId);
             return Response.ok().build();

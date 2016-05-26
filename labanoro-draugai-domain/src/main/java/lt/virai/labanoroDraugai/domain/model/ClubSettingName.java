@@ -5,5 +5,6 @@ package lt.virai.labanoroDraugai.domain.model;
  */
 public enum ClubSettingName {
     MAX_MEMBERS,
-    ANNUAL_PAYMENT_SIZE
+    ANNUAL_PAYMENT_SIZE,
+    RECOMMENDATION_COUNT
 }

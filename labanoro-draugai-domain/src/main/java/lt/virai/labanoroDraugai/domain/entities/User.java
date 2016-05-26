@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -35,6 +36,7 @@ public class User {
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
     private Set<AnnualPayment> annualPayments = new HashSet<>();
+    private Integer confirmations = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,5 +126,37 @@ public class User {
 
     public void setAnnualPayments(Set<AnnualPayment> annualPayments) {
         this.annualPayments = annualPayments;
+    }
+
+    @Basic
+    @Column(name = "confirmations", nullable = false)
+    public Integer getConfirmations() {
+        return confirmations;
+    }
+
+    public void setConfirmations(Integer confirmations) {
+        this.confirmations = confirmations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(balance, user.balance) &&
+                role == user.role &&
+                Objects.equals(registrationDate, user.registrationDate) &&
+                Objects.equals(authenticationAttributes, user.authenticationAttributes) &&
+                Objects.equals(annualPayments, user.annualPayments) &&
+                Objects.equals(confirmations, user.confirmations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, name, surname, balance, role, registrationDate, authenticationAttributes, annualPayments, confirmations);
     }
 }

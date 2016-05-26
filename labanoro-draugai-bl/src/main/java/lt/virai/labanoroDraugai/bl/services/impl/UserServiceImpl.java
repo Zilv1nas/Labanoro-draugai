@@ -1,5 +1,6 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
+import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.User;
@@ -63,5 +64,10 @@ public class UserServiceImpl implements UserService {
             u.setSurname(user.getSurname());
             u.setName(user.getName());
         });
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return email != null && !email.isEmpty() && userDAO.emailExists(email);
     }
 }

@@ -9,9 +9,9 @@ import lt.virai.labanoroDraugai.domain.entities.User;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Žilvinas on 2016-04-24.
@@ -46,7 +46,7 @@ public class SendGridEmailService implements EmailService {
 
     @Override
     @Asynchronous
-    public void askForRecommendations(List<String> emails, int userId) throws SendGridException {
+    public void askForRecommendations(Set<String> emails, int userId) throws SendGridException {
         Objects.requireNonNull(emails);
 
         User user = Optional.ofNullable(userDAO.get(userId)).orElseThrow(IllegalStateException::new);
