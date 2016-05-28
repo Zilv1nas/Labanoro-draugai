@@ -173,5 +173,5 @@
 }
 
 .navbar .navbar-nav>li>a {
-    padding-bottom: 17px;
+    border-bottom: 0;
 }
