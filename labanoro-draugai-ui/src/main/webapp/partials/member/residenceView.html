@@ -15,10 +15,6 @@
                             <td>{{residence.capacity}}</td>
                         </tr>
                         <tr>
-                            <td>Miestas</td>
-                            <td>{{residence.city.name}}</td>
-                        </tr>
-                        <tr>
                             <td>Adresas</td>
                             <td>{{residence.address}}</td>
                         </tr>
@@ -28,7 +24,7 @@
                         </tr>
                         <tr>
                             <td>Rezervavimas</td>
-                            <td>nuo {{residence.availability.dateFrom}} iki {{residence.availability.dateTo}}</td>
+                            <td>nuo {{residence.availability.dateFrom}}</br>iki {{residence.availability.dateTo}}</td>
                         </tr>
                     </table>
                 </div>
@@ -71,25 +67,25 @@
                         </table>
                     </div>
                 </div>
-                    <div id="history" class="tab-pane fade">
-                        <div class="col-md-12 ">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="extraService-tr">Narys</th>
-                                    <th class="extraService-tr">Nuo</th>
-                                    <th class="extraService-tr">Iki</th>
-                                </tr>
-                                </thead>
-                                <tbody ng-cloak>
-                                <tr ng-repeat="residenceEvent in residenceHistory track by $index">
-                                    <td>{{residenceEvent.user.fullName}}</td>
-                                    <td>{{residenceEvent.duration.dateFrom}}</td>
-                                    <td>{{residenceEvent.duration.dateTo}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div id="history" class="tab-pane fade">
+                    <div class="col-md-12 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="extraService-tr">Narys</th>
+                                <th class="extraService-tr">Nuo</th>
+                                <th class="extraService-tr">Iki</th>
+                            </tr>
+                            </thead>
+                            <tbody ng-cloak>
+                            <tr ng-repeat="residenceEvent in residenceHistory track by $index">
+                                <td>{{residenceEvent.user.fullName}}</td>
+                                <td>{{residenceEvent.duration.dateFrom}}</td>
+                                <td>{{residenceEvent.duration.dateTo}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

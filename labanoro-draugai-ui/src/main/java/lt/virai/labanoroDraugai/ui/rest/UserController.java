@@ -7,6 +7,7 @@ import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 import lt.virai.labanoroDraugai.ui.model.users.InvitationInfo;
 import lt.virai.labanoroDraugai.ui.model.users.ProfileModel;
+import lt.virai.labanoroDraugai.ui.model.users.UserListModel;
 import lt.virai.labanoroDraugai.ui.security.RequiresPayment;
 import lt.virai.labanoroDraugai.ui.security.Secured;
 import lt.virai.labanoroDraugai.ui.validation.ValidationExceptionMapper;
@@ -32,8 +33,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static lt.virai.labanoroDraugai.ui.validation.ValidationExceptionMapper.*;
 
 /**
  * Created by Žilvinas on 2016-04-21.
@@ -84,22 +83,29 @@ public class UserController {
     @GET
     @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response getAll(@Context SecurityContext securityContext) {
+        int currentUserId = Integer.parseInt(securityContext.getUserPrincipal().getName());
         return Response.ok().entity(userService.getAll()
-                .stream().map(ProfileModel::new).collect(Collectors.toList())).build();
+                .stream().map(u -> {
+                    UserListModel model = new UserListModel(u);
+                    model.setRecommendedByCurrentUser(userService.isRecommendedBy(u.getId(), currentUserId));
+                    return model;
+                }).collect(Collectors.toList())).build();
     }
 
     @RequiresPayment
-    @Secured({UserRole.ADMIN})
+    @Secured({UserRole.MEMBER, UserRole.ADMIN})
     @POST
     @Path("/verify")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response verifyUser(int userId) {
+    public Response verifyUser(int userId, @Context SecurityContext securityContext) {
         try {
+            int recommenderId = Integer.parseInt(securityContext.getUserPrincipal().getName());
+
             if (clubSettingService.isMemberCapacityExceeded()) {
                 return Response.status(Response.Status.CONFLICT).entity("Maximum member capacity exceeded").build();
             }
-            userService.verifyUser(userId);
+            userService.verifyUser(recommenderId, userId);
             return Response.ok().build();
         } catch (Exception e) {
             return Response.serverError().build();
@@ -133,6 +139,8 @@ public class UserController {
 
             profileModel.setLastPaymentDate(transactionService.getLastAnnualPaymentDate(profileModel.getId()));
             profileModel.setAnnualPaymentSize(clubSettingService.getAnnualPaymentSize());
+            profileModel.setRequiredConfirmationCount(clubSettingService.getRequiredConfirmationCount());
+            profileModel.setConfirmationCount(userService.getRecommendersCount(userId));
             return Response.ok().entity(profileModel).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();

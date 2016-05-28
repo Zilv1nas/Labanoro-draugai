@@ -15,4 +15,6 @@ public interface ClubSettingService {
     boolean isMemberCapacityExceeded();
 
     int getAnnualPaymentSize();
+
+    int getRequiredConfirmationCount();
 }

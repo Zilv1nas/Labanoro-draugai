@@ -13,7 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -36,7 +39,8 @@ public class User {
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
     private Set<AnnualPayment> annualPayments = new HashSet<>();
-    private Integer confirmations = 0;
+    private Set<User> recommendations = new HashSet<>();
+    private Set<User> recommenders = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,14 +132,25 @@ public class User {
         this.annualPayments = annualPayments;
     }
 
-    @Basic
-    @Column(name = "confirmations", nullable = false)
-    public Integer getConfirmations() {
-        return confirmations;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "recommendee_recommender",
+            joinColumns = @JoinColumn(name = "recommendee_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "recommender_id", referencedColumnName = "id"))
+    public Set<User> getRecommenders() {
+        return recommenders;
     }
 
-    public void setConfirmations(Integer confirmations) {
-        this.confirmations = confirmations;
+    public void setRecommenders(Set<User> recommenders) {
+        this.recommenders = recommenders;
+    }
+
+    @ManyToMany(mappedBy = "recommenders",fetch = FetchType.LAZY)
+    public Set<User> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(Set<User> recommendations) {
+        this.recommendations = recommendations;
     }
 
     @Override
@@ -149,14 +164,11 @@ public class User {
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(balance, user.balance) &&
                 role == user.role &&
-                Objects.equals(registrationDate, user.registrationDate) &&
-                Objects.equals(authenticationAttributes, user.authenticationAttributes) &&
-                Objects.equals(annualPayments, user.annualPayments) &&
-                Objects.equals(confirmations, user.confirmations);
+                Objects.equals(registrationDate, user.registrationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, name, surname, balance, role, registrationDate, authenticationAttributes, annualPayments, confirmations);
+        return Objects.hash(id, email, name, surname, balance, role, registrationDate);
     }
 }

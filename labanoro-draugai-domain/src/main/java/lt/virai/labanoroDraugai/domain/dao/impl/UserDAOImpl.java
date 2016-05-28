@@ -58,4 +58,18 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
 
         return streams.streamAll(entityManager, User.class).where(u -> u.getEmail().equals(email)).count() > 0;
     }
+
+    @Override
+    public long getRecommendersCount(Integer userId) {
+        Objects.requireNonNull(userId);
+
+        JinqStream<User> user = streams.streamAll(entityManager, User.class).where(u -> u.getId().equals(userId));
+        return user.join(u -> JinqStream.from(u.getRecommenders())).count();
+    }
+
+    @Override
+    public boolean isRecommendedBy(int userId, int recommendedByUserId) {
+        JinqStream<User> user = streams.streamAll(entityManager, User.class).where(u -> u.getId().equals(userId));
+        return user.join(u -> JinqStream.from(u.getRecommenders())).where(p -> p.getTwo().getId().equals(recommendedByUserId)).count() > 0;
+    }
 }

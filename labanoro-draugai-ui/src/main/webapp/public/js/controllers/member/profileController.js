@@ -4,12 +4,14 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
         $scope.isCurrentUser = !angular.isDefined($stateParams.memberId);
         $scope.isAdmin = authService.isAdmin();
         $scope.isMember = authService.isMember() || $scope.isAdmin;
+        $scope.isCandidate = authService.isCandidate();
         $scope.errorMessages = [];
 
         var getCurrentUserProfule = function () {
             membersService.getCurrentUserProfile().then(function (response) {
                 $scope.user = response.data;
                 $scope.lastPaymentDate = !!$scope.user.lastPaymentDate ? new Date($scope.user.lastPaymentDate) : null;
+                $scope.confirmedRecommendations = $scope.user.confirmationCount + ' iš ' + $scope.user.requiredConfirmationCount;
             }).catch(function (response) {
                 growl.error('Nepavyko gauti profilio duomenų!');
             });

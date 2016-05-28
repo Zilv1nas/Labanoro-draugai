@@ -35,7 +35,7 @@
                     <td>{{member.registrationDate | date}}</td>
                     <td>{{member.role | rolesFilter}}</td>
                     <td>
-                        <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE'"
+                        <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE' && !member.recommendedByCurrentUser"
                                 class="btn btn-success btn-raised">Patvirtinti
                         </button>
                     </td>

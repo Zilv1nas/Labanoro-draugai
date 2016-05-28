@@ -1,9 +1,10 @@
 package lt.virai.labanoroDraugai.bl.services.impl;
 
-import lt.virai.labanoroDraugai.bl.exceptions.LabanoroException;
 import lt.virai.labanoroDraugai.bl.services.UserService;
+import lt.virai.labanoroDraugai.domain.dao.ClubSettingDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
 import lt.virai.labanoroDraugai.domain.entities.User;
+import lt.virai.labanoroDraugai.domain.model.ClubSettingName;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,9 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+
+import static java.lang.Math.toIntExact;
 
 /**
  * Created by Žilvinas on 2016-03-11.
@@ -20,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private ClubSettingDAO clubSettingDAO;
 
     @Override
     public User get(Integer id) {
@@ -47,11 +54,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void verifyUser(int userId) {
-        Optional.ofNullable(userDAO.get(userId)).ifPresent(u -> {
-            if (UserRole.CANDIDATE.equals(u.getRole())) {
+    public void verifyUser(int recommenderId, int recommendeeId) {
+        int recommendationCount = Optional.ofNullable(clubSettingDAO.getSetting(ClubSettingName.RECOMMENDATION_COUNT))
+                .map(s -> Integer.parseInt(s.getValue()))
+                .orElseThrow(IllegalStateException::new);
+
+        Optional.ofNullable(userDAO.get(recommendeeId)).ifPresent(u -> {
+            if (!UserRole.CANDIDATE.equals(u.getRole())) {
+                return;
+            }
+
+            User asd = userDAO.get(recommenderId);
+            asd.getRecommendations().add(u);
+            u.getRecommenders().add(asd);
+
+            if (u.getRecommenders().size() >= recommendationCount) {
                 u.setRole(UserRole.MEMBER);
             }
+
+            userDAO.update(u);
         });
     }
 
@@ -69,5 +90,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean emailExists(String email) {
         return email != null && !email.isEmpty() && userDAO.emailExists(email);
+    }
+
+    @Override
+    public int getRecommendersCount(Integer userId) {
+        return toIntExact(userDAO.getRecommendersCount(Objects.requireNonNull(userId)));
+    }
+
+    @Override
+    public boolean isRecommendedBy(int userId, int recommendedByUserId) {
+        return userDAO.isRecommendedBy(userId, recommendedByUserId);
     }
 }

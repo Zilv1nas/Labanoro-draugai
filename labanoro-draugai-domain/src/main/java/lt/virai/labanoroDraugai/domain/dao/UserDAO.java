@@ -19,4 +19,8 @@ public interface UserDAO extends DAO<User> {
     long getVerifiedMemberCount();
 
     boolean emailExists(String email);
+
+    long getRecommendersCount(Integer userId);
+
+    boolean isRecommendedBy(int userId, int recommendedByUserId);
 }
