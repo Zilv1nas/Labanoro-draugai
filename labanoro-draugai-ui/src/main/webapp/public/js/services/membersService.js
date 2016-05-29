@@ -43,5 +43,9 @@ app.service('membersService', ['$http', function ($http) {
         return $http.delete(baseUrl + 'deleteCurrentUser');
     }
 
+    this.askRecomendations = function (recommendations) {
+        return $http.post(baseUrl + 'askForRecommendations', recommendations);
+    }
+
 }]);
 

@@ -5,10 +5,28 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
         $scope.isAdmin = authService.isAdmin();
         $scope.isMember = authService.isMember() || $scope.isAdmin;
         $scope.errorMessages = [];
+        $scope.emails = [];
+
+        $scope.addEmail = function (email) {
+            if ((email !== null) && (email !== '') && (email !== undefined)) {
+                $scope.emails.push(email);
+                $scope.email = '';
+                console.log($scope.emails);
+            }  
+        }
+
+        $scope.removeEmail = function (key) {
+            $scope.emails.splice(key, 1);
+        };
+        
+        $scope.askRecomendations = function() {
+            membersService.askRecomendations($scope.emails);
+        }
 
         var getCurrentUserProfule = function () {
             membersService.getCurrentUserProfile().then(function (response) {
                 $scope.user = response.data;
+                console.log(response.data);
                 $scope.lastPaymentDate = !!$scope.user.lastPaymentDate ? new Date($scope.user.lastPaymentDate) : null;
             }).catch(function (response) {
                 growl.error('Nepavyko gauti profilio duomenų!');
@@ -70,7 +88,7 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
             annualPaymentModal.result.then(function (points) {
                 transactionService.payAnnualPayment(points).then(function (response) {
                     growl.success('Nario mokestis sėkmingai sumokėtas!');
-                    $state.go("profile", {}, {reload: 'profile'});
+                    $state.go("profile", {}, { reload: 'profile' });
                 }).catch(function (response) {
                     if (response.status == 400) {
                         growl.error("Neužtenka taškų arba nario mokestis jau yra sumokėtas!");
