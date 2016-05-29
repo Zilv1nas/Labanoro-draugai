@@ -1,6 +1,8 @@
 ﻿# Labanoro-draugai
 PSK
 
+Padeployintas appsas: http://46.101.118.159:8080/labanoro-draugai/
+
 DB connectionas:
 Į savo wildfly instaliacijos folderį įmeskit viską, kas projekto wildfly folderio viduje.
 
