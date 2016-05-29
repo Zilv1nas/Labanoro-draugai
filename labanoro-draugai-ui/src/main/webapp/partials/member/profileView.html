@@ -1,15 +1,17 @@
 <div class="col-md-8 col-md-offset-2 col-xs-12">
     <div class="well">
         <h2>Profilio informacija</h2>
-        <div ng-if="user.role === 'ADMIN'">
-            <p style="color: red">Jūs esate kandidatas, todėl jums reikia gauti rekomendaciją iš kito/kitų narių.</p>
+        <div ng-show="isCurrentUser && isCandidate">
+            <div class="alert alert-warning">
+                <strong>Įspėjimas!</strong> Jūs esate kandidatas, todėl jums reikia gauti rekomendaciją iš kito/kitų narių.
+            </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Narių el. paštai rekomendacijoms</label>
                 <div class="col-md-9">
                     <p class="input-group">
                         <input type="email" class="form-control" placeholder="El. paštas" ng-model="email" />
                         <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" uib-tooltip="Pridėti el. paštą" ng-click="addEmail(email)"><i class="glyphicon glyphicon-plus"></i></button>
+                                    <button type="button" class="btn btn-default" uib-tooltip="Pridėti el. paštą" ng-click="addEmail()"><i class="glyphicon glyphicon-plus"></i></button>
                                  <button ng-click="askRecomendations()" class="btn btn-success btn-sm btn-raised">Prašyti rekomendacijų</button>
                                 </span>
                     </p>
@@ -17,6 +19,7 @@
                                 <span>{{email}}</span>
                     <i role="button" style="color: #009688" ng-click="removeEmail($index)" uib-tooltip="Pašalinti el. paštą" class="glyphicon glyphicon-remove"></i>
                     </span>
+                    <validation errors="errorMessages" key="recommendations"></validation>
                 </div>
             </div>
         </div>
@@ -24,7 +27,8 @@
             <label for="inputName" class="col-md-2 control-label">Patvirtinimai</label>
 
             <div class="col-md-10">
-                <input ng-readonly="true" ng-model="confirmedRecommendations" type="text" class="form-control" id="confirmedRecommendations" placeholder="Patvirtintų rekomendacijų skaičius">
+                <input ng-readonly="true" ng-model="confirmedRecommendations" type="text" class="form-control" id="confirmedRecommendations"
+                    placeholder="Patvirtintų rekomendacijų skaičius">
             </div>
         </div>
         <div class="form-group">
@@ -32,7 +36,7 @@
 
             <div class="col-md-10">
                 <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
-                 <validation errors="errorMessages" key="name"></validation>
+                <validation errors="errorMessages" key="name"></validation>
             </div>
         </div>
         <div class="form-group">
@@ -40,7 +44,7 @@
 
             <div class="col-md-10">
                 <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.surname" type="text" class="form-control" id="inputSurname"
-                       placeholder="Pavardė">
+                    placeholder="Pavardė">
                 <validation errors="errorMessages" key="surname"></validation>
             </div>
         </div>
@@ -48,17 +52,15 @@
             <label for="inputEmail" class="col-md-2 control-label">El. paštas</label>
 
             <div class="col-md-10">
-                <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail"
-                       placeholder="El. paštas">
-               <validation errors="errorMessages" key="email"></validation>
+                <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail" placeholder="El. paštas">
+                <validation errors="errorMessages" key="email"></validation>
             </div>
         </div>
         <div>
             <label for="points" class="col-md-2 control-label">Klubo taškai</label>
 
             <div ng-class="isCurrentUser ? 'col-md-4' : 'col-md-10'">
-                <input ng-readonly="true" ng-model="user.balance" type="text" class="form-control" id="points"
-                       placeholder="Klubo taškai">
+                <input ng-readonly="true" ng-model="user.balance" type="text" class="form-control" id="points" placeholder="Klubo taškai">
             </div>
             <div ng-show="isCurrentUser" class="col-md-6">
                 <button ng-click="openModal()" class="btn btn-success btn-raised">Nusipirkti taškų</button>
@@ -68,8 +70,7 @@
             <label for="lastPayment" class="col-md-2 control-label">Paskutinio metinio mokesčio data</label>
 
             <div ng-class="isCurrentUser ? 'col-md-4' : 'col-md-10'">
-                <input ng-readonly="true" ng-model="lastPaymentDate" type="date" class="form-control" id="lastPayment"
-                       placeholder="Mokėjimo data">
+                <input ng-readonly="true" ng-model="lastPaymentDate" type="date" class="form-control" id="lastPayment" placeholder="Mokėjimo data">
             </div>
             <div ng-show="isCurrentUser" class="col-md-6">
                 <button ng-click="payAnnualPayment()" class="btn btn-success btn-raised">Sumokėti nario mokestį</button>

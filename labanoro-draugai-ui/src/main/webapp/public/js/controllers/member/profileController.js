@@ -7,21 +7,28 @@ app.controller('profileController', ['$scope', '$stateParams', '$uibModal', '$st
         $scope.isCandidate = authService.isCandidate();
         $scope.errorMessages = [];
         $scope.emails = [];
+        $scope.email = '';
 
-        $scope.addEmail = function (email) {
-            if ((email !== null) && (email !== '') && (email !== undefined)) {
-                $scope.emails.push(email);
+        $scope.addEmail = function () {
+            if (($scope.email !== null) && ($scope.email !== '') && ($scope.email !== undefined)) {
+                $scope.emails.push($scope.email);
                 $scope.email = '';
                 console.log($scope.emails);
-            }  
+            }
         }
 
         $scope.removeEmail = function (key) {
             $scope.emails.splice(key, 1);
         };
-        
-        $scope.askRecomendations = function() {
-            membersService.askRecomendations($scope.emails);
+
+        $scope.askRecomendations = function () {
+            membersService.askRecomendations($scope.emails)
+                .then(function (response) {
+                    growl.success('Rekomendacijų užklausos išsiųstos sėkmingai!');
+                    $scope.emails = [];
+                }).catch(function (response) {
+                    $scope.errorMessages = response.data;
+                })
         }
 
         var getCurrentUserProfule = function () {

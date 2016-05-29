@@ -7,19 +7,23 @@ app.controller('datePickerController', function($scope) {
         monday: 1,
         sunday: 0
     };
-    var minDate = new Date();
-    var maxDate;
-
+    
+    $scope.inlineOptions = {
+        dateDisabled: disabled,
+        startingDay: 1,
+        showWeeks: false,
+        mindate: new Date()
+    };
 
     // TODO cleanup spagetti
     var extraOptions = $scope.$parent.datePickerOptions;
     if(angular.isDefined(extraOptions)){
         if(angular.isDefined(extraOptions.availability.dateFrom)){
             var minFromOptions = new Date(extraOptions.availability.dateFrom);
-            minDate = new Date < minFromOptions ? minFromOptions : new Date();
+            $scope.inlineOptions.minDate = new Date < minFromOptions ? minFromOptions : new Date();
         }
         if(angular.isDefined(extraOptions.availability.dateTo)){
-            maxDate = new Date(extraOptions.availability.dateTo);
+            $scope.inlineOptions.maxDate = new Date(extraOptions.availability.dateTo);
         }
     }
 
@@ -33,11 +37,12 @@ app.controller('datePickerController', function($scope) {
     }
 
     function disabled(data) {
-        var available = true;
+        var available;
         var date = data.date,
             mode = data.mode;
 
         if(angular.isDefined(extraOptions) && angular.isDefined(extraOptions.unavailableRanges)){
+            available = true;
             angular.forEach(extraOptions.unavailableRanges, function(value, key){
                 if(available){
                     var dateFrom = new Date(value.dateFrom);
@@ -52,17 +57,13 @@ app.controller('datePickerController', function($scope) {
                 }
             });
         }
-
-        return mode === 'day' && (!available || (date.getDay() !== daysMap[$scope.dayFilter]));
+        if(angular.isDefined(available)){
+            return mode === 'day' && (!available || (date.getDay() !== daysMap[$scope.dayFilter]));
+        }
+        else{
+            return mode === 'day' && date.getDay() !== daysMap[$scope.dayFilter];
+        }
     }
-
-    $scope.inlineOptions = {
-        dateDisabled: disabled,
-        startingDay: 1,
-        minDate: minDate,
-        maxDate: maxDate,
-        showWeeks: false
-    };
 
     $scope.open = function () {
         this.popup.opened = true;

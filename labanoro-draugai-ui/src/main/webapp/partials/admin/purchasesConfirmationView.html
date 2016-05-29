@@ -37,7 +37,7 @@
                         <td>{{purchase.username}}</td>
                         <td>{{purchase.purchaseDate | date:'yyyy-MM-dd'}}</td>
                         <td>{{purchase.amount}}</td>
-                        <td>{{purchase.status}}</td>
+                        <td>{{purchase.status | statesFilter}}</td>
                         <td ng-if="purchase.status === 'PENDING'">
                             <button ng-click="confirmPurchase(purchase.id)" class="btn btn-success btn-raised">Patvirtinti
                         </button>

@@ -50,7 +50,7 @@
                         <validation errors="errorMessages" key="description"></validation>
                     </div>
                 </div>
-                <div class="form-group" ng-controller="datePickerController">
+                <div class="form-group" ng-controller="datePickerController" ng-init="dayFilter='monday'">
                     <label class="col-md-2 control-label">Galioja nuo</label>
                     <div class="col-md-9">
                         <p class="input-group">
@@ -63,7 +63,7 @@
                         <validation errors="errorMessages" key="dateFrom"></validation>
                     </div>
                 </div>
-                <div class="form-group" ng-controller="datePickerController">
+                <div class="form-group" ng-controller="datePickerController" ng-init="dayFilter='sunday'">
                     <label class="col-md-2 control-label">Galioja iki</label>
                     <div class="col-md-9">
                         <p class="input-group">
