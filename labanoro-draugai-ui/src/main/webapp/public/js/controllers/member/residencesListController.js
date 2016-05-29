@@ -1,11 +1,35 @@
-app.controller('residencesListController', ['$scope', '$state', '$uibModal', 'residencesService', function($scope, $state, $uibModal, residencesService) {
+app.controller('residencesListController', ['$scope', '$state', '$uibModal', 'residencesService', 'priority', function($scope, $state, $uibModal, residencesService, priority) {
 	$scope.searchRequest = {};
 	$scope.searchRequest.pageSize = 5;
 	$scope.searchRequest.page = 1;
+	
 	var search = function () {
 		residencesService.searchResidences($scope.searchRequest).then(function (response) {
 			$scope.totalItems = response.data.total;
 			$scope.residences = response.data.residences;
+
+			angular.forEach($scope.residences, function(value, key){
+				var created = new Date(value.dateOfRegistration);
+				var availableToReserveFrom = new Date(created.setTime(created.getTime() + (priority - 1) * 7 * 86400000));
+				var today = new Date();
+				var availableFrom = new Date(value.availableFrom);
+				if(availableToReserveFrom < today){
+					value.ableToSeeForUser = true;
+				}
+				else if(availableFrom < today){
+					value.ableToSeeForUser = true;
+				}
+				else{
+					var oneDay = 24*60*60*1000;
+					if(availableFrom < availableToReserveFrom){
+						value.daysLeftToReserve = Math.round(Math.abs((availableFrom.getTime() - today.getTime())/(oneDay))) + 1;
+					}
+					else{
+						value.daysLeftToReserve = Math.round(Math.abs((availableToReserveFrom.getTime() - today.getTime())/(oneDay))) + 1;
+					}
+					value.ableToSeeForUser = false;
+				}
+			});
 		});
 	};
 

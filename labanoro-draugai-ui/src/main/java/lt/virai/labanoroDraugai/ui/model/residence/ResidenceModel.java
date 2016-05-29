@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -48,6 +49,8 @@ public class ResidenceModel implements MappableTo<Residence> {
     @Valid
     private WeekRangeModel availability;
 
+    private LocalDate dateOfRegistration;
+
     private int version;
 
     @Valid
@@ -68,6 +71,7 @@ public class ResidenceModel implements MappableTo<Residence> {
         availability = new WeekRangeModel (residence.getAvailableFrom(), residence.getAvailableUntil());
         extraServices = residence.getExtraServices().stream().map(ExtraServiceModel::new).collect(Collectors.toSet());
         version = residence.getVersion();
+        dateOfRegistration = residence.getDateOfRegistration();
     }
 
     @Override
@@ -87,6 +91,7 @@ public class ResidenceModel implements MappableTo<Residence> {
         }
         residence.setExtraServices(extraServices.stream().map(ExtraServiceModel::mapTo).collect(Collectors.toSet()));
         residence.setVersion(version);
+        residence.setDateOfRegistration(dateOfRegistration);
         return residence;
     }
 
@@ -176,5 +181,9 @@ public class ResidenceModel implements MappableTo<Residence> {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public LocalDate getDateOfRegistration() {
+        return dateOfRegistration;
     }
 }

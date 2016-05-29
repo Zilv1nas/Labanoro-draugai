@@ -3,6 +3,7 @@ package lt.virai.labanoroDraugai.bl.services.impl;
 import lt.virai.labanoroDraugai.bl.services.UserService;
 import lt.virai.labanoroDraugai.domain.dao.ClubSettingDAO;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
+import lt.virai.labanoroDraugai.domain.dao.UserGroupDAO;
 import lt.virai.labanoroDraugai.domain.entities.User;
 import lt.virai.labanoroDraugai.domain.model.ClubSettingName;
 import lt.virai.labanoroDraugai.domain.model.UserRole;
@@ -26,7 +27,11 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Inject
+    private UserGroupDAO userGroupDAO;
+
+    @Inject
     private ClubSettingDAO clubSettingDAO;
+
 
     @Override
     public User get(Integer id) {
@@ -70,8 +75,8 @@ public class UserServiceImpl implements UserService {
 
             if (u.getRecommenders().size() >= recommendationCount) {
                 u.setRole(UserRole.MEMBER);
+                u.setUserGroup(userGroupDAO.getFirstUserGroup());
             }
-
             userDAO.update(u);
         });
     }

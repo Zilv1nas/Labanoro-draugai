@@ -57,6 +57,9 @@ public class ResidenceDAOImpl extends AbstractDAO<Residence> implements Residenc
         model.setImage(residence.getImage());
         model.setDescription(residence.getDescription());
         model.setWeeklyPrice(residence.getWeeklyPrice());
+        model.setAvailableFrom(residence.getAvailableFrom());
+        model.setAvailableUntil(residence.getAvailableUntil());
+        model.setDateOfRegistration(residence.getDateOfRegistration());
 
         return model;
     }

@@ -83,9 +83,12 @@
                     <div style="vertical-align: bottom;" class="col-md-3 text-center">
                         <h4> Laisvos vietos: {{residence.capacity}} </h4>
                         <h4> Savaitinė kaina: {{residence.weeklyPrice}} </h4>
-                        <button ng-click="reserveResidence(residence.id)" type="button"
+                        <button ng-if="residence.ableToSeeForUser" ng-click="reserveResidence(residence.id)" type="button"
                                 class="btn btn-default btn-raised"> Rezervuoti
                         </button>
+                        <div ng-if="!residence.ableToSeeForUser"class="alert alert-warning">
+                            Galėsite rezervuoti po {{residence.daysLeftToReserve}} dienų
+                        </div>
                         <!--
                         <button type="button" class="btn btn-default" aria-label="Right Align">
                             <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>

@@ -28,9 +28,12 @@
                         </tr>
                     </table>
                 </div>
-                <button ng-click="reserveResidence(residence.id)" type="button" class="btn btn-success btn-raised">
-                    Rezervuoti
+                <button ng-if="residence.ableToSeeForUser" ng-click="reserveResidence(residence.id)" type="button"
+                        class="btn btn-default btn-raised"> Rezervuoti
                 </button>
+                <div ng-if="!residence.ableToSeeForUser"class="alert alert-warning">
+                    Galėsite rezervuoti po {{residence.daysLeftToReserve}} dienų
+                </div>
             </div>
         </div>
         <div class="row residence-secondary residence-divider">

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 public class UserGroupModel implements MappableTo<UserGroupSettings> {
     @NotNull(message = "Grupių skaičius būti tušias")
-    @Min(value = 1, message = "Grupių skaičius negali būti mažesnis nei 1")
+    @Min(value = 2, message = "Grupių skaičius negali būti mažesnis nei 2")
     private Integer groupsNumber;
 
     @NotNull(message = "Dienų intervalas negali būti tušias")

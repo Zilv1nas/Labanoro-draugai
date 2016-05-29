@@ -72,6 +72,9 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 resolve: {
                     residences: function (residencesService) {
                         return residencesService.getAllResidences();
+                    },
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
                     }
                 }
             })
@@ -85,6 +88,9 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                     },
                     residenceHistory: function (residencesService, $stateParams) {
                         return residencesService.getResidenceHistory($stateParams.id);
+                    },
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
                     }
                 }
             })
