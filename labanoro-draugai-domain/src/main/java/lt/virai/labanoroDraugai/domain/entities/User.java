@@ -2,22 +2,7 @@ package lt.virai.labanoroDraugai.domain.entities;
 
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -41,6 +26,7 @@ public class User {
     private Set<AnnualPayment> annualPayments = new HashSet<>();
     private Set<User> recommendations = new HashSet<>();
     private Set<User> recommenders = new HashSet<>();
+    private UserGroup userGroup;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -151,6 +137,16 @@ public class User {
 
     public void setRecommendations(Set<User> recommendations) {
         this.recommendations = recommendations;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_group_id", nullable = true)
+    public UserGroup getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
     }
 
     @Override

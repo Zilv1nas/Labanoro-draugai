@@ -6,6 +6,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/LabanoroDraugaiDS</jta-data-source>
         <class>lt.virai.labanoroDraugai.domain.entities.User</class>
+        <class>lt.virai.labanoroDraugai.domain.entities.UserGroup</class>
         <class>lt.virai.labanoroDraugai.domain.entities.AuthenticationAttribute</class>
         <class>lt.virai.labanoroDraugai.domain.entities.City</class>
         <class>lt.virai.labanoroDraugai.domain.entities.Residence</class>

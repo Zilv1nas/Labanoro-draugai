@@ -143,6 +143,16 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                     }
                 }
             })
+            .state('groups', {
+                url: "/admin/groups",
+                controller: 'groupsController',
+                templateUrl: adminUrlPrefix + '/groupsView.html',
+                resolve: {
+                    groups: function (groupsService) {
+                        return { groupsNumber: 5, daysInterval: 10 };
+                    }
+                }
+            })
             .state('reservationsList', {
                 url: "/reservationsList",
                 controller: 'reservationsListController',
