@@ -28,7 +28,7 @@
                 </thead>
                 <tbody ng-cloak>
                     <tr ng-repeat="residence in residences | filter: {name : filterKey}">
-                        <td>{{residence.id}}</td>
+                        <td>{{$index + 1}}</td>
                         <td><a class="residence-link" ui-sref="viewResidence({id: residence.id})">{{residence.name}}</a></td>
                         <td>{{residence.weeklyPrice}}</td>
                         <td>{{residence.capacity}}</td>

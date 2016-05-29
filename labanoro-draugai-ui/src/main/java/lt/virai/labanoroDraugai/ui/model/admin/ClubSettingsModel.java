@@ -19,6 +19,9 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
     @NotNull(message = "Negali būti tuščias")
     @Range(min = 0, message = "Metinis mokestis negali būti neigiamas")
     private Integer annualPaymentSize;
+    @NotNull(message = "Negali būti tuščias")
+    @Range(min = 2, message = "Minimalus rekomendacijų skaičius: 2")
+    private Integer recommendationCount;
 
     public ClubSettingsModel() {
     }
@@ -29,6 +32,8 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
                 maxClubMembers = Integer.parseInt(s.getValue());
             } else if (s.getName() == ClubSettingName.ANNUAL_PAYMENT_SIZE) {
                 annualPaymentSize = Integer.parseInt(s.getValue());
+            } else if (s.getName() == ClubSettingName.RECOMMENDATION_COUNT) {
+                recommendationCount= Integer.parseInt(s.getValue());
             }
         });
     }
@@ -49,18 +54,31 @@ public class ClubSettingsModel implements MappableTo<List<ClubSetting>> {
         this.annualPaymentSize = annualPaymentSize;
     }
 
+    public Integer getRecommendationCount() {
+        return recommendationCount;
+    }
+
+    public void setRecommendationCount(Integer recommendationCount) {
+        this.recommendationCount = recommendationCount;
+    }
+
     @Override
     public List<ClubSetting> mapTo() {
         List<ClubSetting> clubSettings = new ArrayList<>();
-        ClubSetting maxClubMembersEntity;
+        ClubSetting entity;
         if (maxClubMembers != null) {
-            maxClubMembersEntity = new ClubSetting(ClubSettingName.MAX_MEMBERS, maxClubMembers.toString());
-            clubSettings.add(maxClubMembersEntity);
+            entity = new ClubSetting(ClubSettingName.MAX_MEMBERS, maxClubMembers.toString());
+            clubSettings.add(entity);
         }
         if (annualPaymentSize != null) {
-            maxClubMembersEntity = new ClubSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE, annualPaymentSize.toString());
-            clubSettings.add(maxClubMembersEntity);
+            entity = new ClubSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE, annualPaymentSize.toString());
+            clubSettings.add(entity);
         }
+        if (recommendationCount != null) {
+            entity = new ClubSetting(ClubSettingName.RECOMMENDATION_COUNT, recommendationCount.toString());
+            clubSettings.add(entity);
+        }
+
         return clubSettings;
     }
 }

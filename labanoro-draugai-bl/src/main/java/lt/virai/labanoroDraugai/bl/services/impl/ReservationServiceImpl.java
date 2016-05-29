@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Logged
     @Override
-    public void reserve(User user, Integer residenceId, LocalDate dateFrom, LocalDate dateTo, Set<Integer> extraServiceIds) throws LabanoroException {
+    public Reservation reserve(User user, Integer residenceId, LocalDate dateFrom, LocalDate dateTo, Set<Integer> extraServiceIds) throws LabanoroException {
         Objects.requireNonNull(user);
         Objects.requireNonNull(residenceId);
         Objects.requireNonNull(dateFrom);
@@ -107,6 +106,8 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservationDAO.save(reservation);
         userDAO.update(user);
+
+        return reservation;
     }
 
     @Override

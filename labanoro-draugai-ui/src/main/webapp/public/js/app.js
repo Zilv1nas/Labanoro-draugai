@@ -32,8 +32,13 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
         $stateProvider
             .state('main', {
                 url: "/",
-                controller: 'mainController',
-                templateUrl: memberUrlPrefix + '/mainView.html'
+                controller: 'residencesListController',
+                templateUrl: memberUrlPrefix + '/residencesListView.html',
+                resolve: {
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
+                    }
+                }
             })
             .state('login', {
                 url: "/login",
@@ -70,8 +75,8 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'residencesListController',
                 templateUrl: memberUrlPrefix + '/residencesListView.html',
                 resolve: {
-                    residences: function (residencesService) {
-                        return residencesService.getAllResidences();
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
                     }
                 }
             })
@@ -85,6 +90,9 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                     },
                     residenceHistory: function (residencesService, $stateParams) {
                         return residencesService.getResidenceHistory($stateParams.id);
+                    },
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
                     }
                 }
             })
@@ -140,6 +148,16 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 resolve: {
                     settings: function (settingsService) {
                         return settingsService.getAllSettings();
+                    }
+                }
+            })
+            .state('groups', {
+                url: "/admin/groups",
+                controller: 'groupsController',
+                templateUrl: adminUrlPrefix + '/groupsView.html',
+                resolve: {
+                    groups: function (groupsService) {
+                        return groupsService.getGroupSettings();
                     }
                 }
             })

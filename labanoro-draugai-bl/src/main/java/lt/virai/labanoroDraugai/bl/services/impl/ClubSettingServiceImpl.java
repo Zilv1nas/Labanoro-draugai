@@ -50,8 +50,17 @@ public class ClubSettingServiceImpl implements ClubSettingService {
 
     @Override
     public int getAnnualPaymentSize() {
-        return Optional.ofNullable(clubSettingDAO.getSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE))
+        return getIntegerSetting(ClubSettingName.ANNUAL_PAYMENT_SIZE);
+    }
+
+    @Override
+    public int getRequiredConfirmationCount() {
+        return getIntegerSetting(ClubSettingName.RECOMMENDATION_COUNT);
+    }
+
+    private int getIntegerSetting(ClubSettingName name) {
+        return Optional.ofNullable(clubSettingDAO.getSetting(name))
                 .map(s -> Integer.parseInt(s.getValue()))
-                .orElseThrow(() -> new IllegalStateException("Annual payment size setting not found!"));
+                .orElseThrow(() -> new IllegalStateException(name + " setting not found!"));
     }
 }

@@ -71,12 +71,11 @@ public class AnnualPayment {
         AnnualPayment that = (AnnualPayment) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(amount, that.amount) &&
-                Objects.equals(paymentDate, that.paymentDate) &&
-                Objects.equals(user, that.user);
+                Objects.equals(paymentDate, that.paymentDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, paymentDate, user);
+        return Objects.hash(id, amount, paymentDate);
     }
 }

@@ -1,6 +1,7 @@
 package lt.virai.labanoroDraugai.domain.model.search;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Created by Žilvinas on 2016-05-23.
@@ -15,6 +16,9 @@ public class ResidenceListModel implements Serializable {
     private String address;
     private String image;
     private Integer weeklyPrice;
+    private LocalDate dateOfRegistration;
+    private LocalDate availableFrom;
+    private LocalDate availableUntil;
 
     public Integer getId() {
         return id;
@@ -70,5 +74,29 @@ public class ResidenceListModel implements Serializable {
 
     public void setWeeklyPrice(Integer weeklyPrice) {
         this.weeklyPrice = weeklyPrice;
+    }
+
+    public LocalDate getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(LocalDate dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public LocalDate getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(LocalDate availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public LocalDate getAvailableUntil() {
+        return availableUntil;
+    }
+
+    public void setAvailableUntil(LocalDate availableUntil) {
+        this.availableUntil = availableUntil;
     }
 }

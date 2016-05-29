@@ -18,7 +18,13 @@ public interface UserService {
 
     List<User> getAll();
 
-    void verifyUser(int userId);
+    void verifyUser(int recommenderId, int recommendeeId);
 
     void updateUserProfile(User user);
+
+    boolean emailExists(String email);
+
+    int getRecommendersCount(Integer userId);
+
+    boolean isRecommendedBy(int userId, int recommendedByUserId);
 }

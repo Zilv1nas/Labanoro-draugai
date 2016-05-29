@@ -81,7 +81,6 @@ public class AuthenticationController {
             attrs.add(attr);
             user.setAuthenticationAttributes(attrs);
 
-            notifyMembers(user.getEmail(), user.getName(), user.getSurname());
             return Response.ok(authService.register(user)).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -128,7 +127,6 @@ public class AuthenticationController {
         attr.setValue(facebookId);
         user.getAuthenticationAttributes().add(attr);
 
-        notifyMembers(user.getEmail(), user.getName(), user.getSurname());
         return Response.ok().entity(authService.registerFacebookUser(user)).build();
     }
 
@@ -150,12 +148,5 @@ public class AuthenticationController {
         OAuthRequest oauthRequest = new OAuthRequest(Verb.GET, "https://graph.facebook.com/v2.5/me?fields=id,first_name,last_name,email");
         fbService.signRequest(accessToken, oauthRequest);
         return oauthRequest.send();
-    }
-
-    private void notifyMembers(String email, String name, String surname) {
-        try {
-            emailService.notifyMembers(email, name, surname);
-        } catch (Exception ignore) {
-        }
     }
 }

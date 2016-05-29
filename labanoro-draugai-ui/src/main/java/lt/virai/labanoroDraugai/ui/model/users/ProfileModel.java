@@ -39,6 +39,12 @@ public class ProfileModel implements MappableTo<User> {
     /*Mapped externally*/
     private Integer annualPaymentSize;
 
+    /*Mapped externally*/
+    private Integer confirmationCount;
+
+    /*Mapped externally*/
+    private Integer requiredConfirmationCount;
+
     public ProfileModel() {
     }
 
@@ -122,6 +128,22 @@ public class ProfileModel implements MappableTo<User> {
 
     public void setAnnualPaymentSize(Integer annualPaymentSize) {
         this.annualPaymentSize = annualPaymentSize;
+    }
+
+    public Integer getConfirmationCount() {
+        return confirmationCount;
+    }
+
+    public void setConfirmationCount(Integer confirmationCount) {
+        this.confirmationCount = confirmationCount;
+    }
+
+    public Integer getRequiredConfirmationCount() {
+        return requiredConfirmationCount;
+    }
+
+    public void setRequiredConfirmationCount(Integer requiredConfirmationCount) {
+        this.requiredConfirmationCount = requiredConfirmationCount;
     }
 
     @Override

@@ -4,11 +4,14 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
 import lt.virai.labanoroDraugai.bl.services.EmailService;
 import lt.virai.labanoroDraugai.domain.dao.UserDAO;
+import lt.virai.labanoroDraugai.domain.entities.User;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Žilvinas on 2016-04-24.
@@ -24,6 +27,7 @@ public class SendGridEmailService implements EmailService {
 
     //TODO read email template from propeties
     @Override
+    @Asynchronous
     public void sendInvitationEmail(String email, String from, String redirectUrl) throws SendGridException {
         Objects.requireNonNull(email);
 
@@ -42,19 +46,19 @@ public class SendGridEmailService implements EmailService {
 
     @Override
     @Asynchronous
-    public void notifyMembers(String email, String name, String surname) throws SendGridException {
-        Objects.requireNonNull(email);
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(surname);
+    public void askForRecommendations(Set<String> emails, int userId) throws SendGridException {
+        Objects.requireNonNull(emails);
+
+        User user = Optional.ofNullable(userDAO.get(userId)).orElseThrow(IllegalStateException::new);
 
         SendGrid.Email newEmail = new SendGrid.Email();
         newEmail.setFrom("info@labanoro-draugai.lt");
-        newEmail.setSubject("Užregistravo naujas kandidatas į klubą");
+        newEmail.setSubject("Rekomendacijos prašymas");
 
-        String message = String.format("Sveiki, pranešame, kad užsiregistravo naujas kandidatas į klubą: %s %s, %s", name, surname, email);
+        String message = String.format("Sveiki, Labanoro Draugų klubo kandidatas vardu %s %s prašo jūsų rekomendacijos", user.getName(), user.getSurname());
         newEmail.setHtml(message);
 
-        userDAO.getAllVerifiedMembers().forEach(m -> newEmail.addTo(m.getEmail()));
+        emails.forEach(newEmail::addTo);
 
         sendgrid.send(newEmail);
     }

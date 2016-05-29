@@ -20,31 +20,45 @@
                 </div>
             </div>
         </div>
+        <div ng-show="isCurrentUser && isCandidate" class="form-group">
+            <label for="inputName" class="col-md-2 control-label">Patvirtinimai</label>
+
+            <div class="col-md-10">
+                <input ng-readonly="true" ng-model="confirmedRecommendations" type="text" class="form-control" id="confirmedRecommendations" placeholder="Patvirtintų rekomendacijų skaičius">
+            </div>
+        </div>
         <div class="form-group">
             <label for="inputName" class="col-md-2 control-label">Vardas</label>
+
             <div class="col-md-10">
-                <input ng-readonly="!isAdmin" ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
-                <validation errors="errorMessages" key="name"></validation>
+                <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.name" type="text" class="form-control" id="inputName" placeholder="Vardas">
+                 <validation errors="errorMessages" key="name"></validation>
             </div>
         </div>
         <div class="form-group">
             <label for="inputSurname" class="col-md-2 control-label">Pavardė</label>
+
             <div class="col-md-10">
-                <input ng-readonly="!isAdmin" ng-model="user.surname" type="text" class="form-control" id="inputSurname" placeholder="Pavardė">
+                <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.surname" type="text" class="form-control" id="inputSurname"
+                       placeholder="Pavardė">
                 <validation errors="errorMessages" key="surname"></validation>
             </div>
         </div>
         <div class="form-group">
             <label for="inputEmail" class="col-md-2 control-label">El. paštas</label>
+
             <div class="col-md-10">
-                <input ng-readonly="!isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail" placeholder="El. paštas">
-                <validation errors="errorMessages" key="email"></validation>
+                <input ng-readonly="!isCurrentUser && !isAdmin" ng-model="user.email" type="email" class="form-control" id="inputEmail"
+                       placeholder="El. paštas">
+               <validation errors="errorMessages" key="email"></validation>
             </div>
         </div>
         <div>
             <label for="points" class="col-md-2 control-label">Klubo taškai</label>
+
             <div ng-class="isCurrentUser ? 'col-md-4' : 'col-md-10'">
-                <input ng-readonly="true" ng-model="user.balance" type="text" class="form-control" id="points" placeholder="Klubo taškai">
+                <input ng-readonly="true" ng-model="user.balance" type="text" class="form-control" id="points"
+                       placeholder="Klubo taškai">
             </div>
             <div ng-show="isCurrentUser" class="col-md-6">
                 <button ng-click="openModal()" class="btn btn-success btn-raised">Nusipirkti taškų</button>
@@ -52,11 +66,13 @@
         </div>
         <div ng-show="isMember" ng-class="!isAdmin ? 'last-profile-row form-group' : 'form-group'">
             <label for="lastPayment" class="col-md-2 control-label">Paskutinio metinio mokesčio data</label>
+
             <div ng-class="isCurrentUser ? 'col-md-4' : 'col-md-10'">
-                <input ng-readonly="true" ng-model="lastPaymentDate" type="date" class="form-control" id="lastPayment" placeholder="Mokėjimo data">
+                <input ng-readonly="true" ng-model="lastPaymentDate" type="date" class="form-control" id="lastPayment"
+                       placeholder="Mokėjimo data">
             </div>
             <div ng-show="isCurrentUser" class="col-md-6">
-                <button ng-click="payAnnualPayment()" class="btn btn-success btn-raised">Sumokėtin nario mokestį</button>
+                <button ng-click="payAnnualPayment()" class="btn btn-success btn-raised">Sumokėti nario mokestį</button>
             </div>
         </div>
         <div class="form-group">

@@ -4,19 +4,15 @@
         <h2>{{residence.name}}</h2>
         <div class="row residence-divider">
             <div class="col-md-7">
-                <img class="img-thumbnail img-responsive" ng-src="{{residence.image}}" width="400" height="300">
+                <img class="img-thumbnail img-responsive" ng-src="{{residence.image}}" width="400" height="300"/>
             </div>
-            <div class="col-md-5 col-sm-6 col-xs-7">
+            <div class="col-md-5 col-sm-6 col-xs-10" style="max-width: 300px">
                 <div class="info-panel panel panel-default">
                     <div class="panel-heading">Informacija</div>
                     <table class="table">
                         <tr>
                             <td>Vietos</td>
                             <td>{{residence.capacity}}</td>
-                        </tr>
-                        <tr>
-                            <td>Miestas</td>
-                            <td>{{residence.city.name}}</td>
                         </tr>
                         <tr>
                             <td>Adresas</td>
@@ -28,13 +24,16 @@
                         </tr>
                         <tr>
                             <td>Rezervavimas</td>
-                            <td>nuo {{residence.availability.dateFrom}} iki {{residence.availability.dateTo}}</td>
+                            <td>nuo {{residence.availability.dateFrom}}</br>iki {{residence.availability.dateTo}}</td>
                         </tr>
                     </table>
                 </div>
-                <button ng-click="reserveResidence(residence.id)" type="button" class="btn btn-success btn-raised">
-                    Rezervuoti
+                <button ng-if="residence.ableToSeeForUser" ng-click="reserveResidence(residence.id)" type="button"
+                        class="btn btn-default btn-raised"> Rezervuoti
                 </button>
+                <div ng-if="!residence.ableToSeeForUser"class="alert alert-warning">
+                    Galėsite rezervuoti po {{residence.daysLeftToReserve}} dienų
+                </div>
             </div>
         </div>
         <div class="row residence-secondary residence-divider">
@@ -71,25 +70,25 @@
                         </table>
                     </div>
                 </div>
-                    <div id="history" class="tab-pane fade">
-                        <div class="col-md-12 ">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="extraService-tr">Narys</th>
-                                    <th class="extraService-tr">Nuo</th>
-                                    <th class="extraService-tr">Iki</th>
-                                </tr>
-                                </thead>
-                                <tbody ng-cloak>
-                                <tr ng-repeat="residenceEvent in residenceHistory track by $index">
-                                    <td>{{residenceEvent.user.fullName}}</td>
-                                    <td>{{residenceEvent.duration.dateFrom}}</td>
-                                    <td>{{residenceEvent.duration.dateTo}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div id="history" class="tab-pane fade">
+                    <div class="col-md-12 ">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="extraService-tr">Narys</th>
+                                <th class="extraService-tr">Nuo</th>
+                                <th class="extraService-tr">Iki</th>
+                            </tr>
+                            </thead>
+                            <tbody ng-cloak>
+                            <tr ng-repeat="residenceEvent in residenceHistory track by $index">
+                                <td>{{residenceEvent.user.fullName}}</td>
+                                <td>{{residenceEvent.duration.dateFrom}}</td>
+                                <td>{{residenceEvent.duration.dateTo}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

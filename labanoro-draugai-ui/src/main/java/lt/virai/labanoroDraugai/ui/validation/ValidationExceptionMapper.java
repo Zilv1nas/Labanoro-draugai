@@ -28,7 +28,8 @@ public class ValidationExceptionMapper implements ExceptionMapper<EJBException> 
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(validationErrors).build();
             } else if (cause.getCause() instanceof LabanoroException) {
-                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationError("", cause.getCause().getMessage())).build();
+                LabanoroException ex = (LabanoroException) cause.getCause();
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationError(ex.getKey(), ex.getMessage())).build();
             }
             cause = cause.getCause();
         }
@@ -45,11 +46,11 @@ public class ValidationExceptionMapper implements ExceptionMapper<EJBException> 
         return new ValidationError(key, message);
     }
 
-    private class ValidationError {
+    public static class ValidationError {
         private String key;
         private String message;
 
-        ValidationError(String key, String message) {
+        public ValidationError(String key, String message) {
             this.key = key;
             this.message = message;
         }

@@ -2,21 +2,10 @@ package lt.virai.labanoroDraugai.domain.entities;
 
 import lt.virai.labanoroDraugai.domain.model.UserRole;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -35,6 +24,9 @@ public class User {
     private LocalDate registrationDate = LocalDate.now();
     private Set<AuthenticationAttribute> authenticationAttributes = new HashSet<>();
     private Set<AnnualPayment> annualPayments = new HashSet<>();
+    private Set<User> recommendations = new HashSet<>();
+    private Set<User> recommenders = new HashSet<>();
+    private UserGroup userGroup;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,5 +116,55 @@ public class User {
 
     public void setAnnualPayments(Set<AnnualPayment> annualPayments) {
         this.annualPayments = annualPayments;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "recommendee_recommender",
+            joinColumns = @JoinColumn(name = "recommendee_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "recommender_id", referencedColumnName = "id"))
+    public Set<User> getRecommenders() {
+        return recommenders;
+    }
+
+    public void setRecommenders(Set<User> recommenders) {
+        this.recommenders = recommenders;
+    }
+
+    @ManyToMany(mappedBy = "recommenders",fetch = FetchType.LAZY)
+    public Set<User> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(Set<User> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_group_id", nullable = true)
+    public UserGroup getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(balance, user.balance) &&
+                role == user.role &&
+                Objects.equals(registrationDate, user.registrationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, name, surname, balance, role, registrationDate);
     }
 }

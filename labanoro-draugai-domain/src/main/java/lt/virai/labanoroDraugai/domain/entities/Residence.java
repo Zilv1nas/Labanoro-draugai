@@ -36,6 +36,7 @@ public class Residence implements Serializable {
     private City city;
     private String image;
     private Integer weeklyPrice;
+    private LocalDate dateOfRegistration = LocalDate.now();
     private LocalDate availableFrom;
     private LocalDate availableUntil;
     private Set<ExtraService> extraServices = new HashSet<>();
@@ -127,6 +128,16 @@ public class Residence implements Serializable {
 
     public void setWeeklyPrice(Integer weeklyPrice) {
         this.weeklyPrice = weeklyPrice;
+    }
+
+    @Basic
+    @Column(name = "date_of_registration", nullable = false)
+    public void setDateOfRegistration(LocalDate dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
+    public LocalDate getDateOfRegistration() {
+        return dateOfRegistration;
     }
 
     @Basic

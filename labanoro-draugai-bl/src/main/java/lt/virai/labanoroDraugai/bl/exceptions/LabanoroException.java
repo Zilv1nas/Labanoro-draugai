@@ -6,7 +6,14 @@ package lt.virai.labanoroDraugai.bl.exceptions;
 public class LabanoroException extends Exception {
     private static final long serialVersionUID = -2941827297136873420L;
 
+    private String key = "";
+
     public LabanoroException() {
+    }
+
+    public LabanoroException(String key, String message) {
+        super(message);
+        this.key = key;
     }
 
     public LabanoroException(String message) {
@@ -19,5 +26,9 @@ public class LabanoroException extends Exception {
 
     public LabanoroException(Throwable cause) {
         super(cause);
+    }
+
+    public String getKey() {
+        return key;
     }
 }
