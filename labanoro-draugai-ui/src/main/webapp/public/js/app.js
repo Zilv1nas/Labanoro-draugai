@@ -149,7 +149,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 templateUrl: adminUrlPrefix + '/groupsView.html',
                 resolve: {
                     groups: function (groupsService) {
-                        return { groupsNumber: 5, daysInterval: 10 };
+                        return groupsService.getGroupSettings();
                     }
                 }
             })

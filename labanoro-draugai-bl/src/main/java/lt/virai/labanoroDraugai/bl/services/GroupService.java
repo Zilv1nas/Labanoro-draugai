@@ -1,10 +1,12 @@
 package lt.virai.labanoroDraugai.bl.services;
 
+import lt.virai.labanoroDraugai.domain.model.UserGroupSettings;
+
 /**
  * Created by Mantas on 5/29/2016.
  */
 public interface GroupService {
-    void getGroupSettings();
+    UserGroupSettings getGroupSettings();
 
-    void updateClubSettings(Integer groupsNumber, Integer daysInterval);
+    void updateGroups(UserGroupSettings settings);
 }

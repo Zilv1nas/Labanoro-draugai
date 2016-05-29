@@ -5,13 +5,15 @@ import javax.persistence.*;
 /**
  * Created by Mantas on 5/29/2016.
  */
+@Entity
+@Table(name = "user_group")
 public class UserGroup {
     private Integer id;
     private Integer daysRequirement;
     private Integer priority;
 
-    public UserGroup(Integer id, Integer priority) {
-        this.id = id;
+    public UserGroup(Integer daysRequirement, Integer priority) {
+        this.daysRequirement = daysRequirement;
         this.priority = priority;
     }
 

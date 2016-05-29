@@ -30,7 +30,7 @@ public class GroupsController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         try {
-            UserGroupModel model = new UserGroupModel();
+            UserGroupModel model = new UserGroupModel(groupService.getGroupSettings());
             return Response.ok(model).build();
         } catch (Exception ex) {
             return Response.serverError().build();
@@ -44,7 +44,7 @@ public class GroupsController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@Valid UserGroupModel userGroupModel) {
         try {
-            groupService.updateClubSettings(userGroupModel.getGroupsNumber(), userGroupModel.getDaysInterval());
+            groupService.updateGroups(userGroupModel.mapTo());
             return Response.ok().build();
         } catch (Exception ex) {
             return Response.serverError().build();

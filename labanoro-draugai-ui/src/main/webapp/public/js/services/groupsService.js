@@ -1,8 +1,8 @@
 app.service('groupsService', ['$http', function ($http) {
-    var baseUrl = 'rest/settings/';
+    var baseUrl = 'rest/groups/';
 
-    this.getAllSettings = function () {
-        return $http.get(baseUrl + 'getAllSettings')
+    this.getGroupSettings = function () {
+        return $http.get(baseUrl + 'getGroupSettings')
             .then(function (response) {
                 return response.data;
             }).catch(function (response) {
@@ -11,8 +11,8 @@ app.service('groupsService', ['$http', function ($http) {
     };
 
 
-    this.confirmSettings = function (settings) {
-        return $http.post(baseUrl + "updateSettings", settings);
+    this.update = function (groupSettings) {
+        return $http.post(baseUrl + "updateGroups", groupSettings);
     }
 
 }]);
