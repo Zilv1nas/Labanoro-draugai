@@ -29,11 +29,11 @@ import static java.lang.Math.toIntExact;
 public class GroupServiceImpl implements GroupService {
 
     @Inject
-    UserDAO userDAO;
+    private UserDAO userDAO;
     @Inject
-    UserGroupDAO userGroupDAO;
+    private UserGroupDAO userGroupDAO;
     @Inject
-    ReservationDAO reservationDAO;
+    private ReservationDAO reservationDAO;
 
     @Override
     public UserGroupSettings getGroupSettings() {
@@ -62,43 +62,42 @@ public class GroupServiceImpl implements GroupService {
 
         List<UserGroup> currentGroups = userGroupDAO.getAll();
 
-        for(UserGroup existingGroup : currentGroups){
+        for (UserGroup existingGroup : currentGroups) {
             userGroupDAO.remove(existingGroup);
         }
 
         Integer priority;
 
-        for(priority = 1; priority <= groupsNumber; priority++){
+        for (priority = 1; priority <= groupsNumber; priority++) {
             UserGroup group;
-            if(priority.equals(groupsNumber)){
+            if (priority.equals(groupsNumber)) {
                 group = new UserGroup(null, priority);
-            }
-            else {
+            } else {
                 group = new UserGroup(daysInterval * priority, priority);
             }
             userGroupDAO.save(group);
         }
 
         List<UserGroup> updatedGroups = userGroupDAO.getAll()
-                                        .stream().sorted((e1, e2) ->
-                                            e1.getPriority().compareTo(e2.getPriority()))
-                                            .collect(Collectors.toList());
+                .stream().sorted((e1, e2) ->
+                        e1.getPriority().compareTo(e2.getPriority()))
+                .collect(Collectors.toList());
 
         LocalDate dateFrom = LocalDate.now().withDayOfYear(1).minusYears(1);
         LocalDate dateTo = LocalDate.now().withDayOfYear(1);
 
-        for(User user : users){
+        for (User user : users) {
             List<Reservation> lastYearReservations
                     = reservationDAO.getReservationsForUser(user)
-                            .stream().filter(e ->
-                                                e.getDateFrom().isBefore(dateTo)
-                                                && e.getDateTo().isAfter(dateFrom)).collect(Collectors.toList());
+                    .stream().filter(e ->
+                            e.getDateFrom().isBefore(dateTo)
+                                    && e.getDateTo().isAfter(dateFrom)).collect(Collectors.toList());
 
             Integer daysReserved = 0;
 
-            for(Reservation reservation : lastYearReservations){
+            for (Reservation reservation : lastYearReservations) {
                 daysReserved += calculateDays(reservation.getDateFrom().isAfter(dateFrom) ? reservation.getDateFrom() : dateFrom,
-                                                reservation.getDateTo().isBefore(dateTo) ? reservation.getDateTo() : dateTo);
+                        reservation.getDateTo().isBefore(dateTo) ? reservation.getDateTo() : dateTo);
             }
 
             UserGroup groupToSet = null;

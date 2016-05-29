@@ -5,4 +5,10 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
     bean-discovery-mode="all">
+    <alternatives>
+        <!--<class>lt.virai.labanoroDraugai.bl.services.impl.StrinctGroupService</class>--> <!--TODO uncomment if strict groups are required-->
+    </alternatives>
+    <decorators>
+        <!--<class>lt.virai.labanoroDraugai.bl.services.impl.ReservationDiscountDecorator</class>--> <!--TODO uncomment if discount is needed-->
+    </decorators>
 </beans>

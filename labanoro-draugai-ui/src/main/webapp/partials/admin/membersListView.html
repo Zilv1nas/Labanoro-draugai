@@ -31,7 +31,7 @@
                         <td>{{$index + 1}}</td>
                         <td><a class="member-link" ui-sref="memberProfile({memberId: member.id})">{{member.name + ' ' + member.surname}}</a></td>
                         <td>{{member.email}}</td>
-                        <td>{{member.registrationDate | date}}</td>
+                        <td>{{member.registrationDate | date:'yyyy-MM-dd'}}</td>
                         <td>{{member.role | rolesFilter}}</td>
                         <td>
                             <button ng-click="deleteUser(member.id)" class="btn btn-danger btn-raised">Ištrinti</button>

@@ -19,8 +19,8 @@
                     <td><a class="member-link" ui-sref="viewResidence({id: reservation.residence.id})">{{reservation.residence.name}}</a>
                     </td>
                     <td>{{reservation.price}}</td>
-                    <td>{{reservation.duration.dateFrom | date}}</td>
-                    <td>{{reservation.duration.dateTo | date}}</td>
+                    <td>{{reservation.duration.dateFrom | date:'yyyy-MM-dd'}}</td>
+                    <td>{{reservation.duration.dateTo | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <button ng-click="cancelReservation(reservation.id)" class="btn btn-danger btn-raised">Atšaukti Rezervaciją
                         </button>

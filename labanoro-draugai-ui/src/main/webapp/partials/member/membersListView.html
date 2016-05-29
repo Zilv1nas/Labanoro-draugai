@@ -20,11 +20,11 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Created at</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th>Vardas</th>
+                    <th>Pavardė</th>
+                    <th>Registracijos data</th>
+                    <th>Rolė</th>
+                    <th>Veiksmai</th>
                 </tr>
                 </thead>
                 <tbody ng-cloak>
@@ -32,7 +32,7 @@
                     <td>{{$index + 1}}</td>
                     <td><a class="member-link" ui-sref="memberProfile({memberId: member.id})">{{member.name + ' ' + member.surname}}</a></td>
                     <td>{{member.email}}</td>
-                    <td>{{member.registrationDate | date}}</td>
+                    <td>{{member.registrationDate | date:'yyyy-MM-dd'}}</td>
                     <td>{{member.role | rolesFilter}}</td>
                     <td>
                         <button ng-click="verifyUser(member.id)" ng-show="member.role === 'CANDIDATE' && !member.recommendedByCurrentUser"

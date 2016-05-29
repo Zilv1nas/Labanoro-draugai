@@ -70,9 +70,6 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
                 controller: 'residencesListController',
                 templateUrl: memberUrlPrefix + '/residencesListView.html',
                 resolve: {
-                    residences: function (residencesService) {
-                        return residencesService.getAllResidences();
-                    },
                     priority: function(groupsService){
                         return groupsService.getUserPriority();
                     }

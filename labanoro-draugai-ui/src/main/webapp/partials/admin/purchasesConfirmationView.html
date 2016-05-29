@@ -35,7 +35,7 @@
                         <td>{{purchase.name}}</td>
                         <td>{{purchase.surname}}</td>
                         <td>{{purchase.username}}</td>
-                        <td>{{purchase.purchaseDate}}</td>
+                        <td>{{purchase.purchaseDate | date:'yyyy-MM-dd'}}</td>
                         <td>{{purchase.amount}}</td>
                         <td>{{purchase.status}}</td>
                         <td ng-if="purchase.status === 'PENDING'">
