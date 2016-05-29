@@ -32,8 +32,13 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
         $stateProvider
             .state('main', {
                 url: "/",
-                controller: 'mainController',
-                templateUrl: memberUrlPrefix + '/mainView.html'
+                controller: 'residencesListController',
+                templateUrl: memberUrlPrefix + '/residencesListView.html',
+                resolve: {
+                    priority: function(groupsService){
+                        return groupsService.getUserPriority();
+                    }
+                }
             })
             .state('login', {
                 url: "/login",
