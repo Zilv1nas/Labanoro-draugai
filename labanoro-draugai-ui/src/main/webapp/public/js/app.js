@@ -176,7 +176,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpP
             enabled: true
         });
 
-        $httpProvider.interceptors.push('annualPaymentInterceptor');
+        $httpProvider.interceptors.push('errorInterceptor');
 
         cfpLoadingBarProvider.includeSpinner = false;
         $authProvider.loginUrl = 'rest/login';

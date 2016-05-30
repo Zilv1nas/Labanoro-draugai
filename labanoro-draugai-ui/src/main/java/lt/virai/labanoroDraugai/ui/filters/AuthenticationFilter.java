@@ -33,13 +33,21 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String token = AuthUtils.extractToken(requestContext.getHeaderString(HttpHeaders.AUTHORIZATION));
+        if (token == null) {
+            abort(requestContext);
+            return;
+        }
         Optional<String> userId = authService.getUserId(token);
         if (userId.isPresent()) {
             overrideSecurityFilter(requestContext, userId.get());
             ThreadLocalContext.put("userid", userId.get());
         } else {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            abort(requestContext);
         }
+    }
+
+    private void abort(ContainerRequestContext requestContext) {
+        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
     }
 
     private void overrideSecurityFilter(ContainerRequestContext requestContext, String userId) {
