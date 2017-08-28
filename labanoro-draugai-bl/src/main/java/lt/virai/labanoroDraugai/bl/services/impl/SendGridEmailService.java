@@ -21,7 +21,7 @@ public class SendGridEmailService implements EmailService {
     @Inject
     private UserDAO userDAO;
 
-    private static final String SEND_GRID_API_KEY = "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"; //TODO add to properties
+    private static final String SEND_GRID_API_KEY = "TEST"; //TODO get key from properties
 
     private static final SendGrid sendgrid = new SendGrid(SEND_GRID_API_KEY);
 
